@@ -1,1 +1,9 @@
 Dnevnik projekta
+
+20.10.2022. Prvi sastanak tima, prva laboratorijska vježba.
+		Upoznavanje članova tima te diskusija o tehnologijama koje će se koristiti kroz projekt i mogućim
+		ulogama članova tima.
+
+22.10.2022. Odabrane su tehnologije izrade aplikacije.
+
+27.10.2022. Početna skica use case i sekvencijskih dijagrama.
