@@ -96,7 +96,7 @@ export default function Register() {
 
     useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
-        setValidMatch(pwd === matchPwd);
+        setValidMatch(pwd === matchPwd && validPwd);
     }, [pwd, matchPwd])
 
     useEffect(() => {
@@ -141,7 +141,7 @@ export default function Register() {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={5}>
                 <TextField
                   name="firstName"
                   required
@@ -164,7 +164,12 @@ export default function Register() {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={1}>
+                <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} 
+                size="xl"/>
+              </Grid>
+
+              <Grid item xs={12} sm={5}>
                 <TextField
                   required
                   fullWidth
@@ -186,8 +191,12 @@ export default function Register() {
                   helperText = {ErrorInput(surnameCount, validsurname, surnameFocus)? 'Prezime ne smije biti prazno':''}
                 />
               </Grid>
+              <Grid item xs={12} sm={1}>
+                <FontAwesomeIcon icon={faCheck} className={validsurname ? "valid" : "hide"} 
+                size="xl"/>
+              </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={11}>
                 <TextField
                  inputProps={{ maxLength: 24 }}
                   required
@@ -212,7 +221,12 @@ export default function Register() {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={1}>
+                <FontAwesomeIcon icon={faCheck} className={validUser ? "valid" : "hide"} 
+                size="xl"/>
+              </Grid>
+
+              <Grid item xs={12} sm={11}>
                 <TextField
                   required
                   fullWidth
@@ -234,7 +248,12 @@ export default function Register() {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={1}>
+                <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} 
+                size="xl"/>
+              </Grid>
+
+              <Grid item xs={12} sm={11}>
                 <TextField
                    inputProps={{ maxLength: 24 }}
                   required
@@ -260,7 +279,12 @@ export default function Register() {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={1}>
+                <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} 
+                size="xl"/>
+              </Grid>
+
+              <Grid item xs={12} sm={11}>
                 <TextField
                   inputProps={{ maxLength: 24 }}
                   required
@@ -283,8 +307,13 @@ export default function Register() {
                   helperText = {ErrorInput(matchCount, validMatch, matchFocus)?'Lozinke se ne podudaraju':''}
                 />
               </Grid>
+              <Grid item xs={12} sm={1}>
+                <FontAwesomeIcon icon={faCheck} className={validMatch ? "valid" : "hide"} 
+                size="xl"/>
+              </Grid>
             </Grid>
             <Button
+              disabled={!validName || !validPwd || !validMatch || !validUser || !validEmail || !validsurname ? true : false}
               type="submit"
               fullWidth
               variant="contained"
