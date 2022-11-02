@@ -11,7 +11,6 @@ module.exports = class User{
        this.username = username
        this.email = email
        this.pwdHash = pwdHash 
-       this.refreshToken = undefined
     }
 
     //dohvat korisnika na osnovu korisničkog imena
@@ -21,10 +20,10 @@ module.exports = class User{
         let newUser = new User()
 
         if( results.length > 0 ) {
-            newUser = new User(results[0].userName, results[0].firstName,
-                results[0].surName, results[0].email, results[0].pwdHash, results[0].role)
+            newUser = new User(results[0].name, results[0].surname,
+                results[0].username, results[0].email, results[0].pwdHash)
             newUser.id = results[0].id
-            newUser.refreshToken = results[0].refreshToken
+            newUser.role = results[0].role
         }
         return newUser
     }
@@ -36,10 +35,10 @@ module.exports = class User{
         let newUser = new User()
 
         if( results.length > 0 ) {
-            newUser = new User(results[0].userName, results[0].firstName,
-                results[0].surName, results[0].email, results[0].pwdHash, results[0].role)
+            newUser = new User(results[0].name, results[0].surname,
+                results[0].username, results[0].email, results[0].pwdHash)
             newUser.id = results[0].id
-            newUser.refreshToken = results[0].refreshToken
+            newUser.role = results[0].role
         }
         return newUser
     }
@@ -52,10 +51,10 @@ module.exports = class User{
         let newUser = new User()
 
         if( results.length > 0 ) {
-            newUser = new User(results[0].userName, results[0].firstName,
-                results[0].surName, results[0].email, results[0].pwdHash, results[0].role)
+            newUser = new User(results[0].name, results[0].surname,
+                results[0].username, results[0].email, results[0].pwdHash)
             newUser.id = results[0].id
-            newUser.refreshToken = results[0].refreshToken
+            newUser.role = results[0].role
         }
         return newUser
     }
@@ -85,8 +84,8 @@ module.exports = class User{
 
 //dohvat korisnika iz baze podataka na osnovu korisničkog imena (stupac user_name)
 dbGetUserByName = async (userName) => {
-    const sql = `SELECT id, userName, firstName, surName, email, pwdHash, role, refreshToken
-    FROM users WHERE userName = '` + user_name + `'`;
+    const sql = `SELECT id, name, surname, username, email, pwdHash, role
+    FROM users WHERE username = '` + userName + `'`;
     try {
         const result = await db.query(sql, []);
         return result.rows;
@@ -99,7 +98,7 @@ dbGetUserByName = async (userName) => {
 
 //dohvat korisnika iz baze podataka na osnovu email adrese (stupac email)
 dbGetUserByEmail = async (user_email) => {
-    const sql = `SELECT id, userName, firstName, surName, email, pwdHash, role, refreshToken
+    const sql = `SELECT id, name, surname, username, email, pwdHash, role
     FROM users WHERE email = '` + user_email + `'`;
     try {
         const result = await db.query(sql, []);
@@ -112,7 +111,7 @@ dbGetUserByEmail = async (user_email) => {
 
 //dohvat korisnika iz baze podataka na osnovu id korisnika (stupac id)
 dbGetUserById = async (user_id) => {
-    const sql = `SELECT id, userName, firstName, surName, email, pwdHash, role, refreshToken
+    const sql = `SELECT id, name, surname, username, email, pwdHash, role
     FROM users WHERE id = ` + user_id;
     try {
         const result = await db.query(sql, []);
@@ -125,10 +124,9 @@ dbGetUserById = async (user_id) => {
 
 //umetanje zapisa o korisniku u bazu podataka
 dbNewUser = async (user) => {
-    const sql = "INSERT INTO users (userName, firstName, surName, email, pwdHash, role) VALUES ('" +
-        user.username + "', '" + user.name + "', '" + user.surname + "', '" +
-        user.email + "', '" + user.pwdHash + "', '" + user.role + "', '"+
-        user.refreshToken+"') RETURNING id";
+    const sql = "INSERT INTO users (name, surname, username, email, pwdHash, role) VALUES ('" +
+        user.name + "', '" + user.surname + "', '" + user.username + "', '" +
+        user.email + "', '" + user.pwdHash + "', '" + user.role + "') RETURNING id";
     try {
         const result = await db.query(sql, []);
         return result.rows[0].id;

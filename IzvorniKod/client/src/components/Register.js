@@ -134,7 +134,6 @@ export default function Register() {
                           headers: {'Content-Type':'application/json'},
                         }
                );
-      console.log(response.data)
       setSuccess(true);
       setErrMsg("");
     } catch(err){
