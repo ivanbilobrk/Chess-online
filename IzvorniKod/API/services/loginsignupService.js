@@ -3,7 +3,10 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/UserModel')
 const {customError} = require('../errors/customError')
 const { StatusCodes } = require('http-status-codes');
+require('dotenv').config();
 
+
+//nepotrebno - izbriši
 async function register(name, surName, userName, email, pwd){
 
     let user = await User.fetchByUsername(userName);
@@ -17,25 +20,22 @@ async function register(name, surName, userName, email, pwd){
     }
         
     //registriraj novog korisnika
-    const salt = await bcrypt.genSalt(10);
-    const pwdHash = await bcrypt.hash(pwd, salt);
+    const pwdHash = await bcrypt.hash(pwd, 10);
 
     try{
         user = new User(name, surName, userName, email, pwdHash);
         await user.persist();
 
-        const token = jwt.sign(
-            { id: user.id, name: user.name, surName: user.surname ,userName: user.username, email: user.email, role: user.role},
-            config.jwTokenKey,
-            {
-              expiresIn: config.token_expiration,
-            });
+        const refreshToken = jwt.sign(
+            { userName: user.username },
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: '1d' });
 
-        return token;
+        return refreshToken;
 
     } catch(error){
         throw new customError('Neuspjelo stvaranje korisnika.', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
-module.exports={register}
+module.exports = { register };

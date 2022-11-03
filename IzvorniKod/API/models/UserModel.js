@@ -10,7 +10,8 @@ module.exports = class User{
        this.surname = surname
        this.username = username
        this.email = email
-       this.pwdHash = pwdHash 
+       this.pwdHash = pwdHash
+       this.refreshToken = undefined
     }
 
     //dohvat korisnika na osnovu korisničkog imena
