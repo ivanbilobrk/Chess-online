@@ -2,18 +2,20 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
+const cookieParser = require('cookie-parser');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 
-const signupRoute = require('./routes/signup.routes');
-
-app.get('/', (req, res)=>{
-    res.send("eee")
+app.get('/', (req, res)=> {
+    res.send("home")
 })
 
-app.use('/register', signupRoute);
+app.use('/register', require('./routes/register.routes'));
+app.use('/login', require('./routes/login.routes'));
+app.use('/refresh', require('./routes/refresh.routes'));
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});
