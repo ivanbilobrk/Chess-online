@@ -4,11 +4,11 @@ dotenv.config({ path: '../.env' });
 const env = process.env;
 
 const pool = new Pool({
-    user: env.DB_NAME,
+    user: env.DB_USER,
     host: env.DB_HOST,
     database: env.DB_NAME,
     password: env.DB_PASSWORD,
-    port: env.DB_PORT,
+    port: parseInt(env.DB_PORT),
 });
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         return pool.query(text, params)
             .then(res => {
                 const duration = Date.now() - start;
-                //console.log('executed query', {text, params, duration, rows: res.rows});
+                console.log('executed query', {text, params, duration, rows: res.rows});
                 return res;
             });
     },

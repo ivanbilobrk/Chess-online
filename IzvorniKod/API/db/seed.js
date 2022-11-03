@@ -4,26 +4,28 @@ dotenv.config({ path: '../.env' });
 const env = process.env;
 
 const pool = new Pool({
-    user: env.DB_NAME,
+    user: env.DB_USER,
     host: env.DB_HOST,
     database: env.DB_NAME,
     password: env.DB_PASSWORD,
-    port: env.DB_PORT,
+    port: parseInt(env.DB_PORT),
 });
 
 
 const sql_create_users = `CREATE TABLE users (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    role text NOT NULL,
+    role text NOT NULL, 
     name text NOT NULL,
     surname text NOT NULL,
     username text NOT NULL UNIQUE,
     email text NOT NULL UNIQUE,
-    pwdHash text NOT NULL,
-    refreshToken text NOT NULL
+    pwdHash  NOT NULL,
+    refreshToken text
 )`;
 
-const sql_create_users_id_index = `CREATE UNIQUE INDEX idx_usersId ON users(id)`;
+const sql_create_users_id_index = `CREATE  UNIQUE INDEX idx_usersId ON users(id)`;
+
+//const sql_insert_users = `INSERT INTO users (username, name, surname, email, pwdhash, role) VALUES ('admin', 'Adminko', 'Administratović', 'null@admin', 'adminpass', 'admin')`
 
 let table_names = [
     "users"
@@ -34,7 +36,7 @@ let tables = [
 ];
 
 let table_data = [
-    sql_insert_users
+    //sql_insert_users
 ]
 
 let indexes = [
