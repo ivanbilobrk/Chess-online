@@ -17,18 +17,18 @@ const handleNewUser = async (req, res) => {
     }
     
     const{name, surName, userName, email, pwd} = req.body;
-    let user = await User.fetchByUsername(userName);  
-    let userEmail = await User.fetchByEmail(email);
-   
     //ako korisnik postoji, javi grešku
     try {
+        
+        let user = await User.fetchByUsername(userName);  
+        let userEmail = await User.fetchByEmail(email);
         if (user.id !== undefined) {
             throw new customError('User name je već iskorišten!', StatusCodes.CONFLICT);
         } else if (userEmail.id !== undefined) {
             throw new customError('E-mail je već iskorišten!', StatusCodes.CONFLICT);
         }
     } catch(err){
-        res.status(error.status).json({'error': err})
+        res.status(err.status).json({'error': err.message})
     }
 
     //registriraj novog korisnika
@@ -38,9 +38,9 @@ const handleNewUser = async (req, res) => {
     try{
         user = new User(name, surName, userName, email, pwdHash);
         await user.persist();
-
+        res.status(StatusCodes.OK).json({'message':'user successfully created'})
     } catch(error){
-        throw new customError("User se ne može stvoriti", StatusCodes.INTERNAL_SERVER_ERROR);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({'error': 'User se ne može stvoriti.'})
     }
    
 }
