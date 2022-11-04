@@ -15,7 +15,7 @@ app.get('/', (req, res)=> {
 
 app.use('/register', require('./routes/register.routes'));
 app.use('/login', require('./routes/login.routes'));
-//currently login controller isn't sending cookies to refresh controller - FIX
+app.use('/logout', require('./routes/logout.routes'));
 app.use('/refresh', require('./routes/refresh.routes'));
 
 app.use(verifyJWT);  //every route after this line here will use verifyJWT middleware
@@ -27,6 +27,10 @@ app.use(verifyJWT);  //every route after this line here will use verifyJWT middl
 // 3) you will get AccessToken in respone, copy it
 // 4) send the GET request to the /tester with copied AccessToken in Auth->Bearer 
 // 5) you will be able to access the /tester page until the token expires
+// 6) when AccessToken expires, send GET request to the /refresh route and you will get a new AccessToken
+// 7) send the GET request to the /logout route, RefreshToken will be deleted from the database
+// 8) now if you try to GET /refresh you will get 401 Unauthorized because you aren't logged in anymore
+
 app.use('/tester', require('./routes/tester.routes'));
 
 app.use((req, res)=>{

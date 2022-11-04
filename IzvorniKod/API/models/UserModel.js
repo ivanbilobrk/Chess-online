@@ -92,7 +92,7 @@ module.exports = class User{
     }
 
      //provjera zaporke
-     checkPassword(passwordHash) {
+    checkPassword(passwordHash) {
         return this.pwdHash ? this.pwdHash === passwordHash : false
     }
 
