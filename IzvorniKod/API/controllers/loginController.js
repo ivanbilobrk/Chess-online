@@ -17,7 +17,7 @@ const handleLogin = async (req, res) => {
         const accessToken = jwt.sign(
             { "username": foundUser.userName },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '120s' }
+            { expiresIn: '60s' }
         );
         const refreshToken = jwt.sign(
             { "username": foundUser.userName },
@@ -25,7 +25,12 @@ const handleLogin = async (req, res) => {
             { expiresIn: '1d' }
         );
         // Saving refreshToken with current user in the database, add the refreshToken column to the database 
-        // Zasad bez refreshTokena u bazi 
+        try {
+            const result = await User.addRefreshToken(userName, refreshToken);
+        } catch (error){
+            console.log(error);
+        }
+
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ accessToken });
     } else {

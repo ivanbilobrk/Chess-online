@@ -4,10 +4,8 @@ const User = require('../models/UserModel')
 const customError = require('../errors/customError')
 const { check, validationResult } = require ('express-validator');
 const { NOT_EXTENDED } = require('http-status');
-const dotenv = require('dotenv');
 const { StatusCodes } = require('http-status-codes');
-dotenv.config({ path: '../.env' })
-const env = process.env;
+
 
 const handleNewUser = async (req, res) => {
 
@@ -28,7 +26,7 @@ const handleNewUser = async (req, res) => {
             throw new customError('E-mail je već iskorišten!', StatusCodes.CONFLICT);
         }
     } catch(err){
-        res.status(err.status).json({'error': err.message})
+        return res.status(err.status).json({'error': err.message})
     }
 
     //registriraj novog korisnika

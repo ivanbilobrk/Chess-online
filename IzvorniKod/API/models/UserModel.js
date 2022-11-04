@@ -11,7 +11,7 @@ module.exports = class User{
        this.username = username
        this.email = email
        this.pwdHash = pwdHash
-       this.refreshToken = "bezveze"
+       this.refreshToken = null
     }
 
     //dohvat korisnika na osnovu korisničkog imena
@@ -22,7 +22,7 @@ module.exports = class User{
 
         if( results.length > 0 ) {
             newUser = new User(results[0].name, results[0].surname,
-                results[0].username, results[0].email, results[0].pwdHash)
+                results[0].username, results[0].email, results[0].pwdhash)
             newUser.id = results[0].id
             newUser.role = results[0].role
         }
@@ -42,6 +42,32 @@ module.exports = class User{
             newUser.role = results[0].role
         }
         return newUser
+    }
+    static async fetchByRefreshToken(refreshToken) {
+
+        let results = await dbGetUserByRefreshToken(refreshToken)
+        let newUser = new User()
+
+        if( results.length > 0 ) {
+            newUser = new User(results[0].name, results[0].surname,
+                results[0].username, results[0].email, results[0].pwdHash)
+            newUser.id = results[0].id
+            newUser.role = results[0].role
+        }
+        return newUser
+    }
+    static async addRefreshToken(userName, refreshToken){
+        let results = await dbUpdateUser(userName, refreshToken);
+        let newUser = new User()
+
+        if( results.length > 0 ) {
+            newUser = new User(results[0].name, results[0].surname,
+                results[0].username, results[0].email, results[0].pwdHash)
+            newUser.id = results[0].id
+            newUser.role = results[0].role
+        }
+        return newUser
+
     }
 
 
@@ -81,11 +107,12 @@ module.exports = class User{
             throw err
         }
     }
+    
 }
 
 //dohvat korisnika iz baze podataka na osnovu korisničkog imena (stupac user_name)
 dbGetUserByName = async (userName) => {
-    const sql = `SELECT id, name, surname, username, email, pwdHash, role
+    const sql = `SELECT *
     FROM users WHERE username = '` + userName + `'`;
     try {
         const result = await db.query(sql, []);
@@ -99,8 +126,19 @@ dbGetUserByName = async (userName) => {
 
 //dohvat korisnika iz baze podataka na osnovu email adrese (stupac email)
 dbGetUserByEmail = async (user_email) => {
-    const sql = `SELECT id, name, surname, username, email, pwdHash, role
+    const sql = `SELECT *
     FROM users WHERE email = '` + user_email + `'`;
+    try {
+        const result = await db.query(sql, []);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err
+    }
+};
+dbGetUserByRefreshToken = async (refreshToken) => {
+    const sql = `SELECT *
+    FROM users WHERE refreshToken = '` + refreshToken + `'`;
     try {
         const result = await db.query(sql, []);
         return result.rows;
@@ -112,7 +150,7 @@ dbGetUserByEmail = async (user_email) => {
 
 //dohvat korisnika iz baze podataka na osnovu id korisnika (stupac id)
 dbGetUserById = async (user_id) => {
-    const sql = `SELECT id, name, surname, username, email, pwdHash, role
+    const sql = `SELECT *
     FROM users WHERE id = ` + user_id;
     try {
         const result = await db.query(sql, []);
@@ -132,6 +170,16 @@ dbNewUser = async (user) => {
         const result = await db.query(sql, []);
         return result.rows[0].id;
     } catch (err) {
+        console.log(err);
+        throw err
+    }
+}
+dbUpdateUser = async (userName, refreshToken) => {
+    const sql = "UPDATE users SET refreshToken = '"+refreshToken+"' WHERE userName = '" + userName + "'";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows; 
+    } catch (err){
         console.log(err);
         throw err
     }
