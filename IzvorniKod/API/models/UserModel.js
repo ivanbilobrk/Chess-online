@@ -11,7 +11,7 @@ module.exports = class User{
        this.username = username
        this.email = email
        this.pwdHash = pwdHash
-       this.refreshToken = undefined
+       this.refreshToken = "bezveze"
     }
 
     //dohvat korisnika na osnovu korisničkog imena
@@ -125,9 +125,9 @@ dbGetUserById = async (user_id) => {
 
 //umetanje zapisa o korisniku u bazu podataka
 dbNewUser = async (user) => {
-    const sql = "INSERT INTO users (name, surname, username, email, pwdHash, role) VALUES ('" +
+    const sql = "INSERT INTO users (name, surname, username, email, pwdHash, role, refreshToken) VALUES ('" +
         user.name + "', '" + user.surname + "', '" + user.username + "', '" +
-        user.email + "', '" + user.pwdHash + "', '" + user.role + "') RETURNING id";
+        user.email + "', '" + user.pwdHash + "', '" + user.role + "','"+user.refreshToken+"') RETURNING id";
     try {
         const result = await db.query(sql, []);
         return result.rows[0].id;

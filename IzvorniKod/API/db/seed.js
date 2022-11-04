@@ -13,13 +13,13 @@ const pool = new Pool({
 
 
 const sql_create_users = `CREATE TABLE users (
-    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    role text NOT NULL, 
+    id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
     name text NOT NULL,
     surname text NOT NULL,
     username text NOT NULL UNIQUE,
     email text NOT NULL UNIQUE,
     pwdHash  NOT NULL,
+    role text NOT NULL,
     refreshToken text
 )`;
 
