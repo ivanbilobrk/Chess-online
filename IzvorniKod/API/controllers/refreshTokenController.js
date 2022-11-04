@@ -23,4 +23,4 @@ const handleRefreshToken = (req, res) => {
     );
 }
 
-module.exports = { handleRefreshToken }
+module.exports =  {handleRefreshToken}

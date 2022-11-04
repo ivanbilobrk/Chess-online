@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require ('express-validator');
 const{ StatusCodes } = require('http-status-codes');
-const {register} = require('../services/loginsignupService');
 const CustomError = require('../errors/customError');
 const registerController = require('../controllers/registerController');
 

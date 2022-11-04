@@ -2,6 +2,7 @@ const db = require('../db/index');
 const bcrypt = require('bcrypt');
 
 const handleNewUser = async (req, res) => {
+    console.log("tuu")
     const{name, surName, userName, email, pwd} = req.body;
 
     let user = await User.fetchByUsername(userName);
@@ -26,4 +27,4 @@ const handleNewUser = async (req, res) => {
     
 }
 
-module.exports = { handleNewUser }
+module.exports =  {handleNewUser}
