@@ -1,21 +1,24 @@
 const db = require('../db/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/UserModel')
+const User = require('../models/UserModel');
+const { StatusCodes } = require('http-status-codes');
 require('dotenv').config();
 
 const handleLogin = async (req, res) => {
     const{name, surName, userName, email, pwd} = req.body;
     
     const foundUser = await User.fetchByUsername(userName);
-    if (!foundUser) return res.sendStatus(401); //Unauthorized 
+    if (foundUser.id === undefined) return res.status(StatusCodes.BAD_REQUEST).json({'error':'User ne postoji'}); //Unauthorized 
 
     // evaluate password 
     const match = await bcrypt.compare(pwd, foundUser.pwdHash);
     if (match) {
         // create JWTs
         const accessToken = jwt.sign(
-            { "username": foundUser.userName },
+            { "username": foundUser.userName,
+              "role":"user"
+            },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '60s' }
         );
@@ -31,10 +34,9 @@ const handleLogin = async (req, res) => {
             console.log(error);
         }
 
-        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-        res.json({ accessToken });
+        return res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).json({accessToken, role:"user"});
     } else {
-        res.sendStatus(401);
+        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Kriva lozinka'});
     }
 }
 

@@ -1,16 +1,17 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const { StatusCodes } = require('http-status-codes');
 
 const verifyJWT = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.sendStatus(401);
+    if (!authHeader) return res.sendStatus(StatusCodes.UNAUTHORIZED);
     console.log(authHeader); // Bearer token
     const token = authHeader.split(' ')[1];
     jwt.verify(
         token,
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
-            if (err) return res.sendStatus(403); //invalid token
+            if (err) return res.sendStatus(StatusCodes.UNAUTHORIZED); //invalid token
             req.user = decoded.username;
             next();
         }

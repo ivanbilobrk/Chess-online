@@ -16,8 +16,14 @@ code {
   display: none;
 }
 
-.valid {
+.validRegister {
   color: limegreen;
+  margin-top:100%;
+  margin-left:-20%;
+}
+
+.validLogin {
+  color: rgb(24, 23, 23);
   margin-top:100%;
   margin-left:-20%;
 }

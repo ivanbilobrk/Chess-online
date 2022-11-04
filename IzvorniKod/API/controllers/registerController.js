@@ -1,9 +1,7 @@
-const db = require('../db/index');
 const bcrypt = require('bcrypt');
 const User = require('../models/UserModel')
 const customError = require('../errors/customError')
 const { check, validationResult } = require ('express-validator');
-const { NOT_EXTENDED } = require('http-status');
 const { StatusCodes } = require('http-status-codes');
 
 
@@ -17,7 +15,6 @@ const handleNewUser = async (req, res) => {
     const{name, surName, userName, email, pwd} = req.body;
     //ako korisnik postoji, javi grešku
     try {
-        
         let user = await User.fetchByUsername(userName);  
         let userEmail = await User.fetchByEmail(email);
         if (user.id !== undefined) {
@@ -36,9 +33,9 @@ const handleNewUser = async (req, res) => {
     try{
         user = new User(name, surName, userName, email, pwdHash);
         await user.persist();
-        res.status(StatusCodes.OK).json({'message':'user successfully created'})
+        return res.status(StatusCodes.OK).json({'message':'user successfully created'})
     } catch(error){
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({'error': 'User se ne može stvoriti.'})
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({'error': 'User se ne može stvoriti.'})
     }
    
 }

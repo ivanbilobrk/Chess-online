@@ -1,17 +1,14 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   faCheck,
-  faTimes,
-  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {ErrorInput} from '../util/ErrorInput'
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -19,8 +16,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { counter } from "@fortawesome/fontawesome-svg-core";
 import CircularProgress from "@mui/material/CircularProgress";
+import Backdrop from '@mui/material/Backdrop';
 import axios from '../api/axios';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
@@ -52,8 +49,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Register() {
-  const userRef = useRef();
-  const errRef = useRef();
 
   const [name, setName] = useState("");
   const [validName, setValidName] = useState(false);
@@ -90,6 +85,12 @@ export default function Register() {
   const [matchCount, setmatchCount] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     setValidUser(USER_REGEX.test(user));
   }, [user]);
@@ -117,12 +118,11 @@ export default function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
 
-    setLoading(true);
+    setOpen(true);
     setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+      setOpen(false);
+    }, 500);
     
     try{
       const response = await axios.post(REGISTER_URL, 
@@ -134,31 +134,35 @@ export default function Register() {
                           headers: {'Content-Type':'application/json'},
                         }
                );
-      setSuccess(true);
-      setErrMsg("");
+
+      setTimeout(() => {
+        setSuccess(true);
+        setErrMsg("");
+      }, 500);
+
     } catch(err){
       if(!err?.response){
         setErrMsg('Nema odgovora sa servera');
-      } else if(err.response?.status === 400){
-        setErrMsg(err.response.data)
+      } else {
+        setErrMsg(err.response.data.error)
       }
     }
 
   };
 
-  const ErrorInput = (count, validation, focus) => {
-    if (count === false) return false;
-
-    if (!focus) {
-      return !validation;
-    }
-    return false;
-  };
 
   return (
     <>
-      {loading === true && <CircularProgress />}
-      {success === true && loading === false && <h1>Uspjesna registracija</h1>}
+     
+      {success === true && loading === false && <Alert severity="success">Uspješna registracija <Link href="/login" variant="body2">Prijavite se!</Link></Alert>}
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
       {success === false && (
         <ThemeProvider theme={theme}>
@@ -219,7 +223,7 @@ export default function Register() {
                   <Grid item xs={12} sm={1}>
                     <FontAwesomeIcon
                       icon={faCheck}
-                      className={validName ? "valid" : "hide"}
+                      className={validName ? "validRegister" : "hide"}
                       size="xl"
                     />
                   </Grid>
@@ -256,7 +260,7 @@ export default function Register() {
                   <Grid item xs={12} sm={1}>
                     <FontAwesomeIcon
                       icon={faCheck}
-                      className={validsurname ? "valid" : "hide"}
+                      className={validsurname ? "validRegister" : "hide"}
                       size="xl"
                     />
                   </Grid>
@@ -292,7 +296,7 @@ export default function Register() {
                   <Grid item xs={12} sm={1}>
                     <FontAwesomeIcon
                       icon={faCheck}
-                      className={validUser ? "valid" : "hide"}
+                      className={validUser ? "validRegister" : "hide"}
                       size="xl"
                     />
                   </Grid>
@@ -326,7 +330,7 @@ export default function Register() {
                   <Grid item xs={12} sm={1}>
                     <FontAwesomeIcon
                       icon={faCheck}
-                      className={validEmail ? "valid" : "hide"}
+                      className={validEmail ? "validRegister" : "hide"}
                       size="xl"
                     />
                   </Grid>
@@ -363,7 +367,7 @@ export default function Register() {
                   <Grid item xs={12} sm={1}>
                     <FontAwesomeIcon
                       icon={faCheck}
-                      className={validPwd ? "valid" : "hide"}
+                      className={validPwd ? "validRegister" : "hide"}
                       size="xl"
                     />
                   </Grid>
@@ -398,7 +402,7 @@ export default function Register() {
                   <Grid item xs={12} sm={1}>
                     <FontAwesomeIcon
                       icon={faCheck}
-                      className={validMatch ? "valid" : "hide"}
+                      className={validMatch ? "validRegister" : "hide"}
                       size="xl"
                     />
                   </Grid>
@@ -423,7 +427,7 @@ export default function Register() {
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="/login" variant="body2">
                       Već imaš profil? Prijavi se!
                     </Link>
                   </Grid>

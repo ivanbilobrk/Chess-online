@@ -3,7 +3,10 @@ const app = express();
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const verifyJWT = require('./middleware/verifyJWT');
+var cors = require('cors')
 
+
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
