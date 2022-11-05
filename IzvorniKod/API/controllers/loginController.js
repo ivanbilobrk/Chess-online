@@ -17,13 +17,14 @@ const handleLogin = async (req, res) => {
         // create JWTs
         const accessToken = jwt.sign(
             { "username": foundUser.userName,
-              "role":"user"
+              "role":foundUser.role
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '60s' }
+            { expiresIn: '1000s' }
         );
         const refreshToken = jwt.sign(
-            { "username": foundUser.userName },
+            { "username": foundUser.userName,
+                "role": foundUser.role },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
         );
@@ -34,7 +35,7 @@ const handleLogin = async (req, res) => {
             console.log(error);
         }
 
-        return res.cookie('jwt', refreshToken, { httpOnly: true,secure: true, sameSite:'None', maxAge: 24 * 60 * 60 * 1000 }).json({accessToken, role:"user"});
+        return res.cookie('jwt', refreshToken, { httpOnly: true,secure: true, sameSite:'None', maxAge: 24 * 60 * 60 * 1000 }).json({accessToken});
     } else {
         return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Kriva lozinka'});
     }

@@ -11,6 +11,7 @@ import RequireAuth from "./components/RequireAuth";
 import ReactDOM from "react";
 import Layout from './components/Layout';
 import Unauthorized from "./pages/Unauthorized";
+import PersistLogin from "./components/PersistLogin";
 
 function App() {
   return (
@@ -24,10 +25,11 @@ function App() {
             <Route path="login" element = {<LoginPage/>}></Route>
             <Route path="unauthorized" element={<Unauthorized />} />
 
+          <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={["user"]}/>}>
               <Route path ="profile" element ={<ProfilePage/>}></Route>
             </Route>
-            
+          </Route>
 
           </Route>
 

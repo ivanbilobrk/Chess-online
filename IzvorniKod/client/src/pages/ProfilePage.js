@@ -3,12 +3,14 @@ import{Link} from 'react-router-dom'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useLogout from '../hooks/useLogout';
 
 
 export default function ProfilePage(){
     const [data, setData] = useState();
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+    const logout = useLogout();
     const location = useLocation();
     const {auth} = useAuth();           //primjer kako koristiti auth 
 
@@ -35,6 +37,10 @@ export default function ProfilePage(){
         }
     }, [])
 
+    const signout = async() =>{
+        await logout();
+        navigate('/');
+    }
 
 
 
@@ -50,6 +56,7 @@ export default function ProfilePage(){
                     </ul>
                 ) : <p>No data to display</p>
             }
+            <button onClick={signout}>Odjavi se</button>
         </>
     );
 };

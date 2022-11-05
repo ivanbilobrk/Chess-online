@@ -8,15 +8,14 @@ import { createRoot } from 'react-dom/client';
 const container = document.getElementById('root');
 const root = createRoot(container); 
 
-root.render(<React.StrictMode>
+root.render(
   <BrowserRouter>
     <AuthProvider>
       <Routes>
         <Route path="/*" element={<App />} />
       </Routes>
     </AuthProvider>
-  </BrowserRouter>
-</React.StrictMode>);
+  </BrowserRouter>);
 
 
 

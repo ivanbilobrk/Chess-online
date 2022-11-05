@@ -17,6 +17,7 @@ const handleRefreshToken = async (req, res) => {
     const surName = foundUser.surname;
     const email = foundUser.email;
     const userName = foundUser.username;
+    const role = foundUser.role
 
     // evaluate jwt 
     jwt.verify(
@@ -24,14 +25,15 @@ const handleRefreshToken = async (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
             if (err) return res.sendStatus(403);
+            console.log(decoded.userName)
             const accessToken = jwt.sign(
                 { "username": decoded.userName, 
                   "role": decoded.role
             },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '60s' }
+                { expiresIn: '1000s' }
             );
-            return res.json({ accessToken, role:"user"})
+            return res.json({ accessToken: accessToken})
         }
     );
 }

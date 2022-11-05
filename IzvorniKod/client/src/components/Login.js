@@ -23,6 +23,10 @@ import axios from '../api/axios';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import {Navigate, useNavigate, Link as ReactLink, useLocation} from 'react-router-dom';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import jwt_decode from "jwt-decode";
 
 
 const LOGIN_URL = "/login";
@@ -48,7 +52,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const {setAuth} = useAuth();
+  const {setAuth, persist, setPersist} = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -83,6 +87,10 @@ export default function Login() {
     setErrMsg("");
   }, [user, pwd]);
 
+  useEffect(()=>{
+    localStorage.setItem("persist", persist);
+  },[persist])
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -102,9 +110,7 @@ export default function Login() {
                                 });
        
         const accessToken = response?.data?.accessToken;
-        const role = response?.data?.role;
-        setAuth({user, role, accessToken});                           
-
+        setAuth({user, accessToken});                           
        setTimeout(() => {
         setSuccess(true);
         setErrMsg("");
@@ -120,6 +126,11 @@ export default function Login() {
     }
 
   };
+
+  const togglePersist = ()=>{
+    setPersist(prev => !prev);
+  }
+
 
   return (
     <>
@@ -231,6 +242,9 @@ export default function Login() {
                 >
                   Prijavi se!
                 </Button>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox id="persis" onChange={togglePersist} checked={persist} />} label="Zapamti me!" />
+                </FormGroup>
               </Box>
             </Box>
             <Copyright sx={{ mt: 5 }} />
