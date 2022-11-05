@@ -132,7 +132,8 @@ export default function Register() {
                         email: email, 
                         pwd: pwd}), {
                           headers: {'Content-Type':'application/json'},
-                        }
+                          withCredentials: true
+                        },
                );
 
       setTimeout(() => {

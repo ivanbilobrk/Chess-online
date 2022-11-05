@@ -6,7 +6,7 @@ const verifyJWT = require('./middleware/verifyJWT');
 var cors = require('cors')
 
 
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -34,7 +34,7 @@ app.use(verifyJWT);  //every route after this line here will use verifyJWT middl
 // 7) send the GET request to the /logout route, RefreshToken will be deleted from the database
 // 8) now if you try to GET /refresh you will get 401 Unauthorized because you aren't logged in anymore
 
-app.use('/tester', require('./routes/tester.routes'));
+app.use('/user', require('./routes/user.routes'));
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});

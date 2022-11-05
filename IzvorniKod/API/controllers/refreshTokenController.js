@@ -6,12 +6,12 @@ const { StatusCodes } = require('http-status-codes');
 
 const handleRefreshToken = async (req, res) => {
     const cookies = req.cookies;
-    if (!cookies?.jwt) return res.sendStatus(StatusCodes.UNAUTHORIZED); //Unauthorized
+    if (!cookies?.jwt) return res.sendStatus(401); //Unauthorized
     const refreshToken = cookies.jwt;
 
     //find the user with given refreshtoken in the database if it doesnt exist ->forbidden 403
     const foundUser = await User.fetchByRefreshToken(refreshToken);
-    if (foundUser.id === undefined) return res.sendStatus(StatusCodes.FORBIDDEN); //Forbidden
+    if (foundUser.id === undefined) return res.sendStatus(403); //Forbidden
 
     const name = foundUser.name;
     const surName = foundUser.surname;
@@ -23,7 +23,7 @@ const handleRefreshToken = async (req, res) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
-            if (err) return res.sendStatus(StatusCodes.FORBIDDEN);
+            if (err) return res.sendStatus(403);
             const accessToken = jwt.sign(
                 { "username": decoded.userName, 
                   "role": decoded.role

@@ -34,7 +34,7 @@ const handleLogin = async (req, res) => {
             console.log(error);
         }
 
-        return res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).json({accessToken, role:"user"});
+        return res.cookie('jwt', refreshToken, { httpOnly: true,secure: true, sameSite:'None', maxAge: 24 * 60 * 60 * 1000 }).json({accessToken, role:"user"});
     } else {
         return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Kriva lozinka'});
     }

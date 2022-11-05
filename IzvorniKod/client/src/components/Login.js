@@ -98,11 +98,12 @@ export default function Login() {
                                 pwd: pwd}), 
                                 {
                                     headers: {'Content-Type':'application/json'},
+                                    withCredentials: true
                                 });
        
         const accessToken = response?.data?.accessToken;
         const role = response?.data?.role;
-        setAuth({user, pwd, role, accessToken});                           
+        setAuth({user, role, accessToken});                           
 
        setTimeout(() => {
         setSuccess(true);
