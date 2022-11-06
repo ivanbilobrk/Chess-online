@@ -1,6 +1,7 @@
 
 \documentclass{article}
 \usepackage{graphicx}
+\graphicspath{ {./slike_dok/} }
 \begin{document}
 
 \newenvironment{packed_enum}{
@@ -17,7 +18,89 @@
 		\setlength{\parsep}{0pt}
 	}{\end{itemize}}
 
-
+	\section{Opis projektnog zadatka}
+		Cilj ovog projektnog zadatka je izrada funkcionalne web aplikacije koju će koristiti članovi šahovskog kluba. Ova web aplikacija olakšala bi trenerima u šahovskom klubu organizaciju i vodenje treninga i natjecanja svojih učenika, a učenicima bi pružila platformu na kojoj bi mogli okušati svoja znanja i vještine putem dnevnih taktika. Na taj način svi korisnici mogu doraditi i unaprijediti svoja znanja i vještine u divnoj šahovskoj igri. \\ 
+		Aplikacija je dizajnirana primarno za članove šahovskog kluba, samo oni će imati pristup punoj funkcionalnosti aplikacije. No to ne sprječava sve one zainteresirane da dobiju uvid u svijet šaha putem ove aplikacije. \\
+		Prilikom pokretanja same aplikacije, korisnika se vodi na stranicu s 3 opcije:
+		\begin{itemize}
+			\item Registracija
+			\item Prijava u sustav
+			\item  Nastavi kao gost
+		\end{itemize}
+		Ukoliko korisnik želi nastaviti bez ikakve prijave ili registracije te odabere posljednju opciju, vodi ga se na početnu stranicu koja ne nudi sve opcije kao što bi u normalnom načinu rada, no ipak nudi dosta zabavnog sadržaja. Korisnik u ovom načinu rada može:
+		\begin{itemize}
+			\item Riješiti dnevnu taktiku 
+			\item Pročitati novosti i zanimljivosti 
+			\item Pregledati rang listu članova 
+		\end{itemize}
+		Novosti i zanimljivosti je rubrika koju treneri ureduju po svojoj volji. Koncipirana je kao svojevrsna lista članaka čiji sadržaj bi bile vijesti o radu i rezultatima kluba, vijesti iz svijeta šaha i šahovskih natjecanja diljem svijeta, crtice iz povijesti, analize legendarnih šahovskih partija i slično. 
+		
+		Dnevna taktika je kratka šahovska zagonetka, najčešće od 1 do 5 poteza, u kojoj je cilj naći optimalnu kombinaciju poteza u danom scenariju šahovske igre. Primjer jedne takve zagonetke možemo vidjeti na raznim šahovskim platformama kao što su lichess(link), chess.com(link) i slični. U našoj aplikaciji, dnevna taktika bilježi vrijeme rješavanja, te točnost ponudenog rješenja. Rješavanjem dnevne taktike, neregistriranog korisnika se obavijesti o ispravnosti njegova rješenja, no njegovo rješenje se nigdje ne pohranjuje, niti taj korisnik sam može biti uvršten u rang listu. Za te funkcionalnosti korisnik mora biti član, a član može postati registracijom.\\
+		
+		\includegraphics[width=\columnwidth]{ozLichessPrimjer}
+		\begin{center}
+			\textit{Slika 1.1: Primjer šahovske zagonetke}
+		\end{center}
+		
+		Registracija nudi korisnicima koji žele postati članovi šahovskog kluba mogućnost da tu želju ostvare. Odabirom te opcije korisnika se vodi na formular u kojem korisnik unosi svoje vlastite podatke. Ukoliko su svi podatci ispravno uneseni, korisnik se pohranjuje u bazu podataka te postaje punopravni član šahovskog kluba. Čestitke!
+		
+		Prijava u sustav je slična registraciji, jedina razlika je ta što njoj pristupaju postojeći članovi kluba, stoga moraju unijeti ispravne podatke koji već postoje u bazi podataka šahovskog kluba kako bi im se omogućio pristup aplikaciji. 
+		
+		Ukoliko je korisnik prijavljen u sustav te se radi o članu šahovskog kluba koji nije trener, korisnik u aplikaciji može: 
+		\begin{itemize}
+			\item Pregledati osobne podatke 
+			\item Riješiti dnevnu taktiku 
+			\item Pročitati novosti i zanimljivosti 
+			\item Pregledati rang listu članova 
+			\item Prijaviti se na treninge 
+			\item Prijaviti se na turnire
+			\item Biti dio rang liste svih članova 
+			\item Prijaviti rješenja dnevne taktike 
+			\item Platiti članarinu i pregledati svoja prijašnja plaćanja 
+		\end{itemize}
+		
+		Treća i četvrta točka prethodne liste se ne razlikuju prema funkcionalnosti od funkcionalnosti koju za iste komponente imaju neregistrirani članovi. 
+		
+		Rješavanje dnevne taktike je isto kao i kod neregistriranih korisnika, no ono što se odvija nakon samog rješavanja jest drugačije. Kod registriranih članova, rješenja se pohranjuju u bazu podataka. Na temelju toga kreira se rang lista svih članova kluba. Rang lista uzima u obzir sve riješene taktike te 3 parametra tih rješenja; točnost, brzinu i težinu same taktike. 
+		
+		Osim rješavanja dnevne taktike članovi imaju opciju prijavljivanja rješenja. Ukoliko smatraju kako rješenje nije ispravno, korisnici odabiru opciju za prijavu dnevne taktike te obavljaju proces podnošenja prijave koji se sastoji od 3 koraka: 
+		\begin{packed_enum}
+			\item Unos novih poteza za koje član smatra da su ispravni 
+			\item Tekstualni opis tih rješenja, iznošenje svojih misli iza priloženih novih rješenja 
+			\item Odabir trenera kojem se šalje zahtjev 
+		\end{packed_enum}
+		Ukoliko trener prihvati novo rješenje, ono se uzima kao ispravno te se rang liste ažuriraju prema ovim rješenjima.  
+		
+		Član se unutar naše aplikacije može prijavljivati na treninge i turnire objavljene na aplikaciju od strane trenera. Odabirom opcije za prijavu na turnir/trening, član odlazi na stranicu gdje vidi popis svih dostupnih treninga i turnira. Ukoliko nema nikakvih konflikata ili prekršenih ograničenja o maksimalnom broju dopuštenih članova u treningu/turniru, člana se prijavljuje na dani trening/turnir. 
+		
+		Odabirom opcije za pregled osobnih podataka, član na jednom mjestu vidi svoje osnovne osobne podatke koje je unio u trenutku registracije te svu svoju aktivnost na aplikaciji. 
+		
+		Svaki član mora platiti članarinu kako bi mogao i dalje biti punopravni član, a naša aplikacija nudi opciju plaćanja. Odabirom opcije za plaćanje članarine, člana se vodi na popis svih svojih računa. Ukoliko na tom popisu ima neplaćenih, člana se o tome obavijesti te odabirom pojedinog neplaćenog računa korisnik može platiti taj račun unošenjem osnovnih podataka potrebnih za plaćanje. Za člana je bitno da uredno plaća svoje račune jer je moguće da mu administrator(više o njemu kasnije) ograniči pristup aplikaciji sve dok ne plati sve neplaćene članarine.\\ 
+		
+		
+		Osim članova, u šahovskom klubu postoje i treneri. Oni su zaduženi za objavljivanje sadržaja i aktivnosti na aplikaciju koje članovi kasnije mogu koristiti. Treneri na aplikaciji mogu:
+		
+		\begin{itemize}
+			\item Pregledati osobne podatke 
+			\item Objavljivati i ažurirati dnevne taktike 
+			\item Objavljivati novosti i zanimljivosti 
+			\item Objavljivati treninge 
+			\item Organizirati i objaviti turnire 
+			\item Revidirati zaprimljene prijave o neispravnim rješenjima dnevnih taktika 
+		\end{itemize} 
+		
+		Prva točka je identična kao kod članova, iste funkcionalnosti imaju i jedni i drugi. 
+		
+		Treneri mogu objavljivati novosti i zanimljivosti na aplikaciju te postavljati nove dnevne taktike. Kod svake od navedenih rubrika u aplikaciji, za trenere će biti ponudena opcija dodavanja novog sadržaja. Primjerice, kod unosa novosti, treneru će se otvoriti prostor za unošenje teksta u kojem trener upisuje što želi. Nakon što je gotov, trener potvrdi svoju namjeru objavljivanja odabirom prikladnog gumba te se taj tekst dodaje u aplikaciju. 
+		
+		Treninge i turnire trener dodaje odabirom opcije za dodavanje novog treninga/turnira. Odabire termin početka i vrijeme trajanja te potencijalno ograničenje maksimalnog broja sudionika. Ukoliko su svi kriteriji zadovoljeni, aktivnost se dodaje u bazu podataka i prikazuje se unutar aplikacije. Ukoliko termin nije ispravan te dolazi do kolizije s nekom drugom aktivnosti, trenera se vraća na ponovni odabir ispravnog termina. 
+		
+		U prijašnjem dijelu teksta smo vidjeli kako članovi mogu prijavljivati dnevne taktike za koje misle da imaju bolja rješenja od onih koja su ponudena. Odabirom na opciju pristigle prijave, trener može pregledati imaju li kakvih prijava od članova. Ukoliko imaju, mogu pogledati cijeli tekst prijave i proučiti ponovno dnevnu taktiku. Smatraju li kako je prijava neutemeljena treneri je samo odbacuju. Na ako je prijava valjana, trener može promijeniti rješenje dnevne taktike te ju na taj način ažurirati. Tim činom se ujedno i ažuriraju rang liste.\\ 
+		
+		
+		Osim do sada navedenih korisnika aplikacije, postoji i još jedna vrsta korisnika a to je administrator. Njegove ovlasti su slične kao kod trenera, no još dodatno proširene. On može vidjeti sav sadržaj aplikacije, ali može ga i ukloniti i mijenjati po volji, bez obzira je li on autor tog sadržaja. Uz to, administrator ima opciju zabrane pristupa korisnicima. Ova akcija se može dogoditi iz proizvoljnih razloga no istaknimo jedan poseban scenarij; član uredno ne plaća svoju članarinu. Administrator može vidjeti pregled svih plaćanja svakog člana te ako utvrdi da pojedini član ima previše neplaćenih računa može mu ograničiti pristup aplikaciji. Taj član će od funkcionalnosti jedino moći vidjeti svoja plaćanja i platiti svoje neplaćene račune, i tako sve dok ne plati račune. U tom slučaju, administrator može maknuti restrikcije tom članu.
+		\eject 
+		
 	\section{Specifikacija programske potpore}
 		\subsection{Funkcionalni zahtjevi}
 		\textit{Dionici ovog sustava su predsjednik šahovskog kluba, administrator sustava, razvojni tim te članovi kluba}\\
@@ -520,6 +603,52 @@
 		
 		\eject
 		
+		\textbf{Dijagrami obrazaca uporabe}\\\\
+		\includegraphics[width=\columnwidth]{ucGraf2}
+		\begin{center}
+			\textit{Slika 3.1: Dijagram obrasca uporabe, korisnička funkcionalnost}
+		\end{center}
+		\eject
+		
+		\includegraphics[width=\columnwidth]{ucGraf3}
+		\begin{center}
+			\textit{Slika 3.2: Dijagram obrasca uporabe, funkcionalnost člana i trenera}
+		\end{center}
+		\eject
+		
+		\includegraphics[width=\columnwidth]{ucGraf1}
+		\begin{center}
+			\textit{Slika 3.3: Dijagram obrasca uporabe, funkcionalnost administratora}
+		\end{center}
+		\eject
+		
 		\subsubsection{Sekvencijski dijagrami}
+		\textbf{Obrazac uporabe UC4 - Rješavanje dnevne taktike}\\
+		Kad član pokrene rješavanje dnevne taktike, poslužitelj započinje mjeriti vrijeme, a nakon toga u bazu podataka prosljeduje izmjereno vrijeme odnosno ishod rješavanja dnevne taktike.
+		Aplikacija uz to kreira težinsku rang listu članova na temelju povijensog učinka u rješavanju taktika, izmjerenog vremena za pojedini član te težine dnevne taktike.
+		Ako član zamijeti pogrešku u dnevnoj taktici to prijavljuje unoseći nove poteze i opis novih poteza, zatim svaka prijavljena pogreška odlazi na revidiranje proizvoljno odabranom treneru. Ako se trener složi s novim rješenjem, ono se mora promijeniti na navedenoj taktici i automatski se moraju revidirati rang liste pri čemu se dodjeljuju bodovi onim članovima koji su ponudili točno rješenje, a uklanjaju onima koji su ponudili staro rješenje.
+		\eject
+		\includegraphics[width=\columnwidth]{sdRjesavanjeDnevneTaktike}
+		\begin{center}
+			\textit{Slika 3.4: Sekvencijski dijagram za UC4}
+		\end{center}
+		\eject
+		\textbf{Obrazac uporabe UC17 - Organiziranje turnira}\\
+		Trener šalje zahtjev za pregled slobodnih termina kako bi mogao odabrati termin kada će se održati turnir. Poslužitelj dohvaća slobodne termine i prikazuje ih. Nakon što trener odabere termin, provjerava se ispravnost te se sprema odabir u bazu podataka nakon čega se prikazuje poruka koja ukazuje na uspješan odabir i rezervaciju termina. Trener može opcionalno promijeniti odredene pojedinosti turnira. Ukoliko se na to odluči, trener šalje zahtjev za izmjenu pojedinosti. Poslužitelj dohvaća dosad određene pojedinosti treneru na izmjenu. Nakon što trener izmjeni željene pojedinosti, one se spremaju u bazu podataka. Na kraju se prikazuje poruka koja ukazuje na uspješnu izmjenu pojedinosti.
+		\eject
+		\includegraphics[width=\columnwidth]{sdOrganizacijaTurnira}
+		\begin{center}
+			\textit{Slika 3.5: Sekvencijski dijagram za UC17}
+		\end{center}
+		\eject
+		\textbf{Obrazac uporabe UC24 - Pregled svih plaćanja}\\
+		Administrator šalje zahtjev poslužitelju za prikaz transakcija pojedinog člana. Poslužitelj pristupa bazi podataka, dohvaća tražene transakcije i prikazuje ih. Ako transakcije ne postoje ili nisu provedene u cijelosti, administrator može članu zabraniti pristup svim funkcionalnostima aplikacije osim uplate članarine.
+		\eject
+		\includegraphics[width=\columnwidth]{sdPregledPovijestiTransakcija}
+		\begin{center}
+			\textit{Slika 3.6: Sekvencijski dijagram za UC24}
+		\end{center}
+		\eject
+		
 		
 \end{document}
