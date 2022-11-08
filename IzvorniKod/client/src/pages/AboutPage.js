@@ -2,15 +2,14 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-export default function HomePage(){
+export default function AboutPage(){
     return(
         <>
         <Header></Header>
-        <div>Ovo je home</div>
-        <Link to="/profile">Odi na svoj profil</Link>
+        <div>Ovo je about</div>
         <Footer></Footer>
         </>
     );
 };
 
-export {HomePage}
+export {AboutPage}
