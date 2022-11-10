@@ -17,7 +17,7 @@ const sql_create_users = `CREATE TABLE users (
     surname text NOT NULL,
     username text NOT NULL UNIQUE,
     email text NOT NULL UNIQUE,
-    pwdHash  NOT NULL,
+    pwdHash text NOT NULL,
     role text NOT NULL,
     refreshToken text
 )`;
