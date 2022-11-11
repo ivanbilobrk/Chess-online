@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
+import HeaderUnsigned from "../components/HeaderUnsigned";
+import HeaderSigned from "../components/HeaderSigned";
 
 export default function HomePage(){
     return(
         <>
-        <Header></Header>
         <div>Ovo je home</div>
         <Link to="/profile">Odi na svoj profil</Link>
-        <Footer></Footer>
         </>
     );
 };
