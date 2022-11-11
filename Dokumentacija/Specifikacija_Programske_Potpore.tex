@@ -1,6 +1,7 @@
 
 \documentclass{article}
 \usepackage{graphicx}
+\usepackage[table]{xcolor}
 \graphicspath{ {./slike_dok/} }
 \begin{document}
 
@@ -650,5 +651,230 @@
 		\end{center}
 		\eject
 		
+		\section{Arhitektura i dizajn sustava}
+		\subsection{Baza podataka}
+		Za potrebe naseg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olaksava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaca baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 		
+			\begin{packed_item}
+			
+			\item {Users}
+			\item  {Training} 
+			\item  {Tournament}
+			\item  {Scheduled training}
+			\item  {Scheduled tournament}
+			\item  {News}
+			\item  {Daily tactics}
+			\item  {Score}
+			\item  {Reported mistake}
+			\item  {Membership}
+		\end{packed_item} \\
+		\\
+	\large \textbf{Opis tablica}\\
+	
+	\textbf{Users} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: userID, role, name, surname, username, email i pwdHash. Ovaj entitet u vezi je \textit{One-to-Many} s entitetom Training, Tournament, scheduledTraining, scheduledTournament, News, dailyTactics, Membership, reportedMistake i Score preko jedinstvenog identifikatora korisnika.
+		
+		
+		
+\setlength{\arrayrulewidth}{0.5mm}
+\setlength{\tabcolsep}{10pt}
+\renewcommand{\arraystretch}{1.5}		
+		
+
+
+	
+	\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{Users}  \\ \hline
+   \cellcolor{green!25}userID & INT & jedinstveni identifikator korisnika\\ \hline
+    role & VARCHAR & uloga korisnika (trainer, member, admin)\\ \hline
+    same & VARCHAR & ime korisnika \\ \hline
+    surname & VARCHAR & prezime korisnika\\\hline
+   email & VARCHAR & e-mail adresa korisnika\\ \hline
+   pwdHash & INT & hash lozinke\\ \hline
+    \end{tabular}
+\end{center}
+\eject
+
+\textbf{Training} Ovaj entitet sadržava sve važne informacije o šahovskom treningu pojedinog trenera. Sadrži atribute: trainingID, trainerID, trainingStartTimeDate i trainingDurationMin. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika i \textit{One-to-Many} sa entitetom scheduledTraining.
+		\\
+
+
+
+
+
+
+  \begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{Training}  \\ \hline
+   \cellcolor{green!25}trainingID & INT & jedinstveni identifikator treninga \\ \hline  
+   \cellcolor{blue!15}trainerID & INT & jedinstveni identifikator trenera \\ \hline
+      trainingStartTimeDate  & TIMESTAMP & vrijeme početka treninga \\ \hline
+    trainingDurationMin & INT & trajanje treninga \\ \hline
+    \end{tabular}
+\end{center}    \\ 
+\bigskip
+\bigskip
+\bigskip
+
+
+\textbf{Tournament} Ovaj entitet sadržava sve važne informacije o šahovskom turniru. Sadrži atribute: tournamentID, trainerID, tournamentStartTimeDate, tournamentDurationMin i participantsNo. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika i \textit{One-to-Many} sa entitetom scheduledTournament.
+		\\
+		
+		
+		
+
+	\begin{center}
+      \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{Tournament}  \\ \hline
+    \cellcolor{green!25}tournamentID  & INT & jedinstveni identifikator turnira\\ \hline
+    \cellcolor{blue!15}trainerID & INT & identifikator trenera \\ \hline
+      tournamentStartTimeDate  &  TIMESTAMP  & vrijeme početka turnira \\ \hline
+    tournamentDurationMin & INT & trajanje turnira\\\hline
+    participantsNo   & INT & broj natjecatelja\\ \hline
+    \end{tabular}
+\end{center}
+	\eject
+	
+	
+	
+	
+	
+	\textbf{scheduledTournament} Pomoću ovog entiteta zapisujemo koji član je prijavljen na koji turnir. Sadrži atribute: memberID i tournamentID. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Tournament preko jedinstvenog identifikatora turnira i \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika.
+		\\
+		\bigskip
+	
+	
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{scheduledTournament}  \\ \hline
+   \cellcolor{green!25}memberID & INT & jedinstveni identifikator člana \\ \hline
+    \cellcolor{green!25}tournamentID & INT & jedinstveni identifikator turnira \\ \hline
+    \end{tabular}
+\end{center}
+\bigskip
+\bigskip
+
+
+\textbf{scheduledTraining} Pomoću ovog entiteta zapisujemo koji član je prijavljen na koje treninge. Sadrži atribute: memberID i trainingID. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Training preko jedinstvenog identifikatora treninga i \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika.
+		\\
+
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{scheduledTraining}  \\ \hline
+   \cellcolor{green!25}memberID & INT & jedinstveni identifikator člana \\ \hline
+    \cellcolor{green!25}tournamentID & INT & jedinstveni identifikator trninga \\ \hline 
+    \end{tabular}
+\end{center}
+\bigskip
+\bigskip
+
+
+\textbf{News} Ovaj entitet sadržava sve važne informacije o objavljenoj novosti. Sadrži atribute: newsID, trainerID i content. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika.
+		\\
+
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{News}  \\ \hline
+   \cellcolor{green!25}newsID & INT & jedinstveni identifikator novosti \\ \hline
+    \cellcolor{blue!15}trainerID & INT & jedinstveni identifikator trenera \\ \hline
+    content & VARCHAR & sadržaj novosti \\ \hline 
+    \end{tabular}
+\end{center}
+
+
+
+
+
+\textbf{dailyTactics} Ovaj entitet sadržava sve važne informacije o dnevnoj taktici. Sadrži atribute: tacticID, trainerID, content i solution. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika, \textit{One-to-Many} sa entitetima reportedMistake i Score.
+		\\
+
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{dailyTactics}  \\ \hline
+   \cellcolor{green!25}tacticID & INT & jedinstveni identifikator dnevne taktike \\ \hline
+    \cellcolor{blue!15}trainerID & INT & jedinstveni identifikator trenera \\ \hline
+   content & VARCHAR & opis dnevnog zadatka \\ \hline 
+    solution & VARCHAR & opis rješenja \\ \hline 
+    \end{tabular}
+\end{center}
+\bigskip
+\bigskip
+
+
+
+\textbf{Score} Pomoću ovog entiteta zapisujemo uspjeh rješavanja dnevne taktike. Sadrži atribute: memberID, tacticID, solvingTime i accuracy. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika i \textit{Many-to-One} sa entitetom dailyTactics preko jedinstvenog identifikatora dnevne taktike.
+		\\
+
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{Score}  \\ \hline
+   \cellcolor{green!25}memberID & INT & jedinstveni identifikator člana \\ \hline
+    \cellcolor{blue!15}tacticID & INT & jedinstveni identifikator dnevne taktike \\ \hline
+    solvingTime & TIME & vrijeme rješavanja\\ \hline 
+    accuracy & FLOAT & točnost rješenja\\ \hline
+    \end{tabular}
+\end{center}
+\eject
+
+
+
+\textbf{reportedMistake} Pomoću ovog entiteta zapisujemo prijavljenu pogrešku dnevne taktike. Sadrži atribute: memberID, tacticID, trainerID, preposedMove, moveDescription i isFixed. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika i \textit{Many-to-One} sa entitetom dailyTactics preko jedinstvenog identifikatora dnevne taktike.
+		\\
+		
+
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{reportedMistake}  \\ \hline
+   \cellcolor{green!25}memberID & INT & jedinstveni identifikator člana \\ \hline
+    \cellcolor{green!25}tacticID & INT & jedinstveni identifikator dnevne taktike \\ \hline
+     \cellcolor{blue!15}trainerID & INT & jedinstveni identifikator trenera \\ \hline
+    preposedMove & VARCHAR & predloženo rješenje \\ \hline 
+     moveDescription & VARCHAR & opis predloženog rješenja \\ \hline
+     isFixed & BOOLEAN & oznaka je li greška rješena\\ \hline
+    \end{tabular}
+\end{center}
+\bigskip
+\bigskip
+
+
+
+\textbf{Membership} Pomoću ovog entiteta zapisujemo plaćanje članarine članova. Sadrži atribute: memberID, periodStart, periodEnd i isPaid. Ovaj entitet u vezi je \textit{Many-to-One} sa entitetom Users preko jedinstvenog identifikatora korisnika.
+		\\
+
+
+
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{5cm} |}
+    \hline
+    \multicolumn{3}{|c|}{Membership}  \\ \hline
+   \cellcolor{green!25}memberID & INT & jedinstveni identifikator člana \\ \hline
+    periodStart & INT & početak peroda za koji se plaća članarina \\ \hline
+    periodEnd & INT & kraj peroda za koji se plaća članarina \\ \hline
+      isPaid & BOOLEAN & oznaka je li članarina plaćena\\ \hline
+      
+    \end{tabular}
+\end{center}
+
+
+
+
 \end{document}
