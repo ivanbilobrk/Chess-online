@@ -1,15 +1,16 @@
 import { useRef, useState, useEffect } from "react";
 import {Register} from '../components/Register'
-<<<<<<< HEAD
-=======
 import './register.css';
->>>>>>> feature_A
+import HeaderUnsigned from '../components/HeaderSigned'
 
 export default function RegisterPage(){
 
 
     return(
+        <>
+        <HeaderUnsigned/>
         <Register/>
+        </>
     );
 
 }

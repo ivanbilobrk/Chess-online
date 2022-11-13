@@ -7,6 +7,7 @@ import AboutText from "../components/AboutText";
 export default function AboutPage(){
     return(
         <>
+        <HeaderSigned/>
         <h1>O projektu</h1>
         <AboutText></AboutText>
         <AboutTable></AboutTable>

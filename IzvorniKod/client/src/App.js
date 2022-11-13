@@ -9,7 +9,6 @@ import { AboutPage } from "./pages/AboutPage";
 import {AuthProvider} from './context/AuthProvider';
 import {ProfilePage} from './pages/ProfilePage'
 import RequireAuth from "./components/RequireAuth";
-import ReactDOM from "react";
 import Layout from './components/Layout';
 import Unauthorized from "./pages/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
@@ -32,6 +31,9 @@ function App() {
               <Route path ="profile" element ={<ProfilePage/>}></Route>
             </Route>
           </Route>
+
+
+          
 
           </Route>
 
