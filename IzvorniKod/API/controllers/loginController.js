@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
 const { StatusCodes } = require('http-status-codes');
-//require('dotenv').config();
+require('dotenv').config();
 
 const handleLogin = async (req, res) => {
     const{name, surName, userName, email, pwd} = req.body;
