@@ -1,5 +1,6 @@
 import {Login} from '../components/Login'
 import HeaderSigned from '../components/HeaderSigned'
+import Footer from '../components/Footer';
 
 export default function LoginPage(){
 
@@ -8,6 +9,7 @@ export default function LoginPage(){
         <>
         <HeaderSigned/>
         <Login/>
+        <Footer/>
         </>
     );
 

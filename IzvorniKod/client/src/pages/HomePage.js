@@ -1,5 +1,6 @@
 import HeaderSigned from "../components/HeaderSigned";
 import Home from "../components/Home";
+import Footer from '../components/Footer';
 
 export default function HomePage(){
 
@@ -8,6 +9,7 @@ export default function HomePage(){
         <>
         <HeaderSigned/>
         <Home/>
+        <Footer/>
         </>
     );
 
