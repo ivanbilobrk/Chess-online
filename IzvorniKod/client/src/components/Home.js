@@ -38,15 +38,19 @@ export default function Home(){
                     <input type="button" className="registerButton" value="Dokaži suprotno!" onClick={handleClick}></input>
                 </div>
             </div>
-
+           
             <div className="tekst">
                 <h4 className="paragraf">Aktivnosti u klubu</h4>
                 <h6>Ako postaneš član šahovskog kluba AmostByte imat ćeš mogućnost razvijati svoje šahovske vještine uz naše profesionalne trenere u sklopu grupnih ili pak individualnih treninga. 
 Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, a za sve naše članove i one koji se jos premišljaju tu su i izazovne dnevne taktike koje samo čekaju biti riješene!</h6>
 
-
+<br></br>
+<h4 className="paragraf">Novosti</h4>
+                <h6>Trenutno nema novih novosti.</h6>
+<br></br>
+<h4 className="paragraf">Kalendar</h4>
                 <div className="app">
-                     <h4 className="text-center">Kalendar</h4>
+                     <br></br>
                     <div className="calendar-container">
                         <Calendar onChange={setDate} value={date} className={"kalendar"} />
                     </div>
@@ -55,13 +59,13 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
                     </p>
                 </div>
 
+             <a className="profil" >   <Link to="/profile">Odi na svoj profil</Link> </a>
 
-
-    
+            
             </div>
-
+           
         </div>
-        <Link to="/profile">Odi na svoj profil</Link>
+       
         </>
     );
 };
