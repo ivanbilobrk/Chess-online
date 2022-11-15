@@ -2,6 +2,7 @@ import { color } from "@mui/system";
 import { Link, Navigate } from "react-router-dom";
 import './home.css';
 import { useNavigate } from "react-router-dom";
+import Footer from './Footer';
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -58,14 +59,11 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
                     <h6><span className="bold">Odabrani datum:</span> {date.toDateString()}</h6>
                     </p>
                 </div>
-
              <a className="profil" >   <Link to="/profile">Odi na svoj profil</Link> </a>
-
+             <Footer/>
             
             </div>
-           
         </div>
-       
         </>
     );
 };
