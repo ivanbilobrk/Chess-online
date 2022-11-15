@@ -49,6 +49,7 @@
 .paragraf {
   margin: 0px;
   padding: 30px;
+  background-color: #1565c0;
 }
 .text-4xl:hover {
   color: white;
@@ -56,16 +57,33 @@
 
 .tekst {
   height: 1000px;
-  background-color: black;
+  background-color:  #2d75c7;
+/* background-color: black; */
   font-size: 36px;
   color: white;
 }
 
 /*iz kalendar css*/
+.app{
+  background-color: #2d75c7;
+display: grid;
+justify-content: center;
+
+}
+.profil{
+  background-color: black;
+  display: grid;
+  justify-content: center;
+  text-decoration: white;
+}
 
 .calendar-container .kalendar {
   width: 550px;
-  margin-left: 470px;
+  align-items: center;
+}
+
+a{
+  color: white;
 }
 
 .calendar-container .react-calendar {
@@ -77,17 +95,21 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
+  align-items: center;
 }
 .react-calendar--doubleView {
   width: 700px;
+  align-items: center;
 }
 .react-calendar--doubleView .react-calendar__viewContainer {
   display: flex;
-  margin: -0.5em;
+  /*margin: -0.5em;*/
+  align-items: center;
 }
 .react-calendar--doubleView .react-calendar__viewContainer > * {
   width: 50%;
-  margin: 0.5em;
+ /* margin: 0.5em;*/
+ align-items: center;
 }
 .react-calendar,
 .react-calendar *,
