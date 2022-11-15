@@ -12,6 +12,7 @@ import RequireAuth from "./components/RequireAuth";
 import Layout from './components/Layout';
 import Unauthorized from "./pages/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
+import BlockAuth from './components/BlockAuth';
 
 function App() {
   return (
@@ -21,9 +22,13 @@ function App() {
           <Route path ="/" element={<Layout/>}>
 
             <Route path="/" element = {<HomePage/>}></Route>
+
+          <Route element={<BlockAuth/>}>
             <Route path="register" element = {<RegisterPage/>}></Route>
-            <Route path="about" element = {<AboutPage/>}></Route>
             <Route path="login" element = {<LoginPage/>}></Route>
+            </Route>
+            <Route path="about" element = {<AboutPage/>}></Route>
+           
             <Route path="unauthorized" element={<Unauthorized />} />
 
           <Route element={<PersistLogin />}>

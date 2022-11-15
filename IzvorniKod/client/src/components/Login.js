@@ -179,7 +179,7 @@ export default function Login() {
                       required
                       fullWidth
                       id="userNameEmail"
-                      label="Unesite svoj username ili email"
+                      label="Unesite svoj username"
                       name="userNameEmail"
                       onChange={(e) => {
                         setUser(e.target.value);
@@ -242,9 +242,21 @@ export default function Login() {
                 >
                   Prijavi se!
                 </Button>
-                <FormGroup>
+                <Grid container justifyContent="space-between">
+                  <Grid item >
+                  <FormGroup>
                   <FormControlLabel control={<Checkbox id="persis" onChange={togglePersist} checked={persist} />} label="Zapamti me!" />
                 </FormGroup>
+                  </Grid>
+              
+
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      Nemaš profil? Registriraj se!
+                    </Link>
+                  </Grid>
+                </Grid>
+               
               </Box>
             </Box>
             <Copyright sx={{ mt: 5 }} />
