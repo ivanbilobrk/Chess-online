@@ -11,7 +11,6 @@ export default function RegisterPage(){
         <>
         <HeaderUnsigned/>
         <Register/>
-        <Footer/>
         </>
     );
 
