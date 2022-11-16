@@ -12,6 +12,7 @@ const pool = new Pool({
 
 
 
+
 const sql_create_users = `CREATE TABLE users (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
     name text NOT NULL,
@@ -47,16 +48,16 @@ const sql_create_tournament =`CREATE TABLE tournament(
 const sql_create_tournament_id_index =`CREATE  UNIQUE INDEX idx_tournamentId ON tournament(id)`;
 
 const sql_create_scheduledTournament =`CREATE TABLE scheduledTournament(
-user_id int REFERENCES users(id),
+member_id int REFERENCES users(id),
 tournament_id int REFERENCES tournament(id),
-PRIMARY KEY (user_id, tournament_id)
+PRIMARY KEY (member_id, tournament_id)
 
 )`;
 
 const sql_create_scheduledTraining =`CREATE TABLE scheduledTraining(
-	user_id int REFERENCES users(id),
+	member_id int REFERENCES users(id),
     training_id int REFERENCES training(id),
-    PRIMARY KEY(user_id, training_id)
+    PRIMARY KEY(member_id, training_id)
 
 
 )`;
@@ -82,33 +83,33 @@ const sql_create_dailyTactics_id_index =`CREATE  UNIQUE INDEX idx_dailyTacticsId
 
 
 const sql_create_membership =`CREATE TABLE membership(
-  user_id int REFERENCES users(id),
+  member_id int REFERENCES users(id),
   periodStart int NOT NULL,
   periodEnd int NOT NULL,
   isPaid boolean NOT NULL,
-  PRIMARY KEY(user_id)
+  PRIMARY KEY(member_id)
 )`;
 
 
 const sql_create_reportedMistake =`CREATE TABLE reportedMistake(
-	user_id int REFERENCES users(id),
+	member_id int REFERENCES users(id),
 	tactic_id int REFERENCES dailyTactics(id),
 	trainer_id int REFERENCES users(id),
 	preposedMove text NOT NULL,
 	moveDescription text NOT NULL,
 	isFixed boolean NOT NULL,
-	PRIMARY KEY(user_id, tactic_id)
+	PRIMARY KEY(member_id, tactic_id)
 
 )`;
 
 
 
 const sql_create_score = `CREATE TABLE score(
-	user_id int REFERENCES users(id),
+	member_id int REFERENCES users(id),
 	tactic_id int REFERENCES dailyTactics(id),
 	solvingTime time NOT NULL,
 	accuracy float NOT NULL,
-	PRIMARY KEY(user_id, tactic_id)
+	PRIMARY KEY(member_id, tactic_id)
 	
 )`;
 
