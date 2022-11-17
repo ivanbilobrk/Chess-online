@@ -1,8 +1,54 @@
 
 \documentclass{article}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{mathdots}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{lastpage}
+\usepackage{etoolbox}
+\usepackage{tabularray}
+\usepackage{color, colortbl}
+\usepackage{adjustbox}
+\usepackage{geometry}
+\usepackage[classicReIm]{kpfonts}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+\usepackage{float}
+\usepackage{setspace}
+\restylefloat{table}
 \usepackage{graphicx}
 \usepackage[table]{xcolor}
-\graphicspath{ {./slike_dok/} }
+\graphicspath{ {./slike/} }
+
+
+\linespread{1.3} %razmak između redaka
+
+\geometry{a4paper, left=1in, top=1in,}  %oblik stranice
+
+\hypersetup{ colorlinks, citecolor=black, filecolor=black, linkcolor=black,	urlcolor=black }   %izgled poveznice
+
+%Promjena teksta za dugačke tablice
+\DefTblrTemplate{contfoot-text}{normal}{Nastavljeno na idućoj stranici}
+\SetTblrTemplate{contfoot-text}{normal}
+\DefTblrTemplate{conthead-text}{normal}{(Nastavljeno)}
+\SetTblrTemplate{conthead-text}{normal}
+\DefTblrTemplate{middlehead,lasthead}{normal}{Nastavljeno od prethodne stranice}
+\SetTblrTemplate{middlehead,lasthead}{normal}
+
+%podesavanje zaglavlja i podnožja
+
+\pagestyle{fancy}
+\lhead{Programsko inženjerstvo}
+\rhead{Šahisti}
+\lfoot{AlmostByte}
+\cfoot{\thepage}
+\rfoot{\today}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.2pt}
 \begin{document}
 
 \newenvironment{packed_enum}{
@@ -18,7 +64,63 @@
 		\setlength{\parskip}{0pt}
 		\setlength{\parsep}{0pt}
 	}{\end{itemize}}
+	
+		\begin{titlepage}
+		\begin{center}
+			\vspace*{\stretch{1.0}} %u kombinaciji s ostalim \vspace naredbama definira razmak između redaka teksta
+			\LARGE Programsko inženjerstvo\\
+			\large Ak. god. 2022./2023.\\
+			
+			\vspace*{\stretch{3.0}}
+			
+			\huge Šahisti\\
+			\Large Dokumentacija, Rev. \textit{1}\\
+			
+			\vspace*{\stretch{12.0}}
+			\normalsize
+			Grupa: \textit{AlmostByte}\\
+			Voditelj: \textit{Ivan Bilobrk}\\
+			
+			
+			\vspace*{\stretch{1.0}}
+			Datum predaje: \textit{18. 11. 2022.}\\
+			
+			\vspace*{\stretch{4.0}}
+			
+			Nastavnik: \textit{$<$Ime i prezime nastavnika zaduženog za vašu grupu$>$}\\
+			
+		\end{center}
+		
+		
+	\end{titlepage}
 
+	\tableofcontents
+	\eject
+		
+	\section{Dnevnik promjena dokumentacije}	
+		\begin{longtblr}[
+		label=none
+		]{
+			width = \textwidth, 
+			colspec={|X[2]|X[13]|X[3]|X[3]|}, 
+			rowhead = 1
+		}
+		\hline
+		\textbf{Rev.}	& \textbf{Opis promjene/dodatka} & \textbf{Autori} & \textbf{Datum}\\[3pt] \hline
+		0.1 & Preuzet predložak i izrađena gruba kopija predloška dokumentacije.	& Anteo Vukasović & 15.10.2022. 		\\[3pt] \hline 
+		0.2	& Napisan i dodan opis use caseova.& Anteo Vukasović & 29.10.2022.	\\[3pt] \hline 
+		0.3 & Napisani i dodani funkcionalni zahtjevi.  & Anteo Vukasović & 03.11.2022. \\[3pt] \hline 
+		0.4 & Dodani use case dijagrami. & Mijo Rajič & 05.11.2022. \\[3pt] \hline 
+		0.5 & Napisan i dodan opis projektnog zadatka. & Anteo Vukasović & 06.11.2022. \\[3pt] \hline 
+		0.6 & Dodani sekvencijski dijagrami te njihovi opisi. & Altea Božić, Tina Jureško i Lara \newline Mahalec & 09.11.2022. \\[3pt] \hline 
+		0.7 & Napisan i dodan opis baze podataka. &  Lara \newline Mahalec & 11.11.2022. \\[3pt] \hline
+		0.8 & Napisan i dodan opis arhitekture sustava. & Anteo Vukasović & 17.11.2022. \\[3pt] \hline
+		0.10 & Kompletirana tablica promjena dokumentacije za prvi ciklus. & Anteo Vukasović & 18.11.2022. \\[3pt] \hline  
+		\textbf{1.0} & Verzija samo s bitnim dijelovima za 1. ciklus & \textit{verificirao \newline cijeli tim} & 18.11.2022. \\[3pt] \hline 
+	\end{longtblr}
+
+	\eject
+	
 	\section{Opis projektnog zadatka}
 		Cilj ovog projektnog zadatka je izrada funkcionalne web aplikacije koju će koristiti članovi šahovskog kluba. Ova web aplikacija olakšala bi trenerima u šahovskom klubu organizaciju i vodenje treninga i natjecanja svojih učenika, a učenicima bi pružila platformu na kojoj bi mogli okušati svoja znanja i vještine putem dnevnih taktika. Na taj način svi korisnici mogu doraditi i unaprijediti svoja znanja i vještine u divnoj šahovskoj igri. \\ 
 		Aplikacija je dizajnirana primarno za članove šahovskog kluba, samo oni će imati pristup punoj funkcionalnosti aplikacije. No to ne sprječava sve one zainteresirane da dobiju uvid u svijet šaha putem ove aplikacije. \\
@@ -38,9 +140,9 @@
 		
 		Dnevna taktika je kratka šahovska zagonetka, najčešće od 1 do 5 poteza, u kojoj je cilj naći optimalnu kombinaciju poteza u danom scenariju šahovske igre. Primjer jedne takve zagonetke možemo vidjeti na raznim šahovskim platformama kao što su lichess(link), chess.com(link) i slični. U našoj aplikaciji, dnevna taktika bilježi vrijeme rješavanja, te točnost ponudenog rješenja. Rješavanjem dnevne taktike, neregistriranog korisnika se obavijesti o ispravnosti njegova rješenja, no njegovo rješenje se nigdje ne pohranjuje, niti taj korisnik sam može biti uvršten u rang listu. Za te funkcionalnosti korisnik mora biti član, a član može postati registracijom.\\
 		
-		\includegraphics[width=\columnwidth]{ozLichessPrimjer}
+		\includegraphics[width=\columnwidth]{lichess_primjer}
 		\begin{center}
-			\textit{Slika 1.1: Primjer šahovske zagonetke}
+			\textit{Slika 2.1: Primjer šahovske zagonetke}
 		\end{center}
 		
 		Registracija nudi korisnicima koji žele postati članovi šahovskog kluba mogućnost da tu želju ostvare. Odabirom te opcije korisnika se vodi na formular u kojem korisnik unosi svoje vlastite podatke. Ukoliko su svi podatci ispravno uneseni, korisnik se pohranjuje u bazu podataka te postaje punopravni član šahovskog kluba. Čestitke!
@@ -605,19 +707,19 @@
 		\eject
 		
 		\textbf{Dijagrami obrazaca uporabe}\\\\
-		\includegraphics[width=\columnwidth]{ucGraf2}
+		\includegraphics[width=\columnwidth]{korisnik_uc_dijagram}
 		\begin{center}
 			\textit{Slika 3.1: Dijagram obrasca uporabe, korisnička funkcionalnost}
 		\end{center}
 		\eject
 		
-		\includegraphics[width=\columnwidth]{ucGraf3}
+		\includegraphics[width=\columnwidth]{clanovi_i_treneri_uc_dijagram}
 		\begin{center}
 			\textit{Slika 3.2: Dijagram obrasca uporabe, funkcionalnost člana i trenera}
 		\end{center}
 		\eject
 		
-		\includegraphics[width=\columnwidth]{ucGraf1}
+		\includegraphics[width=\columnwidth]{administrator_uc_dijagram}
 		\begin{center}
 			\textit{Slika 3.3: Dijagram obrasca uporabe, funkcionalnost administratora}
 		\end{center}
@@ -629,15 +731,15 @@
 		Aplikacija uz to kreira težinsku rang listu članova na temelju povijensog učinka u rješavanju taktika, izmjerenog vremena za pojedini član te težine dnevne taktike.
 		Ako član zamijeti pogrešku u dnevnoj taktici to prijavljuje unoseći nove poteze i opis novih poteza, zatim svaka prijavljena pogreška odlazi na revidiranje proizvoljno odabranom treneru. Ako se trener složi s novim rješenjem, ono se mora promijeniti na navedenoj taktici i automatski se moraju revidirati rang liste pri čemu se dodjeljuju bodovi onim članovima koji su ponudili točno rješenje, a uklanjaju onima koji su ponudili staro rješenje.
 		\eject
-		\includegraphics[width=\columnwidth]{sdRjesavanjeDnevneTaktike}
+		\includegraphics[width=\columnwidth]{rjesavanje_dnevnih_taktika}
 		\begin{center}
 			\textit{Slika 3.4: Sekvencijski dijagram za UC4}
 		\end{center}
 		\eject
 		\textbf{Obrazac uporabe UC17 - Organiziranje turnira}\\
-		Trener šalje zahtjev za pregled slobodnih termina kako bi mogao odabrati termin kada će se održati turnir. Poslužitelj dohvaća slobodne termine i prikazuje ih. Nakon što trener odabere termin, provjerava se ispravnost te se sprema odabir u bazu podataka nakon čega se prikazuje poruka koja ukazuje na uspješan odabir i rezervaciju termina. Trener može opcionalno promijeniti odredene pojedinosti turnira. Ukoliko se na to odluči, trener šalje zahtjev za izmjenu pojedinosti. Poslužitelj dohvaća dosad određene pojedinosti treneru na izmjenu. Nakon što trener izmjeni željene pojedinosti, one se spremaju u bazu podataka. Na kraju se prikazuje poruka koja ukazuje na uspješnu izmjenu pojedinosti.
+		Trener šalje zahtjev za pregled slobodnih termina kako bi mogao odabrati termin kada će se održati turnir. Poslužitelj dohvaća slobodne termine i prikazuje ih. Nakon što trener odabere termin, provjerava se ispravnost te se sprema odabir u bazu podataka nakon čega se prikazuje poruka koja ukazuje na uspješan odabir i rezervaciju termina. Trener može opcionalno promijeniti određene pojedinosti turnira. Ukoliko se na to odluči, trener šalje zahtjev za izmjenu pojedinosti. Poslužitelj dohvaća dosad određene pojedinosti treneru na izmjenu. Nakon što trener izmjeni željene pojedinosti, one se spremaju u bazu podataka. Na kraju se prikazuje poruka koja ukazuje na uspješnu izmjenu pojedinosti.
 		\eject
-		\includegraphics[width=\columnwidth]{sdOrganizacijaTurnira}
+		\includegraphics[width=\columnwidth]{prijava_za_treninge}
 		\begin{center}
 			\textit{Slika 3.5: Sekvencijski dijagram za UC17}
 		\end{center}
@@ -645,15 +747,47 @@
 		\textbf{Obrazac uporabe UC24 - Pregled svih plaćanja}\\
 		Administrator šalje zahtjev poslužitelju za prikaz transakcija pojedinog člana. Poslužitelj pristupa bazi podataka, dohvaća tražene transakcije i prikazuje ih. Ako transakcije ne postoje ili nisu provedene u cijelosti, administrator može članu zabraniti pristup svim funkcionalnostima aplikacije osim uplate članarine.
 		\eject
-		\includegraphics[width=\columnwidth]{sdPregledPovijestiTransakcija}
+		\includegraphics[width=\columnwidth]{uplata_clanarine}
 		\begin{center}
 			\textit{Slika 3.6: Sekvencijski dijagram za UC24}
 		\end{center}
 		\eject
+		\subsection{Ostali zahtjevi}
+		\begin{packed_enum}
+			\item Sustav mora omogućiti paralelno korištenje aplikacije više korisnika u isto vrijeme bez ikakvih međusobnih interferencija
+			\item Aplikacija mora biti maksimalno responzivna, korisnik ne smije puno čekati na odgovor ili prikaz sadržaja od strane sustava
+			\item Sustav treba biti intuitivan i jednostavan za korištenje
+			\item Neispravno korištenje ne smije rezultirati narušavanjem funkcionalnosti
+			\item Korisnik treba biti spriječen pristupu određenih dijelova aplikacije ukoliko nije ovlašten
+			\item Valute unutar sustava prikazane su u Eurima
+			\item Nadogradnje sustava ne smiju narušavati postojeće funkcionalnosti sustava
+			\item Pristup aplikaciji mora biti omogućen iz javne mreže
+			\item Ukoliko je korisniku zabranjen pristup odlukom administratora, ne smije imati nikakve mogućnosti korištenja i treba biti obaviješten o tome, a ukoliko je zabranjen pristup zbog neplaćenih računa, treba mu biti sve ograničeno osim plaćanja računa
+			\eject
+		\end{packed_enum}
 		
 		\section{Arhitektura i dizajn sustava}
+		\subsection{Opis arhitekture sustava}
+		Arhitektura sustava može se podijeliti na 3 dijela:
+		\begin{packed_enum}
+			\item Prikaz web aplikacije korisniku (front-end)
+			\item Web poslužitelj (back-end)
+			\item Baza podataka
+		\end{packed_enum}
+	
+		Našem proizvodu pristupa se putem web preglednika. Putem web preglednika, naša web aplikacija napisana u svojim programskim jezicima se prevodi u oblik koji je korisniku jasniji i prirodniji. To korisniku omogućuje korištenje svih funkcionalnosti naše aplikacije.\\
+		Web poslužitelj temelj je rada naše aplikacije. On prima zahtjeve poslane od strane korisnika te vraća informacije koje je korisnik zatražio. Također, poslužitelj ima pristup bazi podataka u kojoj su pohranjeni svi podaci relevantni za rad naše aplikacije. Više o bazi podataka možete pročitati u poglavlju 4.2 (Baza podataka). Komunikacija između korisnika i poslužitelja odvija se pomoću HTTP protokola.\\
+		Web aplikacija je korisniku prikazana na način da mu se omogući što lakši rad i interakcija s mogućnostima same aplikacije. Odabirom jedne od ponuđenih opcija na stranici, web preglednik šalje zahtjeve za potrebnim podatcima i/ili resursima s web poslužitelja/baze podataka na što mu poslužitelj odgovara. Ukoliko nije došlo do nikakvih nepredviđenih poteškoća, korisniku se prikazuje zatraženi sadržaj.
+		Front-end naše aplikacije razvijen je u JavaScriptu ili točnije Reactu, open-source JavaScript biblioteci koja se koristi za jednostavnije kreiranje korisničkih sučelja. Kao dodatnu pomoć u nekim dijelovima korišten je i CSS.
+		Back-end naše aplikacije razvijen je u JavaScriptu.
+		Baza podataka razvijena je u pgAdmin 4, GUI-u razvijen za upravljanje i korištenje PostgreSQL sustavom upravljanja bazi podataka. 
+		Razvojno okruženje korišteno za razvoj back-end i front-end dijela aplikacije je Visual Studio Code.
+		Arhitektura sustava modelirana je prema MVC konceptu. Taj koncept se sastoji od 3 dijela; modela koji kontrolira radom i pravilima aplikacije, prima podatke od controllera te upravlja podacima, viewa koji predstavlja bilo kakav grafički ili drugi prikaz podataka te controllera, komponente koja prima zahtjeve korisnika i prosljeđuje ih drugim dijelovima sustava.
+		Osim do sada navedenih značajki, naš sustav koristi JWT tehnologiju prenošenja podataka u obliku JSON objekata. JWT je skraćeno od JSON Web Token, a u našoj aplikaciji se koriste 2 vrste tokena, access token i refresh token. Access token služi za pristup resursima, a vremenski je ograničen. Refresh token ima dulje vrijeme trajanja od access tokena te služi za pridruživanje novog access tokena korisniku nakon isteka prijašnjeg access tokena. Na taj način korisnik se ne mora ponovno prijavljivati u sustav, no nakon eventualnog refresh tokena, korisnik će ipak morati obaviti ponovnu prijavu u sustav. 
+		
+		\eject
 		\subsection{Baza podataka}
-		Za potrebe naseg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olaksava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaca baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
+		Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
 		
 			\begin{packed_item}
 			
@@ -667,8 +801,8 @@
 			\item  {Score}
 			\item  {Reported mistake}
 			\item  {Membership}
-		\end{packed_item} \\
-		\\
+		\end{packed_item} 
+		
 	\large \textbf{Opis tablica}\\
 	
 	\textbf{Users} Ovaj entitet sadržava sve važne informacije o korisniku aplikacije. Sadrži atribute: userID, role, name, surname, username, email i pwdHash. Ovaj entitet u vezi je \textit{One-to-Many} s entitetom Training, Tournament, scheduledTraining, scheduledTournament, News, dailyTactics, Membership, reportedMistake i Score preko jedinstvenog identifikatora korisnika.
@@ -713,7 +847,7 @@
       trainingStartTimeDate  & TIMESTAMP & vrijeme početka treninga \\ \hline
     trainingDurationMin & INT & trajanje treninga \\ \hline
     \end{tabular}
-\end{center}    \\ 
+\end{center}    
 \bigskip
 \bigskip
 \bigskip
