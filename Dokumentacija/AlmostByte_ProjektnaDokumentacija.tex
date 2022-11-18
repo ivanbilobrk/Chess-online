@@ -1,6 +1,7 @@
 
 \documentclass{article}
 
+\usepackage[croatian]{babel}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{txfonts}
@@ -87,7 +88,7 @@
 			
 			\vspace*{\stretch{4.0}}
 			
-			Nastavnik: \textit{$<$Ime i prezime nastavnika zaduženog za vašu grupu$>$}\\
+			Nastavnik: \textit{Igor Stančin}\\
 			
 		\end{center}
 		
@@ -123,7 +124,7 @@
 	
 	\section{Opis projektnog zadatka}
 		Cilj ovog projektnog zadatka je izrada funkcionalne web aplikacije koju će koristiti članovi šahovskog kluba. Ova web aplikacija olakšala bi trenerima u šahovskom klubu organizaciju i vodenje treninga i natjecanja svojih učenika, a učenicima bi pružila platformu na kojoj bi mogli okušati svoja znanja i vještine putem dnevnih taktika. Na taj način svi korisnici mogu doraditi i unaprijediti svoja znanja i vještine u divnoj šahovskoj igri. \\ 
-		Aplikacija je dizajnirana primarno za članove šahovskog kluba, samo oni će imati pristup punoj funkcionalnosti aplikacije. No to ne sprječava sve one zainteresirane da dobiju uvid u svijet šaha putem ove aplikacije. \\
+		Aplikacija je dizajnirana primarno za članove šahovskog kluba te će samo oni imati pristup punoj funkcionalnosti aplikacije. No to ne sprječava sve one zainteresirane da dobiju uvid u svijet šaha putem ove aplikacije. \\
 		Prilikom pokretanja same aplikacije, korisnika se vodi na stranicu s 3 opcije:
 		\begin{itemize}
 			\item Registracija
@@ -138,7 +139,7 @@
 		\end{itemize}
 		Novosti i zanimljivosti je rubrika koju treneri ureduju po svojoj volji. Koncipirana je kao svojevrsna lista članaka čiji sadržaj bi bile vijesti o radu i rezultatima kluba, vijesti iz svijeta šaha i šahovskih natjecanja diljem svijeta, crtice iz povijesti, analize legendarnih šahovskih partija i slično. 
 		
-		Dnevna taktika je kratka šahovska zagonetka, najčešće od 1 do 5 poteza, u kojoj je cilj naći optimalnu kombinaciju poteza u danom scenariju šahovske igre. Primjer jedne takve zagonetke možemo vidjeti na raznim šahovskim platformama kao što su lichess(link), chess.com(link) i slični. U našoj aplikaciji, dnevna taktika bilježi vrijeme rješavanja, te točnost ponudenog rješenja. Rješavanjem dnevne taktike, neregistriranog korisnika se obavijesti o ispravnosti njegova rješenja, no njegovo rješenje se nigdje ne pohranjuje, niti taj korisnik sam može biti uvršten u rang listu. Za te funkcionalnosti korisnik mora biti član, a član može postati registracijom.\\
+		Dnevna taktika je kratka šahovska zagonetka, najčešće od 1 do 5 poteza, u kojoj je cilj naći optimalnu kombinaciju poteza u danom scenariju šahovske igre. Primjer jedne takve zagonetke možemo vidjeti na raznim šahovskim platformama kao što su lichess(link), chess.com(link) i slični. U našoj aplikaciji, dnevna taktika bilježi vrijeme rješavanja, te točnost ponuđenog rješenja. Rješavanjem dnevne taktike, neregistriranog korisnika se obavijesti o ispravnosti njegova rješenja, no njegovo rješenje se nigdje ne pohranjuje, niti taj korisnik sam može biti uvršten u rang listu. Za te funkcionalnosti korisnik mora biti član, a član može postati registracijom.\\
 		
 		\includegraphics[width=\columnwidth]{lichess_primjer}
 		\begin{center}
@@ -194,11 +195,11 @@
 		
 		Prva točka je identična kao kod članova, iste funkcionalnosti imaju i jedni i drugi. 
 		
-		Treneri mogu objavljivati novosti i zanimljivosti na aplikaciju te postavljati nove dnevne taktike. Kod svake od navedenih rubrika u aplikaciji, za trenere će biti ponudena opcija dodavanja novog sadržaja. Primjerice, kod unosa novosti, treneru će se otvoriti prostor za unošenje teksta u kojem trener upisuje što želi. Nakon što je gotov, trener potvrdi svoju namjeru objavljivanja odabirom prikladnog gumba te se taj tekst dodaje u aplikaciju. 
+		Treneri mogu objavljivati novosti i zanimljivosti na aplikaciju te postavljati nove dnevne taktike. Kod svake od navedenih rubrika u aplikaciji, za trenere će biti ponuđena opcija dodavanja novog sadržaja. Primjerice, kod unosa novosti, treneru će se otvoriti prostor za unošenje teksta u kojem trener upisuje što želi. Nakon što je gotov, trener potvrdi svoju namjeru objavljivanja odabirom prikladnog gumba te se taj tekst dodaje u aplikaciju. 
 		
 		Treninge i turnire trener dodaje odabirom opcije za dodavanje novog treninga/turnira. Odabire termin početka i vrijeme trajanja te potencijalno ograničenje maksimalnog broja sudionika. Ukoliko su svi kriteriji zadovoljeni, aktivnost se dodaje u bazu podataka i prikazuje se unutar aplikacije. Ukoliko termin nije ispravan te dolazi do kolizije s nekom drugom aktivnosti, trenera se vraća na ponovni odabir ispravnog termina. 
 		
-		U prijašnjem dijelu teksta smo vidjeli kako članovi mogu prijavljivati dnevne taktike za koje misle da imaju bolja rješenja od onih koja su ponudena. Odabirom na opciju pristigle prijave, trener može pregledati imaju li kakvih prijava od članova. Ukoliko imaju, mogu pogledati cijeli tekst prijave i proučiti ponovno dnevnu taktiku. Smatraju li kako je prijava neutemeljena treneri je samo odbacuju. Na ako je prijava valjana, trener može promijeniti rješenje dnevne taktike te ju na taj način ažurirati. Tim činom se ujedno i ažuriraju rang liste.\\ 
+		U prijašnjem dijelu teksta smo vidjeli kako članovi mogu prijavljivati dnevne taktike za koje misle da imaju bolja rješenja od onih koja su ponuđena. Odabirom na opciju pristigle prijave, trener može pregledati imaju li kakvih prijava od članova. Ukoliko imaju, mogu pogledati cijeli tekst prijave i proučiti ponovno dnevnu taktiku. Smatraju li kako je prijava neutemeljena treneri je samo odbacuju. Na ako je prijava valjana, trener može promijeniti rješenje dnevne taktike te ju na taj način ažurirati. Tim činom se ujedno i ažuriraju rang liste.\\ 
 		
 		
 		Osim do sada navedenih korisnika aplikacije, postoji i još jedna vrsta korisnika a to je administrator. Njegove ovlasti su slične kao kod trenera, no još dodatno proširene. On može vidjeti sav sadržaj aplikacije, ali može ga i ukloniti i mijenjati po volji, bez obzira je li on autor tog sadržaja. Uz to, administrator ima opciju zabrane pristupa korisnicima. Ova akcija se može dogoditi iz proizvoljnih razloga no istaknimo jedan poseban scenarij; član uredno ne plaća svoju članarinu. Administrator može vidjeti pregled svih plaćanja svakog člana te ako utvrdi da pojedini član ima previše neplaćenih računa može mu ograničiti pristup aplikaciji. Taj član će od funkcionalnosti jedino moći vidjeti svoja plaćanja i platiti svoje neplaćene račune, i tako sve dok ne plati račune. U tom slučaju, administrator može maknuti restrikcije tom članu.
@@ -227,7 +228,7 @@
 	
 		\noindent \textbf{Aktori:}
 		\begin{packed_enum}
-			\item Neregestrirani korisnik(inicijator) može:
+			\item Neregistrirani korisnik(inicijator) može:
 			\begin{packed_enum}
 				\item Obaviti registraciju i postati članom kluba 
 				\item Pregledati novosti postavljene od strane trenera/administratora na aplikaciju 
@@ -252,11 +253,11 @@
 				\item Organizirat turnire za članove te omogućiti članovima prijavu na iste 
 				\item Revidirati zaprimljene prijave pogreški u dnevnim taktikama te ukoliko je potrebno ažurirati ih 
 			\end{packed_enum}
-			\item Administrator(incijator) može:
+			\item Administrator(inicijator) može:
 			\begin{packed_enum}
-				\item Imati uvid u sve podatke na aplikaciji te opciju uredivanja i dodavanja novih sadržaja
-				\item Zabraniti pristup aplikaciji odredenim članovima/trenerima 
-				\item Pregledati plaćanja svih članova te ukoliko ima neplaćenih računa odredenim članovima zabraniti pristup dok ne obavi plaćanja
+				\item Imati uvid u sve podatke na aplikaciji te opciju uređivanja i dodavanja novih sadržaja
+				\item Zabraniti pristup aplikaciji određenim članovima/trenerima 
+				\item Pregledati plaćanja svih članova te ukoliko ima neplaćenih računa određenim članovima zabraniti pristup dok ne obavi plaćanja
 			\end{packed_enum}
 			\item Baza podataka(sudionik):
 			\begin{packed_enum}
@@ -281,7 +282,7 @@
 			
 			\item[] \begin{packed_enum}
 				\item Odabir gumba za registraciju
-				\item Ispunjavanje ponudenog formulara
+				\item Ispunjavanje ponuđenog formulara
 				\item Pohranjivanje podataka u bazu podataka
 				\item Otvaranje početne stranice 
 			\end{packed_enum}
@@ -331,7 +332,7 @@
 		\begin{packed_item}
 			
 			\item \textbf{Glavni sudionik: }Korisnik
-			\item  \textbf{Cilj:} Mogućnost pregledavanja novosti postavljenih na stranicu od strane ovlaštenih korisnika(trener/admin)
+			\item  \textbf{Cilj:} Mogućnost pregledavanja novosti postavljenih na stranicu od strane ovlaštenih korisnika(trener/administrator)
 			\item  \textbf{Sudionici:} Baza podataka
 			\item  \textbf{Preduvjet:} -
 			\item  \textbf{Opis osnovnog tijeka:}
@@ -537,7 +538,7 @@
 			\item[] \begin{packed_enum}
 				\item Trener odabire opciju postavljanja novog treninga  
 				\item Trener postavlja vrijeme početka i trajanja samog treninga, te njegov kratki opis 
-				\item Nakon što je termin potvrden kao slobodan, trening se postavlja na aplikaciju i pohranjuje u bazu podataka 
+				\item Nakon što je termin potvrđen kao slobodan, trening se postavlja na aplikaciju i pohranjuje u bazu podataka 
 			\end{packed_enum}
 			
 			\item  \textbf{Opis mogućih odstupanja:}
@@ -563,7 +564,7 @@
 			\item[] \begin{packed_enum}
 				\item Trener odabire opciju postavljanja novog termina  
 				\item Trener postavlja vrijeme početka i trajanja turnira, njegov opis i maksimalni broj sudionika 
-				\item Nakon što je termin potvrden kao slobodan, turnir se postavlja na aplikaciju i pohranjuje u bazu podataka 
+				\item Nakon što je termin potvrđen kao slobodan, turnir se postavlja na aplikaciju i pohranjuje u bazu podataka 
 			\end{packed_enum}
 		\end{packed_item}
 		
@@ -578,7 +579,7 @@
 			
 			\item[] \begin{packed_enum}
 				\item Trener odabire opciju dodavanja novosti na aplikaciji  
-				\item Trener unosi novost te potvrduje svoje postavljanje  
+				\item Trener unosi novost te potvrđuje svoje postavljanje  
 				\item Novost se objavljuje na aplikaciji te pohranjuje u bazu podataka  
 			\end{packed_enum}
 		\end{packed_item}
@@ -609,7 +610,7 @@
 			\item  \textbf{Opis osnovnog tijeka:}
 			
 			\item[] \begin{packed_enum}
-				\item Nakon potvrde da se radi o validnom zahtjevu, trener mijenja rješenja taktike  
+				\item Nakon potvrde da se radi o valjanom zahtjevu, trener mijenja rješenja taktike  
 				\item Ažurirana taktika se objavljuje na aplikaciju i pohranjuje u  bazu podatka  
 				\item Ažuriraju se rang-liste na temelju novih rješenja   
 			\end{packed_enum}
@@ -727,8 +728,8 @@
 		
 		\subsubsection{Sekvencijski dijagrami}
 		\textbf{Obrazac uporabe UC4 - Rješavanje dnevne taktike}\\
-		Kad član pokrene rješavanje dnevne taktike, poslužitelj započinje mjeriti vrijeme, a nakon toga u bazu podataka prosljeduje izmjereno vrijeme odnosno ishod rješavanja dnevne taktike.
-		Aplikacija uz to kreira težinsku rang listu članova na temelju povijensog učinka u rješavanju taktika, izmjerenog vremena za pojedini član te težine dnevne taktike.
+		Kad član pokrene rješavanje dnevne taktike, poslužitelj započinje mjeriti vrijeme, a nakon toga u bazu podataka prosljeđuje izmjereno vrijeme odnosno ishod rješavanja dnevne taktike.
+		Aplikacija uz to kreira težinsku rang listu članova na temelju povijesnog učinka u rješavanju taktika, izmjerenog vremena za pojedini član te težine dnevne taktike.
 		Ako član zamijeti pogrešku u dnevnoj taktici to prijavljuje unoseći nove poteze i opis novih poteza, zatim svaka prijavljena pogreška odlazi na revidiranje proizvoljno odabranom treneru. Ako se trener složi s novim rješenjem, ono se mora promijeniti na navedenoj taktici i automatski se moraju revidirati rang liste pri čemu se dodjeljuju bodovi onim članovima koji su ponudili točno rješenje, a uklanjaju onima koji su ponudili staro rješenje.
 		\eject
 		\includegraphics[width=\columnwidth]{rjesavanje_dnevnih_taktika}
@@ -776,18 +777,18 @@
 		\end{packed_enum}
 	
 		Našem proizvodu pristupa se putem web preglednika. Putem web preglednika, naša web aplikacija napisana u svojim programskim jezicima se prevodi u oblik koji je korisniku jasniji i prirodniji. To korisniku omogućuje korištenje svih funkcionalnosti naše aplikacije.\\
-		Web poslužitelj temelj je rada naše aplikacije. On prima zahtjeve poslane od strane korisnika te vraća informacije koje je korisnik zatražio. Također, poslužitelj ima pristup bazi podataka u kojoj su pohranjeni svi podaci relevantni za rad naše aplikacije. Više o bazi podataka možete pročitati u poglavlju 4.2 (Baza podataka). Komunikacija između korisnika i poslužitelja odvija se pomoću HTTP protokola.\\
+		Web poslužitelj temelj je rada naše aplikacije. On prima zahtjeve poslane od strane korisnika te vraća informacije koje je korisnik zatražio. Također, poslužitelj ima pristup bazi podataka u kojoj su pohranjeni svi podatci relevantni za rad naše aplikacije. Više o bazi podataka možete pročitati u poglavlju 4.2 (Baza podataka). Komunikacija između korisnika i poslužitelja odvija se pomoću HTTP protokola.\\
 		Web aplikacija je korisniku prikazana na način da mu se omogući što lakši rad i interakcija s mogućnostima same aplikacije. Odabirom jedne od ponuđenih opcija na stranici, web preglednik šalje zahtjeve za potrebnim podatcima i/ili resursima s web poslužitelja/baze podataka na što mu poslužitelj odgovara. Ukoliko nije došlo do nikakvih nepredviđenih poteškoća, korisniku se prikazuje zatraženi sadržaj.
 		Front-end naše aplikacije razvijen je u JavaScriptu ili točnije Reactu, open-source JavaScript biblioteci koja se koristi za jednostavnije kreiranje korisničkih sučelja. Kao dodatnu pomoć u nekim dijelovima korišten je i CSS.
 		Back-end naše aplikacije razvijen je u JavaScriptu.
 		Baza podataka razvijena je u pgAdmin 4, GUI-u razvijen za upravljanje i korištenje PostgreSQL sustavom upravljanja bazi podataka. 
 		Razvojno okruženje korišteno za razvoj back-end i front-end dijela aplikacije je Visual Studio Code.
-		Arhitektura sustava modelirana je prema MVC konceptu. Taj koncept se sastoji od 3 dijela; modela koji kontrolira radom i pravilima aplikacije, prima podatke od controllera te upravlja podacima, viewa koji predstavlja bilo kakav grafički ili drugi prikaz podataka te controllera, komponente koja prima zahtjeve korisnika i prosljeđuje ih drugim dijelovima sustava.
-		Osim do sada navedenih značajki, naš sustav koristi JWT tehnologiju prenošenja podataka u obliku JSON objekata. JWT je skraćeno od JSON Web Token, a u našoj aplikaciji se koriste 2 vrste tokena, access token i refresh token. Access token služi za pristup resursima, a vremenski je ograničen. Refresh token ima dulje vrijeme trajanja od access tokena te služi za pridruživanje novog access tokena korisniku nakon isteka prijašnjeg access tokena. Na taj način korisnik se ne mora ponovno prijavljivati u sustav, no nakon eventualnog refresh tokena, korisnik će ipak morati obaviti ponovnu prijavu u sustav. 
+		Arhitektura sustava modelirana je prema MVC konceptu. Taj koncept se sastoji od 3 dijela; modela koji kontrolira radom i pravilima aplikacije, prima podatke od controllera te upravlja podatcima, viewa koji predstavlja bilo kakav grafički ili drugi prikaz podataka te controllera, komponente koja prima zahtjeve korisnika i prosljeđuje ih drugim dijelovima sustava.
+		Osim do sada navedenih značajki, naš sustav koristi JWT tehnologiju prenošenja podataka u obliku JSON objekata. JWT je skraćeno od JSON Web Token, a u našoj aplikaciji se koriste 2 vrste tokena, access token i refresh token. Access token služi za pristup resursima, a vremenski je ograničen. Refresh token ima dulje vrijeme trajanja od access tokena te služi za pridruživanje novog access tokena korisniku nakon isteka prijašnjeg access tokena. Na taj način korisnik se ne mora ponovno prijavljivati u sustav, no nakon eventualnog isteka refresh tokena, korisnik će ipak morati obaviti ponovnu prijavu u sustav. 
 		
 		\eject
 		\subsection{Baza podataka}
-		Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.Baza podataka ove aplikacije sastoji se od sljedecih entiteta:
+		Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
 		
 			\begin{packed_item}
 			
@@ -1012,7 +1013,7 @@
 
 	\includegraphics[width=\columnwidth]{ERbaze.png}
 		\begin{center}
-			\textit{E-R model baze podataka}
+			\textit{Slika 4.1: E-R dijagram baze podataka}
 		\end{center}
 
 \eject
@@ -1021,7 +1022,14 @@
 
 	\includegraphics[width=\columnwidth]{slike/dijagramRazreda.PNG}
 		\begin{center}
-			\textit{Dijagram razreda}
+			\textit{Slika 4.2: Dijagram razreda}
+		\end{center}
+	
+	\eject
+	
+	\includegraphics[width=\columnwidth]{controllers}
+		\begin{center}
+			\textit{Slika 4.3: Dijagram razreda - Controllers dio}
 		\end{center}
 
 

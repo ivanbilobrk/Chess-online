@@ -1,3 +1,4 @@
+\babel@toc {croatian}{}\relax 
 \contentsline {section}{\numberline {1}Dnevnik promjena dokumentacije}{2}{section.1}%
 \contentsline {section}{\numberline {2}Opis projektnog zadatka}{3}{section.2}%
 \contentsline {section}{\numberline {3}Specifikacija programske potpore}{7}{section.3}%
@@ -8,3 +9,4 @@
 \contentsline {section}{\numberline {4}Arhitektura i dizajn sustava}{26}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Opis arhitekture sustava}{26}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Baza podataka}{27}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Dijagram razreda}{33}{subsection.4.3}%
