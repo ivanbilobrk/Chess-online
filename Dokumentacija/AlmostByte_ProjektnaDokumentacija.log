@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.11.3)  18 NOV 2022 20:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.11.3)  18 NOV 2022 22:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1448,12 +1448,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.63504pt}.
 
 [21]
-<./slike//prijava_za_treninge.png, id=288, 416.15475pt x 322.806pt>
-File: ./slike//prijava_za_treninge.png Graphic file (type png)
-<use ./slike//prijava_za_treninge.png>
-Package pdftex.def Info: ./slike//prijava_za_treninge.png  used on input line 7
-45.
-(pdftex.def)             Requested size: 435.6108pt x 337.91699pt.
+<./slike//organizacija_turnira.png, id=288, 407.72325pt x 419.76825pt>
+File: ./slike//organizacija_turnira.png Graphic file (type png)
+<use ./slike//organizacija_turnira.png>
+Package pdftex.def Info: ./slike//organizacija_turnira.png  used on input line 
+745.
+(pdftex.def)             Requested size: 435.6108pt x 448.48145pt.
 
 Overfull \hbox (15.0pt too wide) in paragraph at lines 745--746
 [][] 
@@ -1467,7 +1467,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-0.63504pt}.
 
-[22 <./slike//prijava_za_treninge.png>]
+[22 <./slike//organizacija_turnira.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 12.63504pt, for example:
@@ -1477,12 +1477,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.63504pt}.
 
 [23]
-<./slike//uplata_clanarine.png, id=298, 417.9615pt x 320.99925pt>
-File: ./slike//uplata_clanarine.png Graphic file (type png)
-<use ./slike//uplata_clanarine.png>
-Package pdftex.def Info: ./slike//uplata_clanarine.png  used on input line 753.
-
-(pdftex.def)             Requested size: 435.6108pt x 334.57094pt.
+<./slike//prikaz_transakcija.png, id=297, 528.17325pt x 302.93175pt>
+File: ./slike//prikaz_transakcija.png Graphic file (type png)
+<use ./slike//prikaz_transakcija.png>
+Package pdftex.def Info: ./slike//prikaz_transakcija.png  used on input line 75
+3.
+(pdftex.def)             Requested size: 435.6108pt x 249.84781pt.
 
 Overfull \hbox (15.0pt too wide) in paragraph at lines 753--754
 [][] 
@@ -1496,7 +1496,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-0.63504pt}.
 
-[24 <./slike//uplata_clanarine.png>]
+[24 <./slike//prikaz_transakcija.png>]
 Overfull \hbox (25.14058pt too wide) in paragraph at lines 768--769
 []\OT1/jkp/m/n/10 Ukoliko je ko-ris-niku za-bra-njen pris-tup od-lu-kom ad-mi-n
 is-tra-tora, ne smije imati ni-kakve mogu[]cnosti
@@ -1625,7 +1625,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 997--999
 
  []
 
-<./slike//ERbaze.png, id=342, 1297.84875pt x 955.57pt>
+<./slike//ERbaze.png, id=340, 1297.84875pt x 955.57pt>
 File: ./slike//ERbaze.png Graphic file (type png)
 <use ./slike//ERbaze.png>
 Package pdftex.def Info: ./slike//ERbaze.png  used on input line 1016.
@@ -1663,7 +1663,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1024--1026
 
  []
 
-<slike/dijagramRazreda.PNG, id=352, 564.30824pt x 492.6405pt>
+<slike/dijagramRazreda.PNG, id=350, 564.30824pt x 492.6405pt>
 File: slike/dijagramRazreda.PNG Graphic file (type png)
 <use slike/dijagramRazreda.PNG>
 Package pdftex.def Info: slike/dijagramRazreda.PNG  used on input line 1028.
@@ -1694,7 +1694,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.63504pt}.
 
 [33 <./slike/dijagramRazreda.PNG>]
-<./slike//controllers.png, id=358, 855.79726pt x 469.755pt>
+<./slike//controllers.png, id=356, 855.79726pt x 469.755pt>
 File: ./slike//controllers.png Graphic file (type png)
 <use ./slike//controllers.png>
 Package pdftex.def Info: ./slike//controllers.png  used on input line 1051.
@@ -1734,7 +1734,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.63504pt}.
 
 [34 <./slike//controllers.png>]
-<./slike//dto_class_diagram.jpeg, id=364, 980.66376pt x 1606.0pt>
+<./slike//dto_class_diagram.jpeg, id=362, 980.66376pt x 1606.0pt>
 File: ./slike//dto_class_diagram.jpeg Graphic file (type jpg)
 <use ./slike//dto_class_diagram.jpeg>
 Package pdftex.def Info: ./slike//dto_class_diagram.jpeg  used on input line 10
@@ -1932,8 +1932,8 @@ ot changed.
  ) 
 Here is how much of TeX's memory you used:
  18240 strings out of 474975
- 318551 string characters out of 5780237
- 847225 words of memory out of 5000000
+ 318584 string characters out of 5780237
+ 847228 words of memory out of 5000000
  39265 multiletter control sequences out of 15000+600000
  518934 words of font info for 129 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1942,10 +1942,10 @@ Here is how much of TeX's memory you used:
 f-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb><c:/texlive/2022/texmf-dist/fonts
 /type1/public/kpfonts/jkpmit8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publ
 ic/kpfonts/jkpmn8a.pfb>
-Output written on AlmostByte_ProjektnaDokumentacija.pdf (40 pages, 1003475 byte
+Output written on AlmostByte_ProjektnaDokumentacija.pdf (40 pages, 1047825 byte
 s).
 PDF statistics:
- 448 PDF objects out of 1000 (max. 8388607)
+ 446 PDF objects out of 1000 (max. 8388607)
  376 compressed objects within 4 object streams
  179 named destinations out of 1000 (max. 500000)
  168 words of extra memory for PDF output out of 10000 (max. 10000000)
