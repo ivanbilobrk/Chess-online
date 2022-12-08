@@ -40,6 +40,15 @@
   color: white;
 }
 
+
+.news{
+  display: flex;
+  justify-content: center;
+  padding:0px;
+  margin-top: 20px;
+}
+
+
 @media all and (max-width: 30em) {
   a.registerButton {
     display: block;
@@ -51,6 +60,7 @@
   padding: 30px;
   background-color: #1565c0;
 }
+
 .text-4xl:hover {
   color: white;
 }
@@ -261,3 +271,5 @@ abbr[title] {
   width: auto;
 }
 /*zavrsava*/
+
+

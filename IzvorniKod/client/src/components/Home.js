@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import './home.css';
 import { useNavigate } from "react-router-dom";
 import Footer from './Footer';
+import  Accordion  from "./Accordion";
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -47,7 +48,9 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
 
 <br></br>
 <h4 className="paragraf">Novosti</h4>
-                <h6>Trenutno nema novih novosti.</h6>
+    <div className="news">
+                <Accordion/>
+    </div>
 <br></br>
 <h4 className="paragraf">Kalendar</h4>
                 <div className="app">
