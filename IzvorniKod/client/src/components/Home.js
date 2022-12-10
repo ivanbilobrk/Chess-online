@@ -49,7 +49,6 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
 
 <br></br>
 <h4 className="paragraf">Novosti</h4>
-                <News title="Naslov" author="Autor"/>
 <br></br>
 <h4 className="paragraf">Kalendar</h4>
                 <div className="app">

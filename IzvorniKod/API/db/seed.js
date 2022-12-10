@@ -67,7 +67,8 @@ const sql_create_news = `CREATE TABLE news(
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
     trainer_id int REFERENCES users(id),
     title text NOT NULL,
-    content text NOT NULL
+    content text NOT NULL,
+    showing int NOT NULL
 )`;
 
 const sql_create_news_id_index =`CREATE  UNIQUE INDEX idx_newsId ON news(id)`;

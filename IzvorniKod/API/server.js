@@ -20,6 +20,7 @@ app.use('/register', require('./routes/register.routes'));
 app.use('/login', require('./routes/login.routes'));
 app.use('/logout', require('./routes/logout.routes'));
 app.use('/refresh', require('./routes/refresh.routes'));
+app.use('/news', require('./routes/news.routes'));
 
 app.use(verifyJWT);  //every route after this line here will use verifyJWT middleware
 
@@ -40,7 +41,7 @@ app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});
 })
 
-app.use((error, req, res, next)=>{
+app.use((error, res, next)=>{
     res.status(error.status).json({
         message: error.message ? error.message : 'Dogodila se greška.',
         stack: error.showStack ? error.showStack : {},

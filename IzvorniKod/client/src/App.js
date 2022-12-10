@@ -32,7 +32,7 @@ function App() {
             <Route path="unauthorized" element={<Unauthorized />} />
 
           <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth allowedRoles={["user", "admin"]}/>}>
+            <Route element={<RequireAuth allowedRoles={["user", "admin", "trener"]}/>}>
               <Route path ="profile" element ={<ProfilePage/>}></Route>
             </Route>
           </Route>
