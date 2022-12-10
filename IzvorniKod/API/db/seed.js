@@ -86,10 +86,9 @@ const sql_create_dailyTactics_id_index =`CREATE  UNIQUE INDEX idx_dailyTacticsId
 
 const sql_create_membership =`CREATE TABLE membership(
   member_id int REFERENCES users(id),
-  periodStart int NOT NULL,
-  periodEnd int NOT NULL,
+  month int NOT NULL,
   isPaid boolean NOT NULL,
-  PRIMARY KEY(member_id)
+  PRIMARY KEY(member_id, month)
 )`;
 
 

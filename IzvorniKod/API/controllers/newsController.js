@@ -12,9 +12,9 @@ const addNewNews = async (req, res, next)=>{
     } else if(result == 403){
         return res.sendStatus(403);
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener"){
-        let news = new News(result.podatci[0], req.body.news.title, req.body.news.content);
 
         try{
+            let news = new News(result.podatci[0], req.body.news.title, req.body.news.content);
             await news.persist();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
