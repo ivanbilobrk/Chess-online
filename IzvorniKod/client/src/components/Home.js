@@ -1,10 +1,17 @@
 import { color } from "@mui/system";
 import { Link, Navigate } from "react-router-dom";
 import './home.css';
-import { useNavigate } from "react-router-dom";
+
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import useLogout from '../hooks/useLogout';
 import Footer from './Footer';
+import { FaPlus } from 'react-icons/fa'
 import { useEffect } from "react";
 import axios from '../api/axios';
+import News from "./News";
+import AddNewsFormDialog from "./AddNews";
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -22,14 +29,103 @@ import 'react-calendar/dist/Calendar.css';
 
 export default function Home(){
     const navigate = useNavigate();
+    const axiosPrivate = useAxiosPrivate();
+    const [userData, setUserData] = useState([]);
+    const [data, setData] = useState([]);
+    const [content, setContent] = useState("");
+    const [title, setTitle] = useState("");
+
+    const logout = useLogout();
+    const location = useLocation();
+    const {auth} = useAuth();
 
     function handleClick(){
         navigate("/register");
     }
+    const loadAllNews = async () => {
+        try {
+            const response = await axios.get('/news', 
+                                {
+                                    headers: {'Content-Type':'application/json'},
+                                    withCredentials: true
+                                });
+            
+            setData(response.data.newsAll);
+        } catch (err) {                                        
+            console.error(err.response);
+            
+        }
+    };
+
+    const handleClickUpdateNews = async (title, content, showing, id) =>{
+        try {
+            const response = await axios.post('/news/update', 
+                JSON.stringify({ 
+                                news:{
+                                    title: title,
+                                    content: content,
+                                    showing: showing,
+                                    id: id
+                                }
+                                }),
+                                {
+                                    headers: {'Content-Type':'application/json'},
+                                    withCredentials: true
+                                });
+    
+        } catch (err) {                                        
+            console.error(err.response);
+        
+        }
+        loadAllNews();
+    };
+    
+    const handleClickAddNews = async (title, content) => {
+        try {
+            const response = await axios.post('/news/add', 
+                JSON.stringify({ 
+                                news:{
+                                    title: title,
+                                    content: content
+                                }
+                                }),
+                                {
+                                    headers: {'Content-Type':'application/json'},
+                                    withCredentials: true
+                                });
+        } catch (err) {                                        
+            console.error(err.response);
+        
+        }
+        loadAllNews();
+    };
 
     //tu počinje js
     const [date, setDate] = useState(new Date());
     //tu završava js
+    useEffect(() =>{
+        let isMounted = true;
+        const controller = new AbortController();
+        const getData = async () => {
+            try {
+                const response = await axiosPrivate.get(`/user/${auth.user}`, {
+                });
+                setUserData(response.data.podatci);
+            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
+        if (auth.user != undefined){
+            getData();
+        }
+        loadAllNews();
+        
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, []);
 
     return(
         <>
@@ -48,7 +144,31 @@ export default function Home(){
 Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, a za sve naše članove i one koji se jos premišljaju tu su i izazovne dnevne taktike koje samo čekaju biti riješene!</h6>
 
 <br></br>
-<h4 className="paragraf">Novosti</h4>
+
+<h4 className="paragraf paragraf-news">Novosti
+        {(userData[5] == 'trener' || userData[5] == 'admin') ?
+            <AddNewsFormDialog
+                handleClickAddNews = {handleClickAddNews}
+                title = {title}
+                content = {content}
+                setTitle = {setTitle}
+                setContent = {setContent}
+                user = {userData}
+            /> : <></>
+        }
+</h4>
+    <div className="news">
+        <News
+            data={data}
+            handleClickUpdateNews = {handleClickUpdateNews}
+            title = {title}
+            content = {content}
+            setTitle = {setTitle}
+            setContent = {setContent}
+            user = {userData}
+        />
+    </div>
+
 <br></br>
 <h4 className="paragraf">Kalendar</h4>
                 <div className="app">

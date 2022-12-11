@@ -40,6 +40,38 @@
   color: white;
 }
 
+.news{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.addButton {
+  height: 38px;
+  min-width: 38px;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: aliceblue;
+  color: #1565c0;
+  cursor: pointer;
+  margin: 7px;
+ 
+}
+
+.addButton:focus, 
+.addButton:hover {
+  color: white;
+  background-color: limegreen;
+  outline: none;
+}
+
+.paragraf-news {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media all and (max-width: 30em) {
   a.registerButton {
     display: block;
