@@ -50,4 +50,4 @@ app.use((error, res, next)=>{
     next();
 });
 
-app.listen(parseInt(process.env.REACT_APP_PORT));
+app.listen(parseInt(process.env.PORT));
