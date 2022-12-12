@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLogout from '../hooks/useLogout';
 import Footer from './Footer';
-import { FaPlus } from 'react-icons/fa'
+
 import { useEffect } from "react";
 import axios from '../api/axios';
 import News from "./News";
