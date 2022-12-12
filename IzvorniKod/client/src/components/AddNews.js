@@ -48,7 +48,6 @@ const AddNewsFormDialog = ({handleClickAddNews, title, content, setTitle, setCon
             onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Content"
