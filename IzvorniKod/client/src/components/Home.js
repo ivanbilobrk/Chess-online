@@ -110,23 +110,25 @@ export default function Home(){
             try {
                 const response = await axiosPrivate.get(`/user/${auth.user}`, {
                 });
-                setUserData(response.data.podatci);
+                console.log(response.data.podatci)
+                isMounted && setUserData(response.data.podatci);
             } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
             }
         }
-        if (auth.user != undefined){
-            getData();
-        }
+        
+        
+        getData();
+        
         loadAllNews();
         
         return () => {
             isMounted = false;
             controller.abort();
         }
-    }, []);
-
+    },[]);
+    
     return(
         <>
         <div>
