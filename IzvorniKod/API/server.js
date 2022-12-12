@@ -36,7 +36,8 @@ app.use(verifyJWT);  //every route after this line here will use verifyJWT middl
 // 8) now if you try to GET /refresh you will get 401 Unauthorized because you aren't logged in anymore
 
 app.use('/user', require('./routes/user.routes'));
-app.use('/transactions', require('./routes/transaction.routes'))
+app.use('/transactions', require('./routes/transaction.routes'));
+app.use('/trainings', require('./routes/training.routes'));
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});
