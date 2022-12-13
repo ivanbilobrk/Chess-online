@@ -13,6 +13,8 @@ import { FiEdit3, FiX } from 'react-icons/fi';
 const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, setContent, element}) => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
+    setContent(element.content)
+    setTitle(element.title)
     setOpen(true);
   };
 
