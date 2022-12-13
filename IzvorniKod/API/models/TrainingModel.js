@@ -7,6 +7,7 @@ module.exports = class Training {
         this.trainerId = trainerId;
         this.trainingStart = trainingStart;
         this.trainingDuration = trainingDuration;
+        this.showing = 1;
     } // Moram provjeriti sto sve ide ovdje, tj sto mi je bitno za trening jer nez jel ovo dobro
 
     static getAllTrainings = async() => {
@@ -61,8 +62,8 @@ module.exports = class Training {
         await dbDeleteTraining(this);
     }
 
-    async signupForTraining() {
-        await dbSignupForTraining(this);
+    async signupForTraining(user) {
+        await dbSignupForTraining(this, user);
     }
 
     async cancelTraining() {
