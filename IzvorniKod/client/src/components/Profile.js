@@ -77,10 +77,10 @@ export default function Profile(){
     return(
         <>
             <Box sx={{ width: '100%'}}>
-                <Stack spacing={1}>
-                    <Item>Dobrodošli na svoj profil! Ovdje možete pregledati svoje osobne podatke.</Item>
-                    <Item>Ukoliko se želite vratiti na home page, kliknite <Link to="/">ovdje</Link>.</Item>
-                </Stack>
+            <Stack spacing={0}>
+                <Item><Typography color="text.secondary">Dobrodošli na svoj profil! Ovdje možete pregledati svoje osobne podatke.</Typography></Item>
+                <Item><Typography color="text.secondary">Ukoliko se želite vratiti na home page, kliknite <Link to="/" style={{ color: '#00F'}}>ovdje</Link>.</Typography></Item>
+            </Stack>
             </Box>
 
             <h1>Vaš profil</h1>
