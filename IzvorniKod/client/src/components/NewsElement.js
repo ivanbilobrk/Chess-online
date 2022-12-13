@@ -27,12 +27,11 @@ const NewsElement = ({element, handleClickUpdateNews, title, content, setTitle, 
                         >
                             <UpdateNews
                                 handleClickUpdateNews = {handleClickUpdateNews}
-                                id = {element.id}
                                 title = {title}
                                 content = {content}
                                 setTitle = {setTitle}
                                 setContent = {setContent}
-                                user = {user}
+                                element = {element}
                             />
                             
                         </IconButton>

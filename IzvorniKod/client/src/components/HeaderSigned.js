@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import ToolbarGroup from '@mui/material/Toolbar';
 import useLogout from '../hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
+import { BiUser } from "react-icons/bi";
 
 
 
@@ -35,7 +36,8 @@ export default function HeaderSigned() {
               </ToolbarGroup>
               <ToolbarGroup>
                   <Link to="/profile" style={{textDecoration: 'none', color: 'white', float: 'right'}}> 
-                      <Button color="inherit" sx={{ mr:1 }}>Osobni podatci</Button>
+                      <Button color="inherit" sx={{ mr:1 }}>Osobni podatci <BiUser style={{margin: 4, marginBottom:5, fontSize:18}}/>
+                      </Button>
                   </Link>
                   
               </ToolbarGroup>

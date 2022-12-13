@@ -10,7 +10,7 @@ import { FaPlus } from 'react-icons/fa';
 import './home.css';
 import { FiEdit3, FiX } from 'react-icons/fi';
 
-const UpdateNewsFormDialog = ({handleClickUpdateNews, id, title, content, setTitle, setContent, user}) => {
+const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, setContent, element}) => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,7 +20,7 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, id, title, content, setTit
     setOpen(false);
   };
   const handleSubmit = async (title,content) => {
-    await handleClickUpdateNews(title, content, 1, id);
+    await handleClickUpdateNews(title, content, 1, element.id);
     setOpen(false);
   };
 
@@ -43,6 +43,7 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, id, title, content, setTit
             type="title"
             fullWidth
             variant="standard"
+            defaultValue={element.title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
@@ -52,6 +53,7 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, id, title, content, setTit
             type="content"
             fullWidth
             variant="standard"
+            defaultValue={element.content}
             onChange={(e) => setContent(e.target.value)}
           />
         </DialogContent>

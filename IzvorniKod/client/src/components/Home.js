@@ -1,6 +1,7 @@
 import { color } from "@mui/system";
 import { Link, Navigate } from "react-router-dom";
 import './home.css';
+import { BiUser } from "react-icons/bi";
 
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -182,7 +183,7 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
                     <h6><span className="bold">Odabrani datum:</span> {date.toDateString()}</h6>
                     </p>
                 </div>
-             <a className="profil" >   <Link to="/profile">Odi na svoj profil</Link> </a>
+             <a className="profil" >   <Link to="/profile" className="link">Odi na svoj profil <BiUser style={{marginBottom:-5, fontSize: 26}}/></Link> </a>
              <Footer/>
             
             </div>

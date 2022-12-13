@@ -103,11 +103,18 @@ justify-content: center;
 
 }
 .profil{
-  background-color: black;
+  background-color: #2d75c7;
   display: grid;
   justify-content: center;
   text-decoration: white;
+
 }
+.link {
+  text-decoration: none;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
 
 .calendar-container .kalendar {
   width: 550px;
