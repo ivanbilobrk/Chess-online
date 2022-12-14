@@ -1,4 +1,4 @@
-import { color } from "@mui/system";
+
 import { Link, Navigate } from "react-router-dom";
 import './home.css';
 import { BiUser } from "react-icons/bi";
@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import axios from '../api/axios';
 import News from "./News";
 import AddNewsFormDialog from "./AddNews";
+import PlayRandomMoveEngine from "./Chess";
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -25,6 +26,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+
 
 //kraj dodavanja
 
@@ -173,6 +175,11 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
     </div>
 
 <br></br>
+<h4 className="paragraf"> ŠAH </h4>
+    <div className="app">
+        <PlayRandomMoveEngine/>
+    </div>
+
 <h4 className="paragraf">Kalendar</h4>
                 <div className="app">
                      <br></br>
