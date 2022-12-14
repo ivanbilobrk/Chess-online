@@ -35,13 +35,14 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function Profile(){
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const logout = useLogout();
     const location = useLocation();
     const {auth} = useAuth();           //primjer kako koristiti auth
     const array = ["username", "email", "name", "surname", "role"];
+    //const [userData, setUserData] = useState([]);
 
     let counter = 0;
 
@@ -61,6 +62,8 @@ export default function Profile(){
         }
 
         getData();
+        console.log(data);
+        console.log(data[5]);
 
         return () => {
             isMounted = false;
@@ -73,7 +76,82 @@ export default function Profile(){
         navigate('/');
     }
 
+    
+    const PaymentAdmin = ({uloga}) =>{
+        if(uloga == 'admin'){
+            return (<><Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+                                    ČLANOVI
+                                </Typography><Typography align='left' color="text.secondary">
+                                        Clan1 <Button size="large" >Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button><br></br>
+                                        Clan2 <Button size="large">Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button><br></br>
+                                        Clan3 <Button size="large">Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button><br></br>
+                                        Clan4 <Button size="large">Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button>
+                                    </Typography></>
+            );
+        }
+            return (<>
+                <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+                   POVIJEST PLAĆANJA
+               </Typography>
+               <Typography align='left' color="text.secondary">
+                   Srpanj - plaćen <br/>
+                   Kolovoz - plaćen <br/>
+                   Rujan - plaćen <br/>
+                   Listopad - <Link>plati</Link> <br/>
+                   Studeni - <Link>plati</Link>
+               </Typography>
+           </>);
+        
+        
+    }
+    function ButtonCheck1({uloga}){
+        //console.log(data[5]);
+        if(uloga == 'admin'){
+            return null;
+        }
+            return <Button size="large">Pregledaj cijelu povijest</Button>;
+        
+    }
 
+    function TurniriTrening({uloga}){
+        if(uloga == 'admin'){
+            return null;
+        }
+        return (<><Grid item xs={6}>
+            <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+            TRENING
+        </Typography><Typography align='left' color="text.secondary">
+                26. Listopad - trening odrađen <br />
+                2. Studeni - trening odrađen <br />
+                9. Studeni - trening odrađen
+            </Typography>
+                </CardContent>
+                <CardActions>
+                <Button size="large">Uplati trening!</Button>
+
+                </CardActions>
+            </Card>
+        </Grid><Grid item xs={6}> {/*TURNIRI*/}
+                <Card sx={{ minWidth: 275 }}>
+                    <CardContent>
+                    <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+            TURNIRI
+        </Typography><Typography align='left' color="text.secondary">
+                29. Listopad - 3. mjesto <br />
+                5. Studeni - 7. mjesto <br />
+                12. Studeni - 1. mjesto
+            </Typography>
+                    </CardContent>
+                    <CardActions>
+                    <Button size="large">Pregledaj nadolazeće turnire</Button>
+
+                    </CardActions>
+                </Card>
+            </Grid></> );
+    }
+    
     return(
         <>
             <Box sx={{ width: '100%'}}>
@@ -108,19 +186,12 @@ export default function Profile(){
                 <Grid item xs={6}> {/*POVIJEST PLACANJA*/}
                     <Card sx={{ minWidth: 275 }}>
                         <CardContent>
-                            <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                                POVIJEST PLAĆANJA
-                            </Typography>
-                            <Typography align='left' color="text.secondary">
-                                Srpanj - plaćen <br/>
-                                Kolovoz - plaćen <br/>
-                                Rujan - plaćen <br/>
-                                Listopad - <Link>plati</Link> <br/>
-                                Studeni - <Link>plati</Link>
-                            </Typography>
+                            <PaymentAdmin uloga={data[5]}/>
                         </CardContent>
                         <CardActions>
-                            <Button size="large">Pregledaj cijelu povijest</Button>
+                            <ButtonCheck1 uloga={data[5]}/>
+                            
+                            
                         </CardActions>
                     </Card>
                 </Grid>
@@ -129,42 +200,8 @@ export default function Profile(){
             <hr/>
 
             <Grid container spacing={3}> {/*TRENING*/}
-                <Grid item xs={6}>
-                    <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                                TRENING
-                            </Typography>
-                            <Typography align='left' color="text.secondary">
-                                26. Listopad - trening odrađen <br/>
-                                2. Studeni - trening odrađen <br/>
-                                9. Studeni - trening odrađen
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="large">Uplati trening!</Button>
-                        </CardActions>
-                    </Card>
-                </Grid>
-
-            <Grid item xs={6}> {/*TURNIRI*/}
-                <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                            TURNIRI
-                        </Typography>
-                        <Typography align='left' color="text.secondary">
-                            29. Listopad - 3. mjesto <br/>
-                            5. Studeni - 7. mjesto <br/>
-                            12. Studeni - 1. mjesto
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="large">Pregledaj nadolazeće turnire</Button>
-                    </CardActions>
-                </Card>
-            </Grid>                 
-        </Grid>
+                <TurniriTrening uloga={data[5]}/>                
+            </Grid>
             
         <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={signout}>Odjavi se</Button>
         </>
