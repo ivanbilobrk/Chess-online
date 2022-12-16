@@ -7,11 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FaPlus } from 'react-icons/fa';
-import './home.css';
+import '../home.css';
+import { FiEdit3, FiX } from 'react-icons/fi';
+import WithMoveValidation from './Chess';
 
-const AddNewsFormDialog = ({handleClickAddNews, title, content, setTitle, setContent, user}) => {
+const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, content}) => {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -20,50 +21,38 @@ const AddNewsFormDialog = ({handleClickAddNews, title, content, setTitle, setCon
     setOpen(false);
   };
   const handleSubmit = async (title,content) => {
-    await handleClickAddNews(title,content);
     setOpen(false);
   };
+  const handleStart = () => {
+    
+  };
+  
 
   return (
     <div>
-        { user != 'user' ?
       <button className="addButton"  onClick={handleClickOpen}>
-         <FaPlus/> 
+        <FiEdit3/>
       </button>
-      : null }
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add news</DialogTitle>
+        <DialogTitle>Uređivanje taktike</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To sumbit news fill required fields.
+            Za uređivanje taktike unesi novo rješenje.
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Title"
-            type="title"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            label="Content"
-            type="content"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setContent(e.target.value)}
-          />
+          
+          <Button onClick={handleStart}>Započni</Button>
+          <div style={{display:'flex', justifyContent:'center'}}>
+            <WithMoveValidation
+            />
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={()=>handleSubmit(title,content)}>Submit</Button>
+          <Button onClick={handleClose}>Odustani</Button>
+          <Button onClick={()=>handleSubmit(title,content)}>Potvrdi</Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 }
 
-export default AddNewsFormDialog;
+export default UpdateDailyTacticsFormDialog;

@@ -1,7 +1,7 @@
 import React from 'react'
 import NewsElement from './NewsElement'
 
-const NewsList = ({data, handleClickUpdateNews, title, content, setTitle, setContent, user}) => {
+const NewsList = ({data, loadAllNews, title, content, setTitle, setContent, user}) => {
   return (
     <> 
     {!data?.length ? (
@@ -10,7 +10,7 @@ const NewsList = ({data, handleClickUpdateNews, title, content, setTitle, setCon
         data.map((element) => (
                 <NewsElement 
                     element = {element}
-                    handleClickUpdateNews = {handleClickUpdateNews}
+                    loadAllNews={loadAllNews}
                     title = {title}
                     content = {content}
                     setTitle = {setTitle}

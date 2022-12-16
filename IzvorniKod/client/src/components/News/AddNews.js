@@ -7,14 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FaPlus } from 'react-icons/fa';
-import './home.css';
-import { FiEdit3, FiX } from 'react-icons/fi';
+import '../home.css';
+import axios from '../../api/axios';
 
-const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, setContent, element}) => {
+
+const AddNewsFormDialog = ({loadAllNews, title, content, setTitle, setContent, user}) => {
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
-    setContent(element.content)
-    setTitle(element.title)
     setOpen(true);
   };
 
@@ -22,20 +22,41 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, 
     setOpen(false);
   };
   const handleSubmit = async (title,content) => {
-    await handleClickUpdateNews(title, content, 1, element.id);
+    await handleClickAddNews(title,content);
     setOpen(false);
   };
+  const handleClickAddNews = async (title, content) => {
+    try {
+        const response = await axios.post('/news/add', 
+            JSON.stringify({ 
+                            news:{
+                                title: title,
+                                content: content
+                            }
+                            }),
+                            {
+                                headers: {'Content-Type':'application/json'},
+                                withCredentials: true
+                            });
+    } catch (err) {                                        
+        console.error(err.response);
+    
+    }
+    loadAllNews();
+};
 
   return (
     <div>
+        { user != 'user' ?
       <button className="addButton"  onClick={handleClickOpen}>
-        <FiEdit3/>
+         <FaPlus/> 
       </button>
+      : null }
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add news</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To edit news fill required fields.
+            To sumbit news fill required fields.
           </DialogContentText>
           <TextField
             autoFocus
@@ -45,7 +66,6 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, 
             type="title"
             fullWidth
             variant="standard"
-            defaultValue={element.title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
@@ -55,7 +75,6 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, 
             type="content"
             fullWidth
             variant="standard"
-            defaultValue={element.content}
             onChange={(e) => setContent(e.target.value)}
           />
         </DialogContent>
@@ -68,4 +87,4 @@ const UpdateNewsFormDialog = ({handleClickUpdateNews, title, content, setTitle, 
   );
 }
 
-export default UpdateNewsFormDialog;
+export default AddNewsFormDialog;
