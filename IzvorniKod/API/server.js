@@ -37,6 +37,7 @@ app.use(verifyJWT);  //every route after this line here will use verifyJWT middl
 
 app.use('/user', require('./routes/user.routes'));
 app.use('/transactions', require('./routes/transaction.routes'))
+app.use('/tactics', require('./routes/tactics.routes'));
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});
