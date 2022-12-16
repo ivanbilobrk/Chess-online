@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -16,9 +17,10 @@ import DialogActions from '@mui/material/DialogActions';
 import '../home.css';
 import UpdateDailyTacticsFormDialog from './UpdateDailyTactics';
 
-const DailyTacticsElement = ({element, title, setTitle, user}) => {
+const DailyTacticsElement = ({element, title, content, user}) => {
     let deleteButton = <></>;
     let editButton = <></>;
+    const [moves, setMoves] = useState("");
 
     const handleClose = () => {
     };
@@ -26,11 +28,16 @@ const DailyTacticsElement = ({element, title, setTitle, user}) => {
     };
     const handleRangList = () => {
     };
-    const handleClickUpdateDailyTactics = async () =>{
+    const handleClickUpdateDailyTactics = async (title, content, showing, moves) =>{
       try {
-          const response = await axios.post('/tactics/update',  /* provjeri path */
+          const response = await axios.post('/tactics/edit',  /* provjeri path */
               JSON.stringify({ 
                               tactic:{
+                                  title: title,
+                                  id: user.id,
+                                  content: content,
+                                  showing: showing,
+                                  moves: moves
                                  /* dodaj vrijednosti */ 
                               }
                               }),
@@ -50,7 +57,7 @@ const DailyTacticsElement = ({element, title, setTitle, user}) => {
                             aria-label="remove" 
                         >
                             <FiX 
-                                onClick={()=>handleClickUpdateDailyTactics}
+                                onClick={()=>handleClickUpdateDailyTactics(title, content, 0, [])}
                             />
                         </IconButton>;
         editButton =    <IconButton 
@@ -82,7 +89,10 @@ const DailyTacticsElement = ({element, title, setTitle, user}) => {
         <AccordionDetails>
           <Typography>
             <div style={{display:'flex', justifyContent:'center'}}>
-              <WithMoveValidation/>
+              <WithMoveValidation
+               moves = {moves}
+               setMoves = {setMoves}
+               />
             </div>
             {editButton}
           </Typography>
