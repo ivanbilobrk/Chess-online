@@ -79,10 +79,10 @@ const sql_create_dailyTactics= `CREATE TABLE dailyTactics(
   title text NOT NULL,
   trainer_id int REFERENCES users(id),
   fen text NOT NULL,
-  index int NOT NULL generated always as identity,
+  index int NOT NULL,
   showing int NOT NULL,
   content text NOT NULL,
-  primary key(id, fen)
+  primary key(id, index)
 )`;
 
 const sql_create_dailyTactics_id_index =`CREATE  UNIQUE INDEX idx_dailyTacticsId ON dailyTactics(id)`;

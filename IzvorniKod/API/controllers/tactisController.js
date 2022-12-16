@@ -28,7 +28,7 @@ const addNewTactic = async (req, res, next)=>{
     }
 }
 
-const updateTactic = async (req, res, next)=>{
+const editTactic = async (req, res, next)=>{
 
     let result = await userInfo.getUserInfo(req, res);
 
@@ -39,16 +39,18 @@ const updateTactic = async (req, res, next)=>{
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener"){
 
         try{
+            let result1 = await DailyTactics.getTacticById(req.body.tactic.id);
+            if(result1 == 0){
+                return res.status(StatusCodes.BAD_REQUEST).json({'error':'Taktika ne postoji.'});
+            }
             let tactic = new DailyTactics(req.body.tactic.title, result.podatci[0], req.body.tactic.content);
-            console.log("ru")
-            let currentMaxId = await DailyTactics.getMaxId();
-            tactic.id = currentMaxId+1;
-
-            console.log(tactic.id)
+            tactic.showing = req.body.tactic.showing;
+            tactic.id = parseInt(req.body.tactic.id);
             tactic.moves = req.body.tactic.moves;
-            await tactic.saveMoves();
+            await tactic.editTactic();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
+            console.log(err)
             return res.status(StatusCodes.BAD_REQUEST).json({'error':err});
         }
     } else {
@@ -56,4 +58,4 @@ const updateTactic = async (req, res, next)=>{
     }
 }
 
-module.exports = {addNewTactic};
+module.exports = {addNewTactic, editTactic};

@@ -22,10 +22,14 @@ module.exports = class DailyTactics{
         }
     }
 
+    static async getTacticById(id){
+        return await dbGetTacticById(id);
+    }
+
 
     async saveMoves(){
-        this.moves.forEach(async (el)=>{
-            await dbSaveMove(el, this.id, this.title, this.trainer_id, this.showing, this.content);
+        this.moves.forEach(async (el, index)=>{
+            await dbSaveMove(el, this.id, this.title, this.trainer_id, this.showing, this.content, index);
         })
     }
 
@@ -45,9 +49,9 @@ dbRemoveAllMoves = async (id) =>{
     }
 }
 
-dbSaveMove = async (fen, id, title, trainer, showing, content) =>{
-    const sql = "insert into dailyTactics (id, title, trainer_id, fen, showing, content) values ('" +
-    id + "', '" + title + "', '" + trainer + "', '" + fen + "', '"+ showing + "', '"+ content + "')"
+dbSaveMove = async (fen, id, title, trainer, showing, content, index) =>{
+    const sql = "insert into dailyTactics (id, title, trainer_id, fen, showing, content, index) values ('" +
+    id + "', '" + title + "', '" + trainer + "', '" + fen + "', '"+ showing + "', '"+ content + "', '"+ index + "')"
     try {
         const result = await db.query(sql, []);
         return result.rows;
@@ -56,6 +60,17 @@ dbSaveMove = async (fen, id, title, trainer, showing, content) =>{
         throw err
     }
 
+}
+
+dbGetTacticById = async(id) =>{
+    const sql = "select * from dailyTactics where id = "+id;
+    try {
+        const result = await db.query(sql, []);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err
+    }
 }
 
 dbGetMaxId = async () =>{
