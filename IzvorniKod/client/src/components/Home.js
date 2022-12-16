@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import axios from '../api/axios';
 import News from "./News";
 import AddNewsFormDialog from "./AddNews";
-import PlayRandomMoveEngine from "./Chess";
+import DailyTactics from "./DailyTactics";
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -35,6 +35,12 @@ export default function Home(){
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const [userData, setUserData] = useState([]);
+    const [dailyTactics, setDailyTactics] = useState([{
+        "title": "First tactic",
+        "showing": 1
+    }
+
+    ]);
     const [data, setData] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
@@ -47,6 +53,7 @@ export default function Home(){
         navigate("/register");
     }
     const loadAllNews = async () => {
+        
         try {
             const response = await axios.get('/news', 
                                 {
@@ -176,9 +183,25 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
     </div>
 
 <br></br>
-<h4 className="paragraf"> ŠAH </h4>
-    <div className="app">
-        <WithMoveValidation/>
+<h4 className="paragraf paragraf-news">Dnevne taktike
+        {(userData[5] == 'trener' || userData[5] == 'admin') ?
+            <AddNewsFormDialog
+            handleClickAddNews = {handleClickAddNews}
+            title = {title}
+            content = {content}
+            setTitle = {setTitle}
+            setContent = {setContent}
+            user = {userData}
+            /> : <></>
+        }
+</h4>
+    <div className="news">
+        <DailyTactics
+            data={dailyTactics}
+            title = {title}
+            setTitle = {setTitle}
+            user = {userData}
+        />
     </div>
 
 <h4 className="paragraf">Kalendar</h4>

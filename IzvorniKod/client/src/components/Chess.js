@@ -6,7 +6,7 @@ import Chessboard from "chessboardjsx";
 
 class HumanVsHuman extends Component {
   static propTypes = { children: PropTypes.func };
-
+  
   state = {
     fen: "start",
     // square styles for active drop square
@@ -23,6 +23,7 @@ class HumanVsHuman extends Component {
 
   componentDidMount() {
     this.game = new Chess();
+    
   }
 
   // keep clicked square style and remove hint squares
@@ -60,11 +61,12 @@ class HumanVsHuman extends Component {
   };
 
   onDrop = ({ sourceSquare, targetSquare }) => {
+    console.log(this.game.fen())
     // see if the move is legal
     let move = this.game.move({
       from: sourceSquare,
       to: targetSquare,
-      promotion: "q" // always promote to a queen for example simplicity
+      promotion: undefined // always promote to a queen for example simplicity
     });
 
     // illegal move
