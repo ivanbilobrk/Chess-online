@@ -13,11 +13,10 @@ const addNewTactic = async (req, res, next)=>{
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener"){
 
         try{
-            let tactic = new DailyTactics(req.body.tactic.title, result.podatci[0]);
+            let tactic = new DailyTactics(req.body.tactic.title, result.podatci[0], req.body.tactic.content);
             let currentMaxId = await DailyTactics.getMaxId();
             tactic.id = currentMaxId+1;
 
-            console.log(req.body.tactic.moves)
             tactic.moves = req.body.tactic.moves;
             await tactic.saveMoves();
             return res.sendStatus(StatusCodes.OK);
@@ -40,16 +39,17 @@ const updateTactic = async (req, res, next)=>{
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener"){
 
         try{
-            let tactic = new DailyTactics(req.body.tactic.title, result.podatci[0]);
+            let tactic = new DailyTactics(req.body.tactic.title, result.podatci[0], req.body.tactic.content);
+            console.log("ru")
             let currentMaxId = await DailyTactics.getMaxId();
             tactic.id = currentMaxId+1;
 
-            console.log(req.body.tactic.moves)
+            console.log(tactic.id)
             tactic.moves = req.body.tactic.moves;
             await tactic.saveMoves();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
-            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dodati taktiku.'});
+            return res.status(StatusCodes.BAD_REQUEST).json({'error':err});
         }
     } else {
         return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za dodati taktiku.'});

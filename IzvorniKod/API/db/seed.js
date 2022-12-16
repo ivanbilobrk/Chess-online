@@ -81,6 +81,7 @@ const sql_create_dailyTactics= `CREATE TABLE dailyTactics(
   fen text NOT NULL,
   index int NOT NULL generated always as identity,
   showing int NOT NULL,
+  content text NOT NULL,
   primary key(id, fen)
 )`;
 

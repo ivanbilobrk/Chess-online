@@ -3,7 +3,8 @@ const db = require('../db/index');
 module.exports = class DailyTactics{
 
     //kostruktor svakog korisnika
-    constructor(title, trainer_id){
+    constructor(title, trainer_id, content){
+       this.content = content;
        this.id = undefined,
        this.showing = 1,
        this.moves = [],
@@ -24,7 +25,7 @@ module.exports = class DailyTactics{
 
     async saveMoves(){
         this.moves.forEach(async (el)=>{
-            await dbSaveMove(el, this.id, this.title, this.trainer_id, this.showing);
+            await dbSaveMove(el, this.id, this.title, this.trainer_id, this.showing, this.content);
         })
     }
 
@@ -44,9 +45,9 @@ dbRemoveAllMoves = async (id) =>{
     }
 }
 
-dbSaveMove = async (fen, id, title, trainer, showing) =>{
-    const sql = "insert into dailyTactics (id, title, trainer_id, fen, showing) values ('" +
-    id + "', '" + title + "', '" + trainer + "', '" + fen + "', '"+ showing + "')"
+dbSaveMove = async (fen, id, title, trainer, showing, content) =>{
+    const sql = "insert into dailyTactics (id, title, trainer_id, fen, showing, content) values ('" +
+    id + "', '" + title + "', '" + trainer + "', '" + fen + "', '"+ showing + "', '"+ content + "')"
     try {
         const result = await db.query(sql, []);
         return result.rows;
