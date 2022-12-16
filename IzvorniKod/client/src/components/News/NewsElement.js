@@ -7,11 +7,35 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import { FiEdit3, FiX } from "react-icons/fi";
 import UpdateNews from "./UpdateNews"
-import './home.css';
+import '../home.css';
+import axios from '../../api/axios';
 
-const NewsElement = ({element, handleClickUpdateNews, title, content, setTitle, setContent, user}) => {
+const NewsElement = ({element, loadAllNews, title, content, setTitle, setContent, user}) => {
     let deleteButton = <></>;
     let editButton = <></>;
+    
+    const handleClickUpdateNews = async (title, content, showing, id) =>{
+      try {
+          const response = await axios.post('/news/update', 
+              JSON.stringify({ 
+                              news:{
+                                  title: title,
+                                  content: content,
+                                  showing: showing,
+                                  id: id
+                              }
+                              }),
+                              {
+                                  headers: {'Content-Type':'application/json'},
+                                  withCredentials: true
+                              });
+  
+      } catch (err) {                                        
+          console.error(err.response);
+      
+      }
+      loadAllNews();
+  };
 
     if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer)){
         deleteButton =  <IconButton 
@@ -26,7 +50,8 @@ const NewsElement = ({element, handleClickUpdateNews, title, content, setTitle, 
         
                         >
                             <UpdateNews
-                                handleClickUpdateNews = {handleClickUpdateNews}
+                                handleClickUpdateNews={handleClickUpdateNews}
+                                loadAllNews={loadAllNews}
                                 title = {title}
                                 content = {content}
                                 setTitle = {setTitle}

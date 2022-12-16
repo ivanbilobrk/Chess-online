@@ -176,7 +176,8 @@ export default function WithMoveValidation() {
             onMouseOutSquare={onMouseOutSquare}
             boardStyle={{
               borderRadius: "5px",
-              boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+              boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`,
+              margin: "10px"
             }}
             squareStyles={squareStyles}
             dropSquareStyle={dropSquareStyle}

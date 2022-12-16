@@ -11,9 +11,9 @@ import Footer from './Footer';
 
 import { useEffect } from "react";
 import axios from '../api/axios';
-import News from "./News";
-import AddNewsFormDialog from "./AddNews";
-import DailyTactics from "./DailyTactics";
+import News from "./News/News";
+import AddNewsFormDialog from "./News/AddNews";
+import DailyTactics from "./DailyTactics/DailyTactics";
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -26,7 +26,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import WithMoveValidation from "./Chess";
+import AddDailyTacticsFormDialog from "./DailyTactics/AddDailyTactics";
 
 
 //kraj dodavanja
@@ -37,7 +37,8 @@ export default function Home(){
     const [userData, setUserData] = useState([]);
     const [dailyTactics, setDailyTactics] = useState([{
         "title": "First tactic",
-        "showing": 1
+        "showing": 1,
+        "trainer": 1
     }
 
     ]);
@@ -68,48 +69,9 @@ export default function Home(){
         }
     };
 
-    const handleClickUpdateNews = async (title, content, showing, id) =>{
-        try {
-            const response = await axios.post('/news/update', 
-                JSON.stringify({ 
-                                news:{
-                                    title: title,
-                                    content: content,
-                                    showing: showing,
-                                    id: id
-                                }
-                                }),
-                                {
-                                    headers: {'Content-Type':'application/json'},
-                                    withCredentials: true
-                                });
     
-        } catch (err) {                                        
-            console.error(err.response);
-        
-        }
-        loadAllNews();
-    };
     
-    const handleClickAddNews = async (title, content) => {
-        try {
-            const response = await axios.post('/news/add', 
-                JSON.stringify({ 
-                                news:{
-                                    title: title,
-                                    content: content
-                                }
-                                }),
-                                {
-                                    headers: {'Content-Type':'application/json'},
-                                    withCredentials: true
-                                });
-        } catch (err) {                                        
-            console.error(err.response);
-        
-        }
-        loadAllNews();
-    };
+    
 
     //tu počinje js
     const [date, setDate] = useState(new Date());
@@ -125,6 +87,7 @@ export default function Home(){
                 isMounted && setUserData(response.data.podatci);
             } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);
+
                 
             }
         }
@@ -161,7 +124,7 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
 <h4 className="paragraf paragraf-news">Novosti
         {(userData[5] == 'trener' || userData[5] == 'admin') ?
             <AddNewsFormDialog
-                handleClickAddNews = {handleClickAddNews}
+                loadAllNews={loadAllNews}
                 title = {title}
                 content = {content}
                 setTitle = {setTitle}
@@ -173,7 +136,7 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
     <div className="news">
         <News
             data={data}
-            handleClickUpdateNews = {handleClickUpdateNews}
+            loadAllNews={loadAllNews}
             title = {title}
             content = {content}
             setTitle = {setTitle}
@@ -183,14 +146,12 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
     </div>
 
 <br></br>
+
 <h4 className="paragraf paragraf-news">Dnevne taktike
         {(userData[5] == 'trener' || userData[5] == 'admin') ?
-            <AddNewsFormDialog
-            handleClickAddNews = {handleClickAddNews}
+            <AddDailyTacticsFormDialog
             title = {title}
-            content = {content}
             setTitle = {setTitle}
-            setContent = {setContent}
             user = {userData}
             /> : <></>
         }
@@ -199,10 +160,14 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
         <DailyTactics
             data={dailyTactics}
             title = {title}
+            content={content}
             setTitle = {setTitle}
+            setContent={setContent}
             user = {userData}
         />
     </div>
+    
+<br></br>
 
 <h4 className="paragraf">Kalendar</h4>
                 <div className="app">
