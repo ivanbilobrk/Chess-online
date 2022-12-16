@@ -26,6 +26,37 @@ module.exports = class DailyTactics{
         return await dbGetTacticById(id);
     }
 
+    static async getAllTactics(){
+        const map1 = new Map();
+
+        let result = await dbGetAllTactics();
+        result.forEach((el)=>{
+            let temp = map1.get(el.id);
+            if(temp == null || temp == undefined){
+                map1.set(el.id, {title: el.title, trainer: el.trainer_id, moves: [{fen: el.fen, index: el.index}], content: el.content, showing: el.showing})
+            } else {
+                let tempArray = [...map1.get(el.id).moves, {fen: el.fen, index: el.index}];
+                map1.set(el.id, {title: el.title, trainer: el.trainer_id, moves: tempArray, content: el.content, showing: el.showing})
+            }
+        });
+
+        let sorted = [];
+
+        let index = 0;
+        map1.forEach((value, key)=>{
+            sorted[index++] = {
+                title: value.title,
+                id: key,
+                trainer_id: value.trainer,
+                showing : value.showing,
+                content: value.content,
+                moves: value.moves
+            }
+        });
+        return sorted;
+
+    }
+
 
     async saveMoves(){
         this.moves.forEach(async (el, index)=>{
@@ -36,6 +67,17 @@ module.exports = class DailyTactics{
     async editTactic(){
         await dbRemoveAllMoves(this.id);
         await this.saveMoves();
+    }
+}
+
+dbGetAllTactics = async () =>{
+    const sql = "select * from dailyTactics"
+    try {
+        const result = await db.query(sql, []);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err
     }
 }
 

@@ -50,12 +50,34 @@ const editTactic = async (req, res, next)=>{
             await tactic.editTactic();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
-            console.log(err)
-            return res.status(StatusCodes.BAD_REQUEST).json({'error':err});
+            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu promjeniti taktiku.'});
         }
     } else {
         return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za dodati taktiku.'});
     }
 }
 
-module.exports = {addNewTactic, editTactic};
+const getAllTactics = async (req, res, next)=>{
+
+    let result = await userInfo.getUserInfo(req, res);
+
+    if(result == 401){
+        return res.sendStatus(401);
+    } else if(result == 403){
+        return res.sendStatus(403);
+    } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener"){
+
+        try{
+            let result1 = await DailyTactics.getAllTactics();
+            return res.status(StatusCodes.OK).json({tactics: result1});
+        } catch(err){
+            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti sve taktike.'});
+        }
+    } else {
+        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za dodati taktiku.'});
+    }
+}
+
+
+
+module.exports = {addNewTactic, editTactic, getAllTactics};
