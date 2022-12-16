@@ -26,6 +26,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import WithMoveValidation from "./Chess";
 
 
 //kraj dodavanja
@@ -177,7 +178,7 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
 <br></br>
 <h4 className="paragraf"> ŠAH </h4>
     <div className="app">
-        <PlayRandomMoveEngine/>
+        <WithMoveValidation/>
     </div>
 
 <h4 className="paragraf">Kalendar</h4>
