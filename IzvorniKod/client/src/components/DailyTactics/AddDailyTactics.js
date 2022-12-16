@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -13,8 +14,10 @@ import WithMoveValidation from './Chess';
 
 
 const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user}) => {
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [moves, setMoves] = useState([]);
+  const [start, setStart] = useState("start");
+  console.log(moves)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -22,22 +25,22 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSubmit = async () => {
+  const handleStart = async () => {
+    setMoves([]);
+  };
+  const handleSubmit = async (title, content, moves) => {
+    await handleClickAddDailyTactics(title, content, moves);
     setOpen(false);
   };
-  const handleStart = async (title, content) => {
-    await handleClickAddDailyTactics(title, content);
-    setOpen(false);
-  };
-  const handleClickAddDailyTactics = async (title, content) => {
+  const handleClickAddDailyTactics = async (title, content, moves) => {
     try {
-        const response = await axios.post('/tactics/add',  /* provjeri path */
+        const response = await axios.post('/tactics/add',  
             JSON.stringify({ 
                             tactic:{
                                 title: title,
                                 content: content,
-                                moves: []
-                                /* dodaj ostale vrijednosti */
+                                moves: moves
+                                
                             }
                             }),
                             {
@@ -46,6 +49,7 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
                             });
     } catch (err) {                                        
         console.error(err.response);
+    
     
     }
 };
@@ -84,12 +88,15 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
           <Button onClick={handleStart}>Započni</Button>
           <div style={{display:'flex', justifyContent:'center'}}>
             <WithMoveValidation
+             moves={moves}
+             start={start}
+             setMoves={setMoves}
             />
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odustani</Button>
-          <Button onClick={()=>handleSubmit(title,content)}>Potvrdi</Button>
+          <Button onClick={()=>handleSubmit(title, content, moves)}>Potvrdi</Button>
         </DialogActions>
       </Dialog>
     </div>

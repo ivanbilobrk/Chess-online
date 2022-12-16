@@ -8,7 +8,7 @@ class HumanVsHuman extends Component {
   static propTypes = { children: PropTypes.func };
   
   state = {
-    fen: "start",
+    fen: this.props.start,
     // square styles for active drop square
     dropSquareStyle: {},
     // custom square styles
@@ -23,7 +23,6 @@ class HumanVsHuman extends Component {
 
   componentDidMount() {
     this.game = new Chess();
-    
   }
 
   // keep clicked square style and remove hint squares
@@ -63,6 +62,8 @@ class HumanVsHuman extends Component {
   onDrop = ({ sourceSquare, targetSquare }) => {
     console.log(this.game.fen())
     // see if the move is legal
+    this.props.setMoves(oldArray => [...oldArray, this.game.fen()]);
+    
     let move = this.game.move({
       from: sourceSquare,
       to: targetSquare,
@@ -152,10 +153,14 @@ class HumanVsHuman extends Component {
   }
 }
 
-export default function WithMoveValidation() {
+export default function WithMoveValidation({moves, start, setMoves}) {
   return (
     <div>
-      <HumanVsHuman>
+      <HumanVsHuman 
+       moves = {moves}
+       start = {start}
+       setMoves = {setMoves}
+       >
         {({
           position,
           onDrop,

@@ -20,7 +20,8 @@ import UpdateDailyTacticsFormDialog from './UpdateDailyTactics';
 const DailyTacticsElement = ({element, title, content, user}) => {
     let deleteButton = <></>;
     let editButton = <></>;
-    const [moves, setMoves] = useState("");
+    const [moves, setMoves] = useState([]);
+    const [start, setStart] = useState("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2");
 
     const handleClose = () => {
     };
@@ -28,7 +29,7 @@ const DailyTacticsElement = ({element, title, content, user}) => {
     };
     const handleRangList = () => {
     };
-    const handleClickUpdateDailyTactics = async (title, content, showing, moves) =>{
+    const handleClickEditDailyTactics = async (title, content, showing, moves) =>{
       try {
           const response = await axios.post('/tactics/edit',  /* provjeri path */
               JSON.stringify({ 
@@ -57,7 +58,7 @@ const DailyTacticsElement = ({element, title, content, user}) => {
                             aria-label="remove" 
                         >
                             <FiX 
-                                onClick={()=>handleClickUpdateDailyTactics(title, content, 0, [])}
+                                onClick={()=>handleClickEditDailyTactics(title, content, 0, moves)}
                             />
                         </IconButton>;
         editButton =    <IconButton 
@@ -65,7 +66,7 @@ const DailyTacticsElement = ({element, title, content, user}) => {
         
                         >
                             <UpdateDailyTacticsFormDialog
-                                handleClickUpdateDailyTactics={handleClickUpdateDailyTactics}
+                                handleClickUpdateDailyTactics={handleClickEditDailyTactics}
                                 title = {element.title}
                                 content={element.content}
                             />
@@ -91,6 +92,7 @@ const DailyTacticsElement = ({element, title, content, user}) => {
             <div style={{display:'flex', justifyContent:'center'}}>
               <WithMoveValidation
                moves = {moves}
+               start = {start}
                setMoves = {setMoves}
                />
             </div>

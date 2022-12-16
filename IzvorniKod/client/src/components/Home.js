@@ -42,7 +42,7 @@ export default function Home(){
     }
 
     ]);
-    const [data, setData] = useState([]);
+    const [news, setNews] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
 
@@ -62,16 +62,28 @@ export default function Home(){
                                     withCredentials: true
                                 });
             
-            setData(response.data.newsAll);
+            setNews(response.data.newsAll);
+        } catch (err) {                                        
+            console.error(err.response);
+            
+        }
+    };
+    const loadAllTactics = async () => {
+        
+        try {
+            const response = await axios.get('/tactics', 
+                                {
+                                    headers: {'Content-Type':'application/json'},
+                                    withCredentials: true
+                                });
+            
+            setDailyTactics(response.data.tactics);
         } catch (err) {                                        
             console.error(err.response);
             
         }
     };
 
-    
-    
-    
 
     //tu počinje js
     const [date, setDate] = useState(new Date());
@@ -92,10 +104,10 @@ export default function Home(){
             }
         }
         
-        
         getData();
         
         loadAllNews();
+        loadAllTactics();
         
         return () => {
             isMounted = false;
@@ -135,7 +147,7 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
 </h4>
     <div className="news">
         <News
-            data={data}
+            data={news}
             loadAllNews={loadAllNews}
             title = {title}
             content = {content}
@@ -151,7 +163,9 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
         {(userData[5] == 'trener' || userData[5] == 'admin') ?
             <AddDailyTacticsFormDialog
             title = {title}
+            content = {content}
             setTitle = {setTitle}
+            setContent = {setContent}
             user = {userData}
             /> : <></>
         }
