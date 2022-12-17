@@ -12,30 +12,33 @@ import WithMoveValidation from './Chess';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import axios from '../../api/axios';
+import axios from '../../hooks/useAxiosPrivate';
 import DialogActions from '@mui/material/DialogActions';
 import '../home.css';
 import UpdateDailyTacticsFormDialog from './UpdateDailyTactics';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const DailyTacticsElement = ({element, title, content, user}) => {
+    const axiosPrivate = useAxiosPrivate();
     let deleteButton = <></>;
     let editButton = <></>;
     const [moves, setMoves] = useState([]);
-    const [start, setStart] = useState("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2");
+    const [start, setStart] = useState(element.moves[1].fen);
 
     const handleClose = () => {
     };
     const handleSubmit = () => {
     };
     const handleRangList = () => {
+      console.log(element)
     };
-    const handleClickEditDailyTactics = async (title, content, showing, moves) =>{
+    const handleClickEditDailyTactics = async (title, content, showing, moves, id) =>{
       try {
-          const response = await axios.post('/tactics/edit',  /* provjeri path */
+         await axiosPrivate.post('/tactic/private/edit',  /* provjeri path */
               JSON.stringify({ 
                               tactic:{
                                   title: title,
-                                  id: user.id,
+                                  id: id,
                                   content: content,
                                   showing: showing,
                                   moves: moves
@@ -53,12 +56,12 @@ const DailyTacticsElement = ({element, title, content, user}) => {
       }
   };
 
-    if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer)){
+    if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer_id)){
         deleteButton =  <IconButton 
                             aria-label="remove" 
                         >
                             <FiX 
-                                onClick={()=>handleClickEditDailyTactics(title, content, 0, moves)}
+                                onClick={()=>handleClickEditDailyTactics(element.title, element.content, 0, element.moves, element.id)}
                             />
                         </IconButton>;
         editButton =    <IconButton 
@@ -67,6 +70,7 @@ const DailyTacticsElement = ({element, title, content, user}) => {
                         >
                             <UpdateDailyTacticsFormDialog
                                 handleClickUpdateDailyTactics={handleClickEditDailyTactics}
+                                start = {start}
                                 title = {element.title}
                                 content={element.content}
                             />
@@ -88,6 +92,11 @@ const DailyTacticsElement = ({element, title, content, user}) => {
            </Typography>
         </AccordionSummary>
         <AccordionDetails>
+        <Typography>
+            {element.content} 
+           </Typography>
+
+
           <Typography>
             <div style={{display:'flex', justifyContent:'center'}}>
               <WithMoveValidation

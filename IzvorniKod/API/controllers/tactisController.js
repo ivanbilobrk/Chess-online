@@ -30,7 +30,7 @@ const addNewTactic = async (req, res, next)=>{
 
 const editTactic = async (req, res, next)=>{
     let result = await userInfo.getUserInfo(req, res);
-
+    console.log(result + "ee")
     if(result == 401){
         return res.sendStatus(401);
     } else if(result == 403){

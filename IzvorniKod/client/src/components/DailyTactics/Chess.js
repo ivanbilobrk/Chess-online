@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Button from '@mui/material/Button';
 import PropTypes from "prop-types";
 import { Chess } from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess() not being a constructor
 
@@ -22,7 +23,12 @@ class HumanVsHuman extends Component {
   };
 
   componentDidMount() {
-    this.game = new Chess();
+    if(this.props.start == "start"){
+      this.game = new Chess();
+    } else {
+      this.game = new Chess(this.props.start)
+    }
+  
   }
 
   // keep clicked square style and remove hint squares
@@ -60,10 +66,9 @@ class HumanVsHuman extends Component {
   };
 
   onDrop = ({ sourceSquare, targetSquare }) => {
-    console.log(this.game.fen())
     // see if the move is legal
-    this.props.setMoves(oldArray => [...oldArray, this.game.fen()]);
     
+    this.props.setMoves(oldArray => [...oldArray, this.game.fen()]);
     let move = this.game.move({
       from: sourceSquare,
       to: targetSquare,
@@ -152,6 +157,12 @@ class HumanVsHuman extends Component {
     });
   }
 }
+//treba dovrsit
+const handleReset = ({setMoves}) => {
+
+
+  
+};
 
 export default function WithMoveValidation({moves, start, setMoves}) {
   return (
@@ -172,6 +183,7 @@ export default function WithMoveValidation({moves, start, setMoves}) {
           onSquareClick,
           onSquareRightClick
         }) => (
+          <>
           <Chessboard
             id="humanVsHuman"
             width={320}
@@ -190,6 +202,8 @@ export default function WithMoveValidation({moves, start, setMoves}) {
             onSquareClick={onSquareClick}
             onSquareRightClick={onSquareRightClick}
           />
+          <Button onClick={()=>{handleReset(setMoves)}}>Resetiraj</Button>
+            </>
         )}
       </HumanVsHuman>
     </div>

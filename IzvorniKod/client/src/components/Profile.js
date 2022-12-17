@@ -50,9 +50,8 @@ export default function Profile(){
         const controller = new AbortController();
         const getData = async () => {
             try {
-                const response = await axiosPrivate.get(`/user/${auth.user}`, {
+                const response = await axiosPrivate.get(`/user`, {
                 });
-                console.log(response.data.podatci);
                 isMounted && setData(response.data.podatci);
             } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);

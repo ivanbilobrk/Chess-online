@@ -10,14 +10,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FaPlus } from 'react-icons/fa';
 import '../home.css';
 import axios from '../../api/axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import WithMoveValidation from './Chess';
 
 
 const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user}) => {
+  const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
   const [moves, setMoves] = useState([]);
   const [start, setStart] = useState("start");
-  console.log(moves)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,16 +26,14 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
   const handleClose = () => {
     setOpen(false);
   };
-  const handleStart = async () => {
-    setMoves([]);
-  };
+
   const handleSubmit = async (title, content, moves) => {
     await handleClickAddDailyTactics(title, content, moves);
     setOpen(false);
   };
   const handleClickAddDailyTactics = async (title, content, moves) => {
     try {
-        const response = await axios.post('/tactics/add',  
+        const response = await axiosPrivate.post('/tactic/private/add',  
             JSON.stringify({ 
                             tactic:{
                                 title: title,
@@ -85,7 +84,7 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
             variant="standard"
             onChange={(e) => setContent(e.target.value)}
           />
-          <Button onClick={handleStart}>Započni</Button>
+          
           <div style={{display:'flex', justifyContent:'center'}}>
             <WithMoveValidation
              moves={moves}

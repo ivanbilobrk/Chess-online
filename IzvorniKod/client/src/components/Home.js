@@ -35,13 +35,7 @@ export default function Home(){
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const [userData, setUserData] = useState([]);
-    const [dailyTactics, setDailyTactics] = useState([{
-        "title": "First tactic",
-        "showing": 1,
-        "trainer": 1
-    }
-
-    ]);
+    const [dailyTactics, setDailyTactics] = useState([]);
     const [news, setNews] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
@@ -93,14 +87,11 @@ export default function Home(){
         const controller = new AbortController();
         const getData = async () => {
             try {
-                const response = await axiosPrivate.get(`/user/${auth.user}`, {
+                const response = await axiosPrivate.get(`/user`, {
                 });
-                console.log(response.data.podatci)
                 isMounted && setUserData(response.data.podatci);
-            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+            } catch (err) {                      //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);
-
-                
             }
         }
         
@@ -108,6 +99,7 @@ export default function Home(){
         
         loadAllNews();
         loadAllTactics();
+        console.log(dailyTactics)
         
         return () => {
             isMounted = false;

@@ -10,8 +10,10 @@ import { FaPlus } from 'react-icons/fa';
 import '../home.css';
 import { FiEdit3, FiX } from 'react-icons/fi';
 import WithMoveValidation from './Chess';
+import { useState } from 'react';
 
-const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, content}) => {
+const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, content, start}) => {
+  const [moves, setMoves] = useState([start]);
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,7 +25,8 @@ const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, con
   const handleSubmit = async (title,content) => {
     setOpen(false);
   };
-  const handleStart = () => {
+  const handleReset = () => {
+    
     
   };
   
@@ -39,11 +42,9 @@ const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, con
           <DialogContentText>
             Za uređivanje taktike unesi novo rješenje.
           </DialogContentText>
-          
-          <Button onClick={handleStart}>Započni</Button>
+          <Button onClick={handleReset}>Resetiraj</Button>
           <div style={{display:'flex', justifyContent:'center'}}>
-            <WithMoveValidation
-            />
+            <WithMoveValidation start={start} moves = {moves} setMoves = {setMoves}/>
           </div>
         </DialogContent>
         <DialogActions>
