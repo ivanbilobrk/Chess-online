@@ -13,6 +13,7 @@ import Layout from './components/Layout';
 import Unauthorized from "./pages/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
 import BlockAuth from './components/BlockAuth';
+import TrainingPage from "./pages/TrainingPage";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
             <Route path="login" element = {<LoginPage/>}></Route>
             </Route>
             <Route path="about" element = {<AboutPage/>}></Route>
-           
+            <Route path="training" element = {<TrainingPage/>}></Route>
             <Route path="unauthorized" element={<Unauthorized />} />
 
           <Route element={<PersistLogin />}>

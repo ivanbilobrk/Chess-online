@@ -37,6 +37,9 @@ export default function HeaderSigned() {
                   <Link to="/profile" style={{textDecoration: 'none', color: 'white', float: 'right'}}> 
                       <Button color="inherit" sx={{ mr:1 }}>Osobni podatci</Button>
                   </Link>
+                  <Link to="/training" style={{textDecoration: 'none', color: 'white', float: 'right'}}> 
+                      <Button color="inherit" sx={{ mr:1 }}>Treninzi</Button>
+                  </Link>
                   
               </ToolbarGroup>
           </Toolbar>
