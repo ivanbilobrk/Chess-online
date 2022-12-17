@@ -21,6 +21,8 @@ app.use('/login', require('./routes/login.routes'));
 app.use('/logout', require('./routes/logout.routes'));
 app.use('/refresh', require('./routes/refresh.routes'));
 app.use('/news', require('./routes/news.routes'));
+app.use('/tactics', require('./routes/tactics.routes'));
+app.use('/scores', require('./routes/score.routes'));
 
 app.use(verifyJWT);  //every route after this line here will use verifyJWT middleware
 
@@ -37,7 +39,8 @@ app.use(verifyJWT);  //every route after this line here will use verifyJWT middl
 
 app.use('/user', require('./routes/user.routes'));
 app.use('/transactions', require('./routes/transaction.routes'))
-app.use('/tactics', require('./routes/tactics.routes'));
+app.use('/tactic/private', require('./routes/tacticPriv.routes'));
+app.use('/score/add', require('./routes/scorePriv.routes'));
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});

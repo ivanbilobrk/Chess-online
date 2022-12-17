@@ -29,7 +29,6 @@ const addNewTactic = async (req, res, next)=>{
 }
 
 const editTactic = async (req, res, next)=>{
-
     let result = await userInfo.getUserInfo(req, res);
 
     if(result == 401){

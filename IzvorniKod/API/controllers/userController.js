@@ -18,5 +18,10 @@ const getUserInfo = async (req, res) => {
     }
 }
 
+const getUserInfoById = async (req, res) =>{
+    let result = await User.getUserInfoById(req.body.user.id);
+    return res.status(StatusCodes.OK).json(result);
+}
 
-module.exports = { getUserInfo }
+
+module.exports = { getUserInfo, getUserInfoById }

@@ -111,11 +111,9 @@ const sql_create_reportedMistake =`CREATE TABLE reportedMistake(
 
 const sql_create_score = `CREATE TABLE score(
 	member_id int REFERENCES users(id),
-	tactic_id int REFERENCES dailyTactics(id),
-	solvingTime time NOT NULL,
-	accuracy float NOT NULL,
+	tactic_id int NOT NULL,
+	solvingTime int NOT NULL,
 	PRIMARY KEY(member_id, tactic_id)
-	
 )`;
 
 
