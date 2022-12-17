@@ -103,6 +103,7 @@ export default function Profile(){
                             ) : <p>No data to display</p>
                         }
                     </Item>
+                    <Item><Typography color="text.secondary"> <Link to="/edit" style={{ color: '#00F'}}>Uredi profil</Link>.</Typography></Item>
                 </Grid>
 
                 <Grid item xs={6}> {/*POVIJEST PLACANJA*/}

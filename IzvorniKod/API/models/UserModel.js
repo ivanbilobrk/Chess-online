@@ -86,6 +86,11 @@ module.exports = class User{
         return newUser
     }
 
+   
+        async updateProfile(){
+            await dbEditUser(this);
+        }
+
      //da li je korisnik pohranjen u bazu podataka?
     isPersisted() {
         return this.id !== undefined
@@ -185,4 +190,22 @@ dbUpdateUser = async (userName, refreshToken) => {
     }
 }
 
+dbEditUser=async(user) =>{
+    const sql = "update users set name = '"+ user.name+"', surname = '"+ user.surname+"', username = '"+ user.surname+"', email = '"+ 
+    user.email+"' where id = '"+ user.id+"'";
+
+/*try {
+await db.query(sql, []);
+} catch (err) {
+console.log(err);
+throw err;
+}         */
+try {
+    const result = await db.query(sql, []);
+    return result.rows;
+} catch (err) {
+    console.log(err);
+    throw err
+}  
+}
 
