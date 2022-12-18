@@ -47,7 +47,7 @@ export default function EditProfile(){
 
     const handleClickUpdateProfile = async (username, name, surname, email , id) =>{
         try {
-            const response =await axios.post('/edit/update', 
+            const response =await axiosPrivate.post('/edit/update', 
                 JSON.stringify({ 
                                 user:{
                                   username: username,

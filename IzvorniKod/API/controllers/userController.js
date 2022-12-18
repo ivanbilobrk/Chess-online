@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel')
 const { StatusCodes } = require('http-status-codes');
 const userInfo = require('../helpFunctions/userInfo');
-const { StatusCodes } = require('http-status-codes');
-const userInfo = require('../helpFunctions/userInfo');
+//const { StatusCodes } = require('http-status-codes');
+//const userInfo = require('../helpFunctions/userInfo');
 const News = require('../models/NewsModel');
-const userInfo = require('../helpFunctions/userInfo');
+//const userInfo = require('../helpFunctions/userInfo');
 const userInfo2 = require('../helpFunctions/userInfo2');
 const getUserInfo = async (req, res) => {
    
