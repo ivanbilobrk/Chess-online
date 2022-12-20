@@ -12,28 +12,24 @@ import { FiEdit3, FiX } from 'react-icons/fi';
 import WithMoveValidation from './Chess';
 import { useState } from 'react';
 
-const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, content, start}) => {
-  const [moves, setMoves] = useState([start]);
+const UpdateDailyTacticsFormDialog = ({id, handleClickUpdateDailyTactics, title, content, start}) => {
+  const [moves, setMoves] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [set, setSet] = useState(true);
+
   const handleClickOpen = () => {
+    setMoves([start]);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSubmit = async (title,content) => {
+  const handleSubmit = async (title, content, showing, moves, id) => {
+    console.log('moves to update: ' + moves)
+    await handleClickUpdateDailyTactics(title, content, showing, moves, id);
     setOpen(false);
   };
-  const handleReset = () => {
-    
-    
-  };
-  const handleStart = () => {
-    
-    
-  };
-  
 
   return (
     <div>
@@ -46,15 +42,20 @@ const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, con
           <DialogContentText>
             Za uređivanje taktike unesi novo rješenje.
           </DialogContentText>
-          <Button onClick={handleReset}>Resetiraj</Button>
-          <Button onClick={handleStart}>Započni</Button>
           <div style={{display:'flex', justifyContent:'center'}}>
-            <WithMoveValidation start={start} moves = {moves} setMoves = {setMoves}/>
+            <WithMoveValidation
+              flag = {false}
+              set = {set}
+              setSet = {setSet}
+              start={start} 
+              moves = {moves} 
+              setMoves = {setMoves}
+            />
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odustani</Button>
-          <Button onClick={()=>handleSubmit(title,content)}>Potvrdi</Button>
+          <Button onClick={()=>handleSubmit(title, content, 1, moves, id)}>Potvrdi</Button>
         </DialogActions>
       </Dialog>
     </div>

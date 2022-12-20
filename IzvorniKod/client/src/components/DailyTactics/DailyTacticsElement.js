@@ -29,10 +29,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     const [time, setTime] = useState();
     const [tactic, setTactic] = useState([]);
     const [set, setSet] = useState(false);
-    
-    const handleClose = () => {
-      document.location.reload();
-    };
+
     const handleStart = async () => {
       setSet(true);
       setTime(Date.now())
@@ -53,14 +50,13 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     }
    
     const handleSubmit = async (userId, tacticId, time) => {
-      console.log("moves: "+ moves)
-      
+      console.log("moves to submit: "+ moves)
       tactic[element.id].moves = tactic[element.id].moves.slice(1)
       for (let j = 0; j < tactic[element.id].moves.length; j++){
         console.log("tactic.moves:"+ tactic[element.id].moves[j].fen)
       }
       if (moves.length != tactic[element.id].moves.length) {
-         document.location.reload();   //trenutno ne znam kako bi bolje resetirao plocu nego reload cijele stranice
+         //document.location.reload();   //trenutno ne znam kako bi bolje resetirao plocu nego reload cijele stranice
          return;
       }
 
@@ -69,7 +65,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
         console.log("tactic: [" + i +"]"+tactic[element.id].moves[i].fen)
         if (moves[i] != tactic[element.id].moves[i].fen){ 
            console.log('krivo rjesenje')
-           document.location.reload()
+           //document.location.reload()
            return;
 
         }
@@ -136,6 +132,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
         
                         >
                             <UpdateDailyTacticsFormDialog
+                                id = {element.id}
                                 handleClickUpdateDailyTactics={handleClickEditDailyTactics}
                                 start = {start}
                                 title = {element.title}

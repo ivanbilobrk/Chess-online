@@ -75,7 +75,6 @@ class HumanVsHuman extends Component {
 
   onDrop = ({ sourceSquare, targetSquare }) => {
 
-    
     // see if the move is legal
     if (!this.props.set ) return;
     let move = this.game.move({
@@ -92,7 +91,7 @@ class HumanVsHuman extends Component {
     }));
 
     this.props.setMoves(oldArray => [...oldArray, this.game.fen()]);
-    console.log(this.props.moves)
+    console.log(this.game.fen())
 
   };
 
@@ -177,12 +176,12 @@ export default function WithMoveValidation({flag, set, setSet, moves, start, set
   return (
     <div>
       <HumanVsHuman 
-       flag = {flag}
-       set = {set}
-       setSet = {setSet}
-       moves = {moves}
-       start = {start}
-       setMoves = {setMoves}
+        flag = {flag}
+        set = {set}
+        setSet = {setSet}
+        moves = {moves}
+        start = {start}
+        setMoves = {setMoves}
        >
         {({
           position,
@@ -219,8 +218,6 @@ export default function WithMoveValidation({flag, set, setSet, moves, start, set
             (<Button onClick={handleClose}>Odustani</Button>) : <></>
           }
             </>
-            
-
         )}
       </HumanVsHuman>
     </div>
