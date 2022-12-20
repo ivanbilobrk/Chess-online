@@ -48,7 +48,6 @@ export default function Home(){
         navigate("/register");
     }
     const loadAllNews = async () => {
-        
         try {
             const response = await axios.get('/news', 
                                 {
@@ -154,16 +153,18 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
 <h4 className="paragraf paragraf-news">Dnevne taktike
         {(userData[5] == 'trener' || userData[5] == 'admin') ?
             <AddDailyTacticsFormDialog
-            title = {title}
-            content = {content}
-            setTitle = {setTitle}
-            setContent = {setContent}
-            user = {userData}
-            /> : <></>
+                loadAllTactics= {loadAllTactics}
+                title = {title}
+                content = {content}
+                setTitle = {setTitle}
+                setContent = {setContent}
+                user = {userData}
+                /> : <></>
         }
 </h4>
     <div className="news">
         <DailyTactics
+            loadAllTactics= {loadAllTactics}
             data={dailyTactics}
             title = {title}
             content={content}

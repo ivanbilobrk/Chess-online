@@ -40,10 +40,9 @@ const NewsElement = ({element, loadAllNews, title, content, setTitle, setContent
     if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer)){
         deleteButton =  <IconButton 
                             aria-label="remove" 
+                            onClick={()=>handleClickUpdateNews(title, content, 0, element.id)}
                         >
-                            <FiX 
-                                onClick={()=>handleClickUpdateNews(title, content, 0, element.id)}
-                            />
+                            <FiX/>
                         </IconButton>;
         editButton =    <IconButton 
                             aria-label="edit" 

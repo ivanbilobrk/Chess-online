@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -12,26 +12,72 @@ import WithMoveValidation from './Chess';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import axios from '../../hooks/useAxiosPrivate';
+import axios from '../../api/axios';
 import DialogActions from '@mui/material/DialogActions';
 import '../home.css';
 import UpdateDailyTacticsFormDialog from './UpdateDailyTactics';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import CustomizedDialogs from './Dialog';
 
-const DailyTacticsElement = ({element, title, content, user}) => {
+
+const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) => {
     const axiosPrivate = useAxiosPrivate();
     let deleteButton = <></>;
     let editButton = <></>;
     const [moves, setMoves] = useState([]);
-    const [start, setStart] = useState(element.moves[1].fen);
-
+    const [start, setStart] = useState(element.moves[0].fen);
+    const [time, setTime] = useState();
+    const [tactic, setTactic] = useState([]);
+    const [set, setSet] = useState(false);
+    
     const handleClose = () => {
+      document.location.reload();
     };
-    const handleSubmit = () => {
+    const handleStart = async () => {
+      setSet(true);
+      setTime(Date.now())
+      setMoves([])
+      try {
+        const response = await axios.get('/tactics', 
+                            {
+                                headers: {'Content-Type':'application/json'}
+                                
+                            });
+        
+        setTactic(response.data.tactics);
+    } catch (err) {                                        
+        console.error(err.response);
+        
+    }
+
+    }
+   
+    const handleSubmit = async (userId, tacticId, time) => {
+      console.log("moves: "+ moves)
+      
+      tactic[element.id].moves = tactic[element.id].moves.slice(1)
+      for (let j = 0; j < tactic[element.id].moves.length; j++){
+        console.log("tactic.moves:"+ tactic[element.id].moves[j].fen)
+      }
+      if (moves.length != tactic[element.id].moves.length) {
+         document.location.reload();   //trenutno ne znam kako bi bolje resetirao plocu nego reload cijele stranice
+         return;
+      }
+
+      for (let i = 0; i < moves.length; i++){
+        console.log("move : [" + i +"]" +moves[i])
+        console.log("tactic: [" + i +"]"+tactic[element.id].moves[i].fen)
+        if (moves[i] != tactic[element.id].moves[i].fen){ 
+           console.log('krivo rjesenje')
+           document.location.reload()
+           return;
+
+        }
+      }
+
+      await handleClickAddScore(userId, tacticId, time);
     };
-    const handleRangList = () => {
-      console.log(element)
-    };
+   
     const handleClickEditDailyTactics = async (title, content, showing, moves, id) =>{
       try {
          await axiosPrivate.post('/tactic/private/edit',  /* provjeri path */
@@ -54,15 +100,36 @@ const DailyTacticsElement = ({element, title, content, user}) => {
           console.error(err.response);
       
       }
+      loadAllTactics();
   };
+  const handleClickAddScore = async (userId, tacticId, time) =>{
+    try {
+       await axiosPrivate.post('/score/add',  /* provjeri path */
+            JSON.stringify({ 
+                            score:{
+                                userId: userId,
+                                tacticId: tacticId,
+                                time: time
+                               /* dodaj vrijednosti */ 
+                            }
+                            }),
+                            {
+                                headers: {'Content-Type':'application/json'},
+                                withCredentials: true
+                            });
+
+    } catch (err) {                                        
+        console.error(err.response);
+    
+    }
+};
 
     if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer_id)){
         deleteButton =  <IconButton 
                             aria-label="remove" 
+                            onClick={()=>handleClickEditDailyTactics(element.title, element.content, 0, element.moves, element.id)}
                         >
-                            <FiX 
-                                onClick={()=>handleClickEditDailyTactics(element.title, element.content, 0, element.moves, element.id)}
-                            />
+                            <FiX/>
                         </IconButton>;
         editButton =    <IconButton 
                             aria-label="edit" 
@@ -95,22 +162,25 @@ const DailyTacticsElement = ({element, title, content, user}) => {
         <Typography>
             {element.content} 
            </Typography>
-
-
           <Typography>
             <div style={{display:'flex', justifyContent:'center'}}>
-              <WithMoveValidation
-               moves = {moves}
-               start = {start}
-               setMoves = {setMoves}
-               />
+            <WithMoveValidation
+              set = {set}
+              setSet = {setSet}
+              moves = {moves}
+              start = {start}
+              setMoves = {setMoves}
+            />
             </div>
+            <Button onClick={handleStart} >Započni</Button>
             {editButton}
           </Typography>
           <DialogActions>
-          <Button onClick={handleRangList}>Rang lista</Button>
+          <CustomizedDialogs 
+            id = {element.id}
+          />
           <Button onClick={handleClose}>Odustani</Button>
-          <Button onClick={handleSubmit}>Potvrdi</Button>
+          <Button onClick={()=>handleSubmit(user[0], element.id, Date.now()-time)}>Potvrdi</Button>
         </DialogActions>
         </AccordionDetails>
       </Accordion>

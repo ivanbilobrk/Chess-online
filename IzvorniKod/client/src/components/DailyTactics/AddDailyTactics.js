@@ -14,7 +14,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import WithMoveValidation from './Chess';
 
 
-const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user}) => {
+const AddDailyTacticsFormDialog = ({loadAllTactics, title, content, setTitle, setContent, user}) => {
   const axiosPrivate = useAxiosPrivate();
   const [open, setOpen] = useState(false);
   const [moves, setMoves] = useState([]);
@@ -38,8 +38,7 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
                             tactic:{
                                 title: title,
                                 content: content,
-                                moves: moves
-                                
+                                moves: moves 
                             }
                             }),
                             {
@@ -51,6 +50,14 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
     
     
     }
+    loadAllTactics();
+};
+const handleStart = () => {
+    setMoves(moves.slice(-1));
+    
+};
+const handleReset = () => {
+    
 };
   return (
     <div>
@@ -92,6 +99,8 @@ const AddDailyTacticsFormDialog = ({title, content, setTitle, setContent, user})
              setMoves={setMoves}
             />
           </div>
+          <Button onClick={handleStart}>Započni</Button>
+          <Button onClick={handleReset}>Resetiraj</Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odustani</Button>

@@ -29,6 +29,10 @@ const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, con
     
     
   };
+  const handleStart = () => {
+    
+    
+  };
   
 
   return (
@@ -43,6 +47,7 @@ const UpdateDailyTacticsFormDialog = ({handleClickUpdateDailyTactics, title, con
             Za uređivanje taktike unesi novo rješenje.
           </DialogContentText>
           <Button onClick={handleReset}>Resetiraj</Button>
+          <Button onClick={handleStart}>Započni</Button>
           <div style={{display:'flex', justifyContent:'center'}}>
             <WithMoveValidation start={start} moves = {moves} setMoves = {setMoves}/>
           </div>

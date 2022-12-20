@@ -3,7 +3,6 @@ const userInfo = require('../helpFunctions/userInfo');
 const Score = require('../models/ScoreModel');
 
 const getAllScoresForTactic = async (req, res, next)=>{
-
     try{
         let result1 = await Score.getAllScoresForTacticWithId(req.body.tactic.id);
         return res.status(StatusCodes.OK).json({scores: result1});
@@ -20,7 +19,7 @@ const addNewNewScore = async (req, res, next)=>{
         return res.sendStatus(401);
     } else if(result == 403){
         return res.sendStatus(403);
-    } else if(result.podatci[5] == "user"){
+    } else if(result.podatci[5] == "user" || result.podatci[5] == "trener"){
 
         try{
             let currentTime = await Score.getScoresForTacticAndUser(req.body.score.userId, req.body.score.tacticId);

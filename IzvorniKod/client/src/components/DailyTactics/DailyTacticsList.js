@@ -1,7 +1,7 @@
 import React from 'react'
 import DailyTacticsElement from './DailyTacticsElement'
 
-const DailyTacticsList = ({data, title, content, user}) => {
+const DailyTacticsList = ({loadAllTactics, data, title, content, user}) => {
   return (
     <> 
     {!data?.length ? (
@@ -9,6 +9,7 @@ const DailyTacticsList = ({data, title, content, user}) => {
       ) : (
         data.map((element) => (
                 <DailyTacticsElement
+                    loadAllTactics= {loadAllTactics}
                     element = {element}
                     title = {title}
                     content= {content}

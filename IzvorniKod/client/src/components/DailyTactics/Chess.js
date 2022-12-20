@@ -65,16 +65,27 @@ class HumanVsHuman extends Component {
     }));
   };
 
+  handleClose = () => {
+    console.log('moves before: ' +this.props.moves)
+    this.props.setMoves([]);
+    console.log('moves after: ' +this.props.moves)
+    this.setState(() => ({
+      fen: this.props.start,
+    }));
+    this.game = new Chess(this.props.start)
+    this.props.setSet(false)
+  }
+
   onDrop = ({ sourceSquare, targetSquare }) => {
-    // see if the move is legal
+
     
-    this.props.setMoves(oldArray => [...oldArray, this.game.fen()]);
+    // see if the move is legal
+    if (!this.props.set) return;
     let move = this.game.move({
       from: sourceSquare,
       to: targetSquare,
       promotion: undefined // always promote to a queen for example simplicity
     });
-
     // illegal move
     if (move === null) return;
     this.setState(({ history, pieceSquare }) => ({
@@ -82,6 +93,10 @@ class HumanVsHuman extends Component {
       history: this.game.history({ verbose: true }),
       squareStyles: squareStyling({ pieceSquare, history })
     }));
+
+    this.props.setMoves(oldArray => [...oldArray, this.game.fen()]);
+    console.log(this.props.moves)
+
   };
 
   onMouseOverSquare = square => {
@@ -153,21 +168,20 @@ class HumanVsHuman extends Component {
       dropSquareStyle,
       onDragOverSquare: this.onDragOverSquare,
       onSquareClick: this.onSquareClick,
-      onSquareRightClick: this.onSquareRightClick
+      onSquareRightClick: this.onSquareRightClick,
+      handleClose: this.handleClose
     });
   }
 }
 //treba dovrsit
-const handleReset = ({setMoves}) => {
 
 
-  
-};
-
-export default function WithMoveValidation({moves, start, setMoves}) {
+export default function WithMoveValidation({set, setSet, moves, start, setMoves}) {
   return (
     <div>
       <HumanVsHuman 
+       set = {set}
+       setSet = {setSet}
        moves = {moves}
        start = {start}
        setMoves = {setMoves}
@@ -181,7 +195,8 @@ export default function WithMoveValidation({moves, start, setMoves}) {
           dropSquareStyle,
           onDragOverSquare,
           onSquareClick,
-          onSquareRightClick
+          onSquareRightClick,
+          handleClose
         }) => (
           <>
           <Chessboard
@@ -202,8 +217,10 @@ export default function WithMoveValidation({moves, start, setMoves}) {
             onSquareClick={onSquareClick}
             onSquareRightClick={onSquareRightClick}
           />
-          <Button onClick={()=>{handleReset(setMoves)}}>Resetiraj</Button>
+          <Button onClick={handleClose}>Odustani</Button>
             </>
+            
+
         )}
       </HumanVsHuman>
     </div>
