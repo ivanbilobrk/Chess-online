@@ -13,6 +13,7 @@ import Layout from './components/Layout';
 import Unauthorized from "./pages/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
 import BlockAuth from './components/BlockAuth';
+import Payment from "./components/Payment";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
               <Route path ="profile" element ={<ProfilePage/>}></Route>
             </Route>
           </Route>
+
+          <Route path="payment" element={<Payment/>} />
 
 
           
