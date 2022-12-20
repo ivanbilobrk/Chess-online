@@ -2,13 +2,13 @@ const userInfo = require('../helpFunctions/userInfo');
 const Training = require('../models/TrainingModel');
 const { StatusCodes } = require('http-status-codes');
 
-// MOZDA MI TREBA PROVJERA JE LI ULOGIRANI KORISNIK ADMIN ALI NISAM SIGURAN
+
 const getAllTrainings = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
-    } else if(result == 403){
+    } else if(result == 403) {
         return res.sendStatus(403);
     } else {
         try {
@@ -73,7 +73,7 @@ const addNewTraining = async(req, res) => {
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener") {
 
         try{
-            let training = new Training(result.podatci[0], req.body.training.trainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
+            let training = new Training(result.podatci[0], req.body.training.trainingStart, req.body.training.trainingDuration);
             await training.persist();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
@@ -96,11 +96,16 @@ const updateExistingTraining = async(req, res) => {
 
         try{
             // OVDJE MORAM IZMIJENJATI KOD TAKO DA DOBIJEM trainingId
-            let currentTrainingId = (await Training.getTrainingById(req.body.training.trainingId)).trainingId;
+            let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
+
+            if(currentTrainerId != result.podatci[0] && result.podatci[5] != "admin"){
+                return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za mijenjati trening.'})
+            }
 
             // MORAM SKONTATI STA CU ZA CURRENTTRAINERID, TJ MENI TREBA TRAINING ID
-            let training = new Training(currentTrainingId, req.body.training.trainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
+            let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.showing = req.body.training.showing;
+            training.id = req.body.training.id;
             // training.trainingId = req.body.training.trainingId;
             await training.updateTraining();
             return res.sendStatus(StatusCodes.OK);
@@ -124,11 +129,11 @@ const deleteExistingTraining = async(req, res) => {
 
         try{
             
-            let currentTrainingId = (await Training.getTrainingById(req.body.training.trainingId)).trainingId;
+            let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainingId;
 
-            let training = new Training(currentTrainingId, req.body.training.trainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
+            let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
+            training.id = req.body.training.id;
             training.showing = req.body.training.showing;
-            // training.trainingId = req.body.training.trainingId;
             await training.deleteTraining();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
@@ -151,11 +156,11 @@ const signupForTraining = async(req, res) => {
 
         try{
             
-            let currentTrainingId = (await Training.getTrainingById(req.body.training.trainingId)).trainingId;
+            let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
 
-            let training = new Training(currentTrainingId, req.body.training.trainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
+            let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.showing = req.body.training.showing;
-            // training.trainingId = req.body.training.trainingId;
+            training.id = req.body.training.id;
             await training.signupForTraining(result);
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
@@ -178,11 +183,11 @@ const cancelTrainingSubscription = async(req, res) => {
 
         try{
             
-            let currentTrainingId = (await Training.getTrainingById(req.body.training.trainingId)).trainingId;
+            let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
 
-            let training = new Training(currentTrainingId, req.body.training.trainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
+            let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.showing = req.body.training.showing;
-            // training.trainingId = req.body.training.trainingId;
+            training.id = req.body.training.id;
             await training.cancelTraining();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){

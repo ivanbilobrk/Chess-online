@@ -3,12 +3,10 @@ const router = express.Router();
 const trainingController = require('../controllers/trainingsController');
 
 router.get('/', trainingController.getAllTrainings);
-router.get('/userTrainings', trainingController.getAllScheduledTrainings);
-router.get('/trainerTrainings', trainingController.getAllTrainingsForTrainer);
-router.post('/addTraining', trainingController.addNewTraining);
-router.post('/updateTraining', trainingController.updateExistingTraining);
-router.post('/deleteTraining', trainingController.deleteExistingTraining);
-router.post('/signupForTraining', trainingController.signupForTraining);
-router.post('/cancelTraining', trainingController.cancelTrainingSubscription);
+router.post('/add', trainingController.addNewTraining);
+router.post('/update', trainingController.updateExistingTraining);
+router.post('/delete', trainingController.deleteExistingTraining);
+router.post('/signup', trainingController.signupForTraining);
+router.post('/cancel', trainingController.cancelTrainingSubscription);
 
 module.exports = router;
