@@ -4,13 +4,14 @@ import HeaderSigned from "../components/HeaderSigned";
 import AboutTable from "../components/AboutTable";
 import AboutText from "../components/AboutText";
 import TrainingElement from "../components/TrainingElement";
+import TrainingPageComponent from "../components/TrainingPageComponent";
 
 export default function TrainingPage(){
     return(
         <>
         <HeaderSigned/>
-        <p>Bla bla</p>
-        <TrainingElement></TrainingElement>
+        <TrainingPageComponent></TrainingPageComponent>
+        <Footer/>
         </>
     );
 };

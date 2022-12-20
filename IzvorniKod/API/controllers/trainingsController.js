@@ -10,7 +10,7 @@ const getAllTrainings = async(req, res) => {
         return res.sendStatus(401);
     } else if(result == 403){
         return res.sendStatus(403);
-    } else if(result.podatci[5] == "admin") {
+    } else {
         try {
             let allTrainings = await Training.getAllTrainings();
             console.log(allTrainings);

@@ -4,12 +4,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import IconButton from '@mui/material/IconButton';
-import { FiEdit3, FiX } from "react-icons/fi";
-import UpdateNews from "./UpdateNews"
 import './home.css';
 
-const TrainingElement = () => {
+const TrainingElement = (element, trainerId, date, duration, setTrainerId, setDate, setDuration, user) => {
 
 return (
     <div className='news' style={{backgroundColor:'#3371FF'}}>
@@ -20,14 +17,14 @@ return (
         id="panel1a-header"
       >
         <Typography>
-          Treningasti trening
+          Trening: {element.trainingstarttimedate}
          </Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Typography style={{backgroundColor:'#3371FA'}}>
-          Treningggg
+          ID trenera koji vodi trening: {element.trainer_Id}
           <br></br>
-          Bla
+          Vrijeme trajanja treninga: {element.trainingdurationmin}
         </Typography>
       </AccordionDetails>
     </Accordion>
@@ -38,4 +35,4 @@ return (
 
 }
 
-export default TrainingElement
+export default TrainingElement;
