@@ -66,9 +66,6 @@ class HumanVsHuman extends Component {
   };
 
   handleClose = () => {
-    console.log('moves before: ' +this.props.moves)
-    this.props.setMoves([]);
-    console.log('moves after: ' +this.props.moves)
     this.setState(() => ({
       fen: this.props.start,
     }));
@@ -80,7 +77,7 @@ class HumanVsHuman extends Component {
 
     
     // see if the move is legal
-    if (!this.props.set) return;
+    if (!this.props.set ) return;
     let move = this.game.move({
       from: sourceSquare,
       to: targetSquare,
@@ -176,10 +173,11 @@ class HumanVsHuman extends Component {
 //treba dovrsit
 
 
-export default function WithMoveValidation({set, setSet, moves, start, setMoves}) {
+export default function WithMoveValidation({flag, set, setSet, moves, start, setMoves}) {
   return (
     <div>
       <HumanVsHuman 
+       flag = {flag}
        set = {set}
        setSet = {setSet}
        moves = {moves}
@@ -217,7 +215,9 @@ export default function WithMoveValidation({set, setSet, moves, start, setMoves}
             onSquareClick={onSquareClick}
             onSquareRightClick={onSquareRightClick}
           />
-          <Button onClick={handleClose}>Odustani</Button>
+          {flag ? 
+            (<Button onClick={handleClose}>Odustani</Button>) : <></>
+          }
             </>
             
 

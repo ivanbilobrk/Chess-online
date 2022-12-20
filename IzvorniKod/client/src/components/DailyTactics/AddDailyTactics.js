@@ -19,10 +19,11 @@ const AddDailyTacticsFormDialog = ({loadAllTactics, title, content, setTitle, se
   const [open, setOpen] = useState(false);
   const [moves, setMoves] = useState([]);
   const [start, setStart] = useState("start");
+  const [set, setSet] = useState(true);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -94,13 +95,17 @@ const handleReset = () => {
           
           <div style={{display:'flex', justifyContent:'center'}}>
             <WithMoveValidation
+             flag = {false}
+             set = {set}
+             setSet={setSet}
              moves={moves}
              start={start}
              setMoves={setMoves}
             />
+           
           </div>
           <Button onClick={handleStart}>Započni</Button>
-          <Button onClick={handleReset}>Resetiraj</Button>
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odustani</Button>

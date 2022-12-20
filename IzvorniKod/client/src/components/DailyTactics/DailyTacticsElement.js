@@ -165,6 +165,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
           <Typography>
             <div style={{display:'flex', justifyContent:'center'}}>
             <WithMoveValidation
+              flag = {true}
               set = {set}
               setSet = {setSet}
               moves = {moves}
@@ -179,7 +180,6 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
           <CustomizedDialogs 
             id = {element.id}
           />
-          <Button onClick={handleClose}>Odustani</Button>
           <Button onClick={()=>handleSubmit(user[0], element.id, Date.now()-time)}>Potvrdi</Button>
         </DialogActions>
         </AccordionDetails>
