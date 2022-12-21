@@ -30,6 +30,7 @@ module.exports = class DailyTactics{
         const map1 = new Map();
 
         let result = await dbGetAllTactics();
+
         result.forEach((el)=>{
             let temp = map1.get(el.id);
             if(temp == null || temp == undefined){
@@ -55,6 +56,7 @@ module.exports = class DailyTactics{
             sorted[index].moves = sorted[index].moves.sort(function(a,b){return a.index - b.index})
             index++;
         });
+        sorted = sorted.sort(function(a,b){return a.id-b.id})
         
         return sorted;
 

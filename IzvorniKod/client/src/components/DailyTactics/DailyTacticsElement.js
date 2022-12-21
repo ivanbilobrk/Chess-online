@@ -57,38 +57,38 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     const handleStart = async () => {
       setSet(true);
       setTime(Date.now())
-      setMoves([])
+      setMoves([start])
       refereshTactics(); 
-      console.log('SET - dte: ')
-      console.log(set)
     }
    
     const handleSubmit = async (userId, tacticId, time) => {
+      console.log('tacticid: ' + tacticId + 'element.id: ' + element.id)
       setSet(false)
       console.log("moves to submit: ")
       console.log(moves)
       console.log("tactic rjesenje")
-      tactic[element.id].moves = tactic[element.id].moves.slice(1)
       for (let j = 0; j < tactic[element.id].moves.length; j++){
         console.log("tactic:"+ tactic[element.id].moves[j].fen)
       }
       if (moves.length != tactic[element.id].moves.length) {
         console.log("Krivo rješenje. Pokušajte ponovo!")
-         return;
+        await handleClickAddScore(userId, tacticId, time, 0, moves);
+        return;
       }
 
       for (let i = 0; i < moves.length; i++){
         console.log("move : [" + i +"]" +moves[i])
-        console.log("tactic: [" + i +"]"+tactic[element.id].moves[i].fen)
+        console.log("tactic: [" + i +"]" + tactic[element.id].title +tactic[element.id].moves[i].fen)
         if (moves[i] != tactic[element.id].moves[i].fen){ 
            console.log("Krivo rješenje. Pokušajte ponovo!")
+           await handleClickAddScore(userId, tacticId, time, 0, moves);
            return;
 
         }
       }
       console.log("Točno rješenje. Čestitam!")
       refereshTactics();
-      await handleClickAddScore(userId, tacticId, time);
+      await handleClickAddScore(userId, tacticId, time, 1, moves);
     };
    
     const handleClickEditDailyTactics = async (title, content, showing, moves, id) =>{
@@ -102,7 +102,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
         console.log('EDITANJE')
         console.log(moves)
       }
-     
+     // dodaj post za brisanje reportedMistake u bazi 
       try {
          await axiosPrivate.post('/tactic/private/edit',  /* provjeri path */
               JSON.stringify({ 
@@ -124,17 +124,20 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
           console.error(err.response);
       
       }
+      console.log('moves->.....')
+      console.log(moves)
       refereshTactics();
   };
-  const handleClickAddScore = async (userId, tacticId, time) =>{
+  const handleClickAddScore = async (userId, tacticId, time, showing, moves) =>{
     try {
        await axiosPrivate.post('/score/add',  /* provjeri path */
             JSON.stringify({ 
                             score:{
                                 userId: userId,
                                 tacticId: tacticId,
-                                time: time
-                               /* dodaj vrijednosti */ 
+                                time: time,
+                                showing: showing,
+                                moves: moves
                             }
                             }),
                             {
@@ -149,7 +152,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     refereshTactics();
 };
 
-    if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer_id)){
+    if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer_id)){ //promjeni uvjet
         deleteButton =  <IconButton 
                             aria-label="remove" 
                             onClick={()=>handleClickEditDailyTactics(element.title, element.content, 0, tactic[element.id].moves, element.id)}
@@ -171,6 +174,8 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
                         </IconButton>
 
     } 
+
+    //dodaj za reportMistakes
     
   return (
       <Accordion>

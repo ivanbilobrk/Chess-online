@@ -99,7 +99,7 @@ export default function CustomizedDialogs({id}) {
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <BasicList 
-          rang={ !rang?.length  ?( rang) : rang.sort(function(a,b){return a.time - b.time})}/>
+          rang={ !rang?.length  ? rang : rang.sort(function(a,b){return a.time - b.time}).filter((element => element.showing == 1))}/>
         </DialogContent>
       </BootstrapDialog>
     </div>

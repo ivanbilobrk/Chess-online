@@ -34,7 +34,7 @@ const addNewNewScore = async (req, res, next)=>{
                 await Score.removeAllUserMovesForTactic(req.body.score.userId,req.body.score.tacticId)
                 await score.persist();
                 await score.addMovesForTactic(moves);
-            } else if(currentScore == undefined && req.body.score.showing == 1){
+            } else if(currentScore == undefined){
                 let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time, req.body.score.showing);
                 await Score.removeAllUserMovesForTactic(req.body.score.userId,req.body.score.tacticId)
                 await score.addMovesForTactic(moves)

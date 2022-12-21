@@ -11,20 +11,21 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 
 export default function BasicList({rang}) {
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}>
       
      
       <nav aria-label="secondary mailbox folders">
         <List>
         {!rang?.length ? (
-        <p style={{margin:'2rem', fontSize:'18px'}}>Još nitko nije riješio dnevnu taktiku.</p>
+        <p style={{margin:'2rem', fontSize:'18px'}}>Još nitko nije ispravno riješio dnevnu taktiku.</p>
       ) : (
         rang.map((element) => (
             <ListItem key= {element.id} disablePadding>
             <ListItemButton style={{width:400}}>
               {element.user} {element.time}
             </ListItemButton>
-          </ListItem>
+          </ListItem> 
+          
         )
         ))
         }
