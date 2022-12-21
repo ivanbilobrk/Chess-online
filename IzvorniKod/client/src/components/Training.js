@@ -2,17 +2,18 @@ import * as React from 'react';
 import NewsList from './NewsList';
 import TrainingList from './TrainingList';
 
-const Training = ({data, trainerId, date, duration, setTrainerId, setDate, setDuration, user}) => {
+const Training = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, user}) => {
   return (
     <div style={{width:'550px'}}>
       <TrainingList
         data={!data ? null : data.filter(item => item.showing === 1)}
-        trainerId = {trainerId}
+        trainersId = {trainersId}
         date = {date}
         duration = {duration}
-        setTrainerId = {setTrainerId}
+        setTrainersId = {setTrainersId}
         setDate = {setDate}
         setDuration = {setDuration}
+        handleUpdateTraining = {handleUpdateTraining}
         user = {user}
       />
     </div>

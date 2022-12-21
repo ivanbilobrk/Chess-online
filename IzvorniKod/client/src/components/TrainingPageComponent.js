@@ -2,23 +2,27 @@ import React from "react";
 import axios from "../api/axios";
 import { useEffect } from "react";
 import { useState } from 'react';
-import { axiosPrivate } from "../api/axios";
+
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 import Training from "./Training";
 import useAuth from "../hooks/useAuth";
+import AddTraining from "./AddTraining";
 
 export default function TrainingPageComponent(){
 
 const [trainingData, setData] = useState([]);
 const [userData, setUserData] = useState([]);
-const [trainerId, setTrainerId] = useState("");
+const [trainersId, setTrainersId] = useState("");
 const [date, setDate] = useState("");
 const [duration, setDuration] = useState("");
 
+const axiosPrivate = useAxiosPrivate();
 const {auth} = useAuth();
 
 const loadAllTraining = async () => {
     try {
-        const response = await axios.get('/', 
+        const response = await axios.get('/training', 
                             {
                                 headers: {'Content-Type':'application/json'},
                                 withCredentials: true
@@ -31,10 +35,55 @@ const loadAllTraining = async () => {
     }
 };
 
+const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
+    try {
+        const response = await axios.post('/training/updateTraining', 
+            JSON.stringify({ 
+                            training:{
+                                trainingDuration: duration,
+                                trainingStart: date,
+                                showing: showing,
+                                trainingId: id,
+                                trainerId: tId
+                            }
+                            }),
+                            {
+                                headers: {'Content-Type':'application/json'},
+                                withCredentials: true
+                            });
+
+    } catch (err) {                                        
+        console.error(err.response);
+    
+    }
+    loadAllTraining();
+};
+
+const handleAddTraining = async (tId, start, duration) => {
+    try {
+        const response = await axios.post('/news/addTraining', 
+            JSON.stringify({ 
+                            news:{
+                                trainerId: tId,
+                                trainingStart: start,
+                                trainingDuration: duration
+                            }
+                            }),
+                            {
+                                headers: {'Content-Type':'application/json'},
+                                withCredentials: true
+                            });
+    } catch (err) {                                        
+        console.error(err.response);
+    
+    }
+    loadAllTraining();
+};
+
 useEffect(() =>{
     let isMounted = true;
     const controller = new AbortController();
-    /*const getData = async () => {
+    const getData = async () => {
         try {
             const response = await axiosPrivate.get(`/user/${auth.user}`, {
             });
@@ -47,7 +96,7 @@ useEffect(() =>{
     }
     
     
-    getData();*/
+    getData();
     
     loadAllTraining();
     
@@ -62,16 +111,31 @@ useEffect(() =>{
 return(
     <>
     <h1>Svi treninzi</h1>
+    {(userData[5] == 'trener' || userData[5] == 'admin') ?
+        <AddTraining
+            trainersId = {trainersId}
+            date = {date}
+            duration = {duration}
+            setTrainersId = {setTrainersId}
+            setDate = {setDate}
+            setDuration = {setDuration}
+            handleAddTraining = {handleAddTraining}
+            user = {userData}
+        />
+        : <></>}
     <Training
           data={trainingData}
-          trainerId = {trainerId}
+          trainersId = {trainersId}
           date = {date}
           duration = {duration}
-          setTrainerId = {setTrainerId}
+          setTrainersId = {setTrainersId}
           setDate = {setDate}
           setDuration = {setDuration}
+          handleUpdateTraining = {handleUpdateTraining}
           user = {userData}/>
+     <AddTraining></AddTraining>
     </>
+   
 )
 
 }

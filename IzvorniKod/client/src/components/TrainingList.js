@@ -2,7 +2,7 @@ import React from 'react'
 import NewsElement from './NewsElement'
 import TrainingElement from './TrainingElement'
 
-const TrainingList = ({data, trainerId, date, duration, setTrainerId, setDate, setDuration, user}) => {
+const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, user}) => {
   return (
     <> 
     {!data?.length ? (
@@ -11,12 +11,13 @@ const TrainingList = ({data, trainerId, date, duration, setTrainerId, setDate, s
         data.map((element) => (
                 <TrainingElement 
                     element = {element}
-                    trainerId = {trainerId}
+                    trainersId = {trainersId}
                     date = {date}
                     duration = {duration}
-                    setTrainerId = {setTrainerId}
+                    setTrainersId = {setTrainersId}
                     setDate = {setDate}
                     setDuration = {setDuration}
+                    handleUpdateTraining = {handleUpdateTraining}
                     user = {user}
                 />
         )
