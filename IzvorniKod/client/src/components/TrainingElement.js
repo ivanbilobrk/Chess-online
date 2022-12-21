@@ -4,10 +4,23 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IconButton } from '@mui/material';
+import { FiX } from 'react-icons/fi';
 import './home.css';
 
-const TrainingElement = (element, trainerId, date, duration, setTrainerId, setDate, setDuration, user) => {
+const TrainingElement = (element, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, user) => {
 
+  let deleteButton = <></>;
+
+  if (user[5] == 'admin' || user[5] == 'trener'){
+    deleteButton =  <IconButton 
+                        aria-label="remove" 
+                    >
+                        <FiX 
+                            onClick={()=>handleUpdateTraining(duration, date, 0, element.id, trainersId)}
+                        />
+                    </IconButton>;
+} 
 return (
     <div className='news' style={{backgroundColor:'#3371FF'}}>
         <Accordion>
@@ -17,7 +30,7 @@ return (
         id="panel1a-header"
       >
         <Typography>
-          Trening: {element.trainingstarttimedate}
+          Trening: {element.trainingstarttimedate}   {deleteButton}
          </Typography>
       </AccordionSummary>
       <AccordionDetails>
