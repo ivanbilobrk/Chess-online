@@ -17,7 +17,6 @@ module.exports = class Training {
             let allTrainings = [];
             
             for(let i = 0; i < results.length; i++){
-                //let date = new Date();
                 let temp = new Training(results[i].trainer_id, results[i].trainingstarttimedate, results[i].trainingdurationmin);
                 temp.id = results[i].id;
                 temp.showing = results[i].showing;
@@ -30,21 +29,6 @@ module.exports = class Training {
 
     static getAllScheduledTrainings = async(id) => {
         let trainings = await dbGetAllScheduledTrainings(id);
-        console.log(trainings);
-        let result = [];
-        if(trainings?.length != 0){
-            for(let i = 0; i < trainings.length; i++){
-                let newTraining = new Training(trainings[i].id, trainings[i].trainer_id, trainings[i].trainingStartTimeDate, trainings[i].trainingDurationMin);
-                result[i] = newTraining;
-            }
-            console.log(result);
-            return result;
-        }
-        return undefined;
-    }
-
-    static getAllTrainingsForTrainer = async(id) => {
-        let trainings = await dbGetAllTrainingsForTrainer(id);
         console.log(trainings);
         let result = [];
         if(trainings?.length != 0){
@@ -78,8 +62,8 @@ module.exports = class Training {
         await dbDeleteTraining(this);
     }
 
-    async signupForTraining(user) {
-        await dbSignupForTraining(this, user);
+    async signupForTraining(userId) {
+        await dbSignupForTraining(this, userId);
     }
 
     async cancelTraining() {
@@ -124,19 +108,6 @@ const dbGetAllScheduledTrainings = async (id)=>{
 }
 
 
-const dbGetAllTrainingsForTrainer = async (id)=>{
-    const sql = "select * from training join users on trainer_id = id where trainer_id =" + id;
-
-    try {
-        const result = await db.query(sql, []);
-        return result.rows;
-    } catch (err) {
-        console.log(err);
-        throw err
-    }
-}
-
-
 dbGetTrainingById = async(id) =>{
     const sql = "select * from training where id = '"+ id+"'";
 
@@ -151,7 +122,8 @@ dbGetTrainingById = async(id) =>{
 
 
 const dbAddNewTraining = async (training) => {
-    const sql = "insert into training (trainer_id, trainingstarttimedate, trainingdurationmin, showing) values('"+training.trainerId+"', '"+training.trainingStart+"', '"+training.trainingDuration+"', '"+training.showing+"') returning id";
+    const sql = "insert into training (trainer_id, trainingstarttimedate, trainingdurationmin, showing) values('"+training.trainerId+
+                    "', '"+training.trainingStart+"', '"+training.trainingDuration+"', '"+training.showing+"') returning id";
 
     try {
         await db.query(sql, []);
@@ -171,12 +143,12 @@ const dbUpdateTraining = async (training) => {
     } catch (err) {
         console.log(err);
         throw err;
-    } 
+    }
 }
 
 
 const dbDeleteTraining = async (training) => {
-    const sql = "update training set showing = '" + training.showing + "'where id = '" + training.trainingId + "'";
+    const sql = "update training set showing = '" + 0 + "' where id = '" + training.id + "'";
 
     try{
         const result = await db.query(sql, []);
@@ -188,8 +160,8 @@ const dbDeleteTraining = async (training) => {
 }
 
 
-const dbSignupForTraining = async (training, user) => {
-    const sql = "insert into scheduledTraining values ('"+user.id+"', '"+training.trainingId+"')";
+const dbSignupForTraining = async (training, userId) => {
+    const sql = "insert into scheduledtraining values ('"+userId+"', '"+training.id+"') ";
 
     try {
         await db.query(sql, []);
@@ -201,7 +173,7 @@ const dbSignupForTraining = async (training, user) => {
 
 
 const dbCancelTraining = async (training) => {
-    const sql = "delete from scheduledTraining where training_id = '" + training.trainingId + "'";
+    const sql = "delete from scheduledtraining where training_id = '" + training.id + "'";
 
     try {
         await db.query(sql, []);

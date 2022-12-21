@@ -25,15 +25,15 @@ const getAllTrainings = async(req, res) => {
 const getAllScheduledTrainings = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
-    } else if(result == 403){
+    } else if(result == 403) {
         return res.sendStatus(403);
     } else if(result.podatci[5] == "user") {
-        try{
+        try {
             let allUserTrains = await Training.getAllScheduledTrainings(result.podatci[0]);
             return res.status(StatusCodes.OK).json({allUserTrainings: allUserTrains});
-        } catch(err){
+        } catch(err) {
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti prijavljene treninge.'});
         }
     } else {
@@ -42,41 +42,20 @@ const getAllScheduledTrainings = async(req, res) => {
 }
 
 
-const getAllTrainingsForTrainer = async(req, res) => {
-    let result = await userInfo.getUserInfo(req, res);
-
-    if(result == 401){
-        return res.sendStatus(401);
-    } else if(result == 403){
-        return res.sendStatus(403);
-    } else if(result.podatci[5] == "trener") {
-        try{
-            let allUserTrains = await Training.getTrainingsForTrainer(result.podatci[0]);
-            return res.status(StatusCodes.OK).json({allUserTrainings: allUserTrains});
-        } catch(err){
-            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti treninge.'});
-        }
-    } else {
-        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za dohvatiti treninge.'});
-    }
-}
-
-
-// MORAM NEKAKO DOHVATITI TRAINING ID
 const addNewTraining = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
-    } else if(result == 403){
+    } else if(result == 403) {
         return res.sendStatus(403);
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener") {
 
-        try{
+        try {
             let training = new Training(result.podatci[0], req.body.training.trainingStart, req.body.training.trainingDuration);
             await training.persist();
             return res.sendStatus(StatusCodes.OK);
-        } catch(err){
+        } catch(err) {
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dodati trening.'});
         }
     } else {
@@ -88,25 +67,22 @@ const addNewTraining = async(req, res) => {
 const updateExistingTraining = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
-    } else if(result == 403){
+    } else if(result == 403) {
         return res.sendStatus(403);
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener") {
 
-        try{
-            // OVDJE MORAM IZMIJENJATI KOD TAKO DA DOBIJEM trainingId
+        try {
             let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
 
             if(currentTrainerId != result.podatci[0] && result.podatci[5] != "admin"){
                 return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za mijenjati trening.'})
             }
 
-            // MORAM SKONTATI STA CU ZA CURRENTTRAINERID, TJ MENI TREBA TRAINING ID
             let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.showing = req.body.training.showing;
             training.id = req.body.training.id;
-            // training.trainingId = req.body.training.trainingId;
             await training.updateTraining();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
@@ -121,15 +97,18 @@ const updateExistingTraining = async(req, res) => {
 const deleteExistingTraining = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
-    } else if(result == 403){
+    } else if(result == 403) {
         return res.sendStatus(403);
     } else if(result.podatci[5] == "admin" || result.podatci[5] == "trener") {
 
-        try{
-            
-            let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainingId;
+        try {
+            let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
+
+            if(currentTrainerId != result.podatci[0] && result.podatci[5] != "admin"){
+                return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za brisati trening.'})
+            }
 
             let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.id = req.body.training.id;
@@ -148,26 +127,25 @@ const deleteExistingTraining = async(req, res) => {
 const signupForTraining = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
     } else if(result == 403){
         return res.sendStatus(403);
     } else if(result.podatci[5] == "user") {
 
-        try{
-            
+        try {
             let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
 
             let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.showing = req.body.training.showing;
             training.id = req.body.training.id;
-            await training.signupForTraining(result);
+            await training.signupForTraining(result.podatci[0]);
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
-            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu izbrisati trening.'});
+            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se prijaviti na trening.'});
         }
     } else {
-        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za brisati trening.'});
+        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za prijaviti se na trening.'});
     }
 }
 
@@ -175,14 +153,13 @@ const signupForTraining = async(req, res) => {
 const cancelTrainingSubscription = async(req, res) => {
     let result = await userInfo.getUserInfo(req, res);
 
-    if(result == 401){
+    if(result == 401) {
         return res.sendStatus(401);
     } else if(result == 403){
         return res.sendStatus(403);
     } else if(result.podatci[5] == "user") {
 
-        try{
-            
+        try {
             let currentTrainerId = (await Training.getTrainingById(req.body.training.id)).trainerId;
 
             let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
@@ -191,13 +168,13 @@ const cancelTrainingSubscription = async(req, res) => {
             await training.cancelTraining();
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
-            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se odjaviti s trening.'});
+            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se odjaviti s treninga.'});
         }
     } else {
-        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za odjaviti se s trening.'});
+        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za odjaviti se s treninga.'});
     }
 }
 
 
-module.exports = {getAllTrainings, getAllScheduledTrainings, getAllTrainingsForTrainer, addNewTraining, updateExistingTraining,
+module.exports = {getAllTrainings, getAllScheduledTrainings, addNewTraining, updateExistingTraining,
                   deleteExistingTraining, signupForTraining, cancelTrainingSubscription};
