@@ -12,9 +12,7 @@ const getAllScoresForTactic = async (req, res, next)=>{
 }
 
 const addNewNewScore = async (req, res, next)=>{
-
     let result = await userInfo.getUserInfo(req, res);
-
     if(result == 401){
         return res.sendStatus(401);
     } else if(result == 403){
@@ -22,18 +20,36 @@ const addNewNewScore = async (req, res, next)=>{
     } else if(result.podatci[5] == "user" || result.podatci[5] == "trener"){
 
         try{
-            let currentTime = await Score.getScoresForTacticAndUser(req.body.score.userId, req.body.score.tacticId);
-            console.log(currentTime)
-            if(currentTime != undefined && currentTime > req.body.score.time){
+            let moves = req.body.score.moves;
+            let currentScore = await Score.getScoresForTacticAndUser(req.body.score.userId, req.body.score.tacticId);
+
+
+            if(currentScore != undefined && currentScore.solvingtime > req.body.score.time && req.body.score.showing == 1){
                 await Score.removeScoreForUserAndTactic(req.body.score.userId, req.body.score.tacticId);
-                let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time);
+                let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time, req.body.score.showing);
                 await score.persist()
-            } else if(currentTime == undefined){
-                let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time);
+            } else if(currentScore != undefined && currentScore.showing == 0 && req.body.score.showing == 1){
+                await Score.removeScoreForUserAndTactic(req.body.score.userId, req.body.score.tacticId);
+                let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time, req.body.score.showing);
+                await Score.removeAllUserMovesForTactic(req.body.score.userId,req.body.score.tacticId)
+                await score.persist();
+                await score.addMovesForTactic(moves);
+            } else if(currentScore == undefined && req.body.score.showing == 1){
+                let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time, req.body.score.showing);
+                await Score.removeAllUserMovesForTactic(req.body.score.userId,req.body.score.tacticId)
+                await score.addMovesForTactic(moves)
                 await score.persist()
-            } 
+            } else if(currentScore != undefined && currentScore.solvingtime > req.body.score.time && req.body.score.showing == 0 && currentScore.showing == 0){
+                console.log("ru")
+                await Score.removeScoreForUserAndTactic(req.body.score.userId, req.body.score.tacticId);
+                let score = new Score(req.body.score.userId, req.body.score.tacticId, req.body.score.time, req.body.score.showing);
+                await Score.removeAllUserMovesForTactic(req.body.score.userId,req.body.score.tacticId)
+                await score.persist()
+                await score.addMovesForTactic(moves);
+            }
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
+            console.log(err)
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dodati score.'});
         }
     } else {

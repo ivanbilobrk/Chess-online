@@ -113,9 +113,17 @@ const sql_create_score = `CREATE TABLE score(
 	member_id int REFERENCES users(id),
 	tactic_id int NOT NULL,
 	solvingTime int NOT NULL,
-	PRIMARY KEY(member_id, tactic_id)
+    showing int NOT NULL,
+	PRIMARY KEY(member_id, tactic_id, solvingtime, showing)
 )`;
 
+const sql_create_scoreMoves = `CREATE TABLE scoremoves(
+	member_id int REFERENCES users(id),
+	tactic_id int NOT NULL,
+	index int NOT NULL,
+    fen text NOT NULL,
+	PRIMARY KEY(member_id, tactic_id, index)
+)`;
 
 
 
@@ -138,7 +146,8 @@ let table_names = [
     "dailyTactics",
     "membership",
     "reportedMistake",
-    "score"
+    "score",
+    "scoremoves"
 ]
 
 let tables = [
@@ -151,7 +160,8 @@ let tables = [
     sql_create_dailyTactics,
     sql_create_membership,
     sql_create_reportedMistake,
-    sql_create_score
+    sql_create_score,
+    sql_create_scoreMoves
 ];
 
 let table_data = [
