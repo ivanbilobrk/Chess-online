@@ -20,7 +20,9 @@ const AddDailyTacticsFormDialog = ({loadAllTactics, title, content, setTitle, se
   const [moves, setMoves] = useState([]);
   const [start, setStart] = useState("start");
   const [set, setSet] = useState(true);
+
   const handleClickOpen = () => {
+    setMoves([start])
     setOpen(true);
   };
   
@@ -29,6 +31,8 @@ const AddDailyTacticsFormDialog = ({loadAllTactics, title, content, setTitle, se
   };
 
   const handleSubmit = async (title, content, moves) => {
+    console.log('moves to add')
+    console.log(moves)
     await handleClickAddDailyTactics(title, content, moves);
     setOpen(false);
   };
@@ -54,12 +58,17 @@ const AddDailyTacticsFormDialog = ({loadAllTactics, title, content, setTitle, se
     loadAllTactics();
 };
 const handleStart = () => {
+  if (moves.length != 0){
     setMoves(moves.slice(-1));
+  } else {
+    setMoves([start])
+  }
+  console.log('after započni')
+  console.log(moves)
+
     
 };
-const handleReset = () => {
-    
-};
+
   return (
     <div>
         { user != 'user' ?

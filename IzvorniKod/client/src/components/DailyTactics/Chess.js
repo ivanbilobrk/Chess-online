@@ -66,6 +66,8 @@ class HumanVsHuman extends Component {
   };
 
   handleClose = () => {
+    console.log('SET: ')
+    console.log(this.props.set)
     this.setState(() => ({
       fen: this.props.start,
     }));
@@ -215,7 +217,7 @@ export default function WithMoveValidation({flag, set, setSet, moves, start, set
             onSquareRightClick={onSquareRightClick}
           />
           {flag ? 
-            (<Button onClick={handleClose}>Odustani</Button>) : <></>
+            (<Button onClick={handleClose}>Resetiraj</Button>) : <></>
           }
             </>
         )}
