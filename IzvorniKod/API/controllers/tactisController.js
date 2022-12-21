@@ -59,10 +59,10 @@ const editTactic = async (req, res, next)=>{
 
                     let same = true;
 
-                    if(moves.length !== tactic.moves){
+                    if(moves.length != tactic.moves.length){
                         same = false;
                     }
-
+                    
                     for(let i = 0; i < moves.length; i++){
                         if(moves[i] != tactic.moves[i]){
                             same = false;
@@ -71,6 +71,7 @@ const editTactic = async (req, res, next)=>{
                     
                     //treba stavit sve koji su isti na showing = 1 a koji nisu na 0
                     if(same == true){
+                        console.log("tu")
                         await Score.showScore(userId, tactic.id);
                     } else {
                         await Score.removeScore(userId, tactic.id)
