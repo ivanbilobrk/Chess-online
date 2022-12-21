@@ -11,8 +11,6 @@ const pool = new Pool({
 });
 
 
-
-
 const sql_create_users = `CREATE TABLE users (
     id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
     name text NOT NULL,
@@ -21,6 +19,8 @@ const sql_create_users = `CREATE TABLE users (
     email text NOT NULL UNIQUE,
     pwdHash text NOT NULL,
     role text NOT NULL,
+    isBanned boolean NOT NULL,
+    onlyPay boolean NOT NULL,
     refreshToken text
 )`;
 

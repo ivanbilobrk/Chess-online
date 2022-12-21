@@ -14,7 +14,7 @@ import Unauthorized from "./pages/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
 import BlockAuth from './components/BlockAuth';
 import {EditPage} from './pages/EditPage'
-
+import AllMembers from "./components/AllMembers"
 function App() {
   return (
    
@@ -25,6 +25,7 @@ function App() {
             <Route path="/" element = {<HomePage/>}></Route>
 
             <Route path ="edit" element ={<EditPage/>}></Route>
+            <Route path ="members" element ={<AllMembers/>}></Route>
 
           <Route element={<BlockAuth/>}>
             <Route path="register" element = {<RegisterPage/>}></Route>

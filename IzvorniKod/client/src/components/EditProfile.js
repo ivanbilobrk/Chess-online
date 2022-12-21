@@ -12,6 +12,7 @@ import Footer from './Footer';
 import { useEffect } from "react";
 import axios from '../api/axios';
 //novo dodajem
+import Typography from '@mui/material/Typography';
 
 import 'react-calendar/dist/Calendar.css';
 
@@ -47,7 +48,7 @@ export default function EditProfile(){
 
     const handleClickUpdateProfile = async (username, name, surname, email , id) =>{
         try {
-            const response =await axiosPrivate.post('/edit/update', 
+            const response =await axiosPrivate.post(`/user/u/${auth.user}`, 
                 JSON.stringify({ 
                                 user:{
                                   username: username,
@@ -58,8 +59,7 @@ export default function EditProfile(){
                                 }
                                 }),
                                 {
-                                    headers: {'Content-Type':'application/json'},
-                                    withCredentials: true
+
                                 });
     
         } catch (err) {                                        
@@ -102,8 +102,8 @@ export default function EditProfile(){
     return(
         <>
         <div>
-            
-           
+        <h1>Uređivanje profila</h1>
+        
             <div className="tekst">
               
 <br></br>

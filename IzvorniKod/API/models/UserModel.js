@@ -12,6 +12,9 @@ module.exports = class User{
        this.email = email
        this.pwdHash = pwdHash
        this.refreshToken = null
+       this.showing=1
+       this.isBanned=0
+       this.onlyPay=0
     }
 
     //dohvat korisnika na osnovu korisničkog imena
@@ -43,6 +46,26 @@ module.exports = class User{
         }
         return newUser
     }
+    static async getAllMembers() {
+
+        let results = await dbGetUserByRole()
+        
+
+        if(results?.length != 0){
+            let allMembers=[];
+            for(let i = 0; i < results.length; i++){
+                let newMember = new User(results[i].name, results[i].surname,
+                    results[i].username, results[i].email, results[i].pwdHash)
+                newMember.id = results[i].id
+                newMember.role = results[i].role
+                allMembers[i] = newMember;
+            }
+            //console.log();
+            return allMembers;
+        }
+        return undefined;
+    }
+
     static async fetchByRefreshToken(refreshToken) {
 
         let results = await dbGetUserByRefreshToken(refreshToken)
@@ -85,10 +108,30 @@ module.exports = class User{
         }
         return newUser
     }
+    static async zabraniP(id) {
 
+        let results = await dbZabrani(id)
+       
+    }
+    static async onemoguciP(id) {
+
+        let results = await dbOnemoguci(id)
+       
+    }
    
-        async updateProfile(){
-            await dbEditUser(this);
+      static  async updateProfile(name, surname, username, email, id){
+            let results = await dbEditUser(name, surname, username, email, id);
+            let newUser = new User()
+    
+            if( results.length > 0 ) {
+                newUser = new User(results[0].name, results[0].surname,
+                    results[0].username, results[0].email, results[0].pwdHash)
+                newUser.id = results[0].id
+                newUser.role = results[0].role
+            }
+            return newUser
+          /*  console.log(surname);
+            await dbEditUser(name, surname, username, email, id);*/
         }
 
      //da li je korisnik pohranjen u bazu podataka?
@@ -119,6 +162,17 @@ module.exports = class User{
 dbGetUserByName = async (userName) => {
     const sql = `SELECT *
     FROM users WHERE username = '` + userName + `'`;
+    try {
+        const result = await db.query(sql, []);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err
+    }
+};
+dbGetUserByRole = async () => {
+    const sql = `SELECT *
+    FROM users WHERE role = 'user'`;
     try {
         const result = await db.query(sql, []);
         return result.rows;
@@ -168,9 +222,9 @@ dbGetUserById = async (user_id) => {
 
 //umetanje zapisa o korisniku u bazu podataka
 dbNewUser = async (user) => {
-    const sql = "INSERT INTO users (name, surname, username, email, pwdHash, role, refreshToken) VALUES ('" +
+    const sql = "INSERT INTO users (name, surname, username, email, pwdHash, role, isBanned, onlyPay, refreshToken) VALUES ('" +
         user.name + "', '" + user.surname + "', '" + user.username + "', '" +
-        user.email + "', '" + user.pwdHash + "', '" + user.role + "','"+user.refreshToken+"') RETURNING id";
+        user.email + "', '" + user.pwdHash + "', '" + user.role + "','"+ user.isBanned+"','"+ user.onlyPay+"','"+user.refreshToken+"') RETURNING id";
     try {
         const result = await db.query(sql, []);
         return result.rows[0].id;
@@ -189,10 +243,29 @@ dbUpdateUser = async (userName, refreshToken) => {
         throw err
     }
 }
-
-dbEditUser=async(user) =>{
-    const sql = "update users set name = '"+ user.name+"', surname = '"+ user.surname+"', username = '"+ user.surname+"', email = '"+ 
-    user.email+"' where id = '"+ user.id+"'";
+dbZabrani= async (id) => {
+    const sql = "UPDATE users SET isBanned = '1' WHERE id = '" + id + "'";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows; 
+    } catch (err){
+        console.log(err);
+        throw err
+    }
+}
+dbOnemoguci= async (id) => {
+    const sql = "UPDATE users SET onlyPay = '1' WHERE id = '" + id + "'";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows; 
+    } catch (err){
+        console.log(err);
+        throw err
+    }
+}
+dbEditUser=async(name, surname,username, email, id) =>{
+    const sql = "update users set name = '"+ name+"', surname = '"+ surname+"', username = '"+ username+"', email = '"+ 
+    email+"' where id = '"+ id+"'";
 
 /*try {
 await db.query(sql, []);
@@ -200,12 +273,20 @@ await db.query(sql, []);
 console.log(err);
 throw err;
 }         */
-try {
+/*try {
     const result = await db.query(sql, []);
     return result.rows;
 } catch (err) {
     console.log(err);
     throw err
-}  
+}  */
+try {
+   const result= await db.query(sql, []);
+    return result.rows; 
+    //console.log(username);
+} catch (err) {
+    console.log(err);
+    throw err;
+}   
 }
 

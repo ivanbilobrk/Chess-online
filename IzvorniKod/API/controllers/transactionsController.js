@@ -24,7 +24,7 @@ const getAllTransactions = async(req, res)=>{
 
 const getAllTransactionsForUser = async (req, res) =>{
     let result = await userInfo.getUserInfo(req, res);
-
+console.log(result);
     if(result == 401){
         return res.sendStatus(401);
     } else if(result == 403){

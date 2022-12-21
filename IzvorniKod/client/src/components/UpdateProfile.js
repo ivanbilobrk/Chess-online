@@ -9,14 +9,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FaPlus } from 'react-icons/fa';
 import './home.css';
 import { FiEdit3, FiX } from 'react-icons/fi';
-
+import { useNavigate, useLocation } from "react-router-dom";
 const UpdateProfileFormDialog = ({ handleClickUpdateProfile, username, name, surname, email, setUsername, setName, setSurname, setEmail,  user}) => {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
   const handleClickOpen = () => {
+    setUsername(user[1])
+    setName(user[3])
+    setSurname(user[4])
+    setEmail(user[2])
     //setContent(element.content)
     //setTitle(element.title)
     setOpen(true);
   };
+
+
 
   const handleClose = () => {
     setOpen(false);
@@ -24,6 +31,7 @@ const UpdateProfileFormDialog = ({ handleClickUpdateProfile, username, name, sur
   const handleSubmit = async (username, name, surname, email) => {
     await handleClickUpdateProfile(username, name, surname, email, user[0]);
     setOpen(false);
+    navigate('/profile', { state: { from: '/edit'}, replace: true });
   };
 
   return (
@@ -35,7 +43,7 @@ const UpdateProfileFormDialog = ({ handleClickUpdateProfile, username, name, sur
         <DialogTitle>Edit profile</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To edit news fill required fields.
+            To edit profile fill required fields correctly.
           </DialogContentText>
           <TextField
             autoFocus
@@ -72,7 +80,7 @@ const UpdateProfileFormDialog = ({ handleClickUpdateProfile, username, name, sur
           />
           <TextField
             margin="dense"
-            id="name"
+            id="email"
             label="Email"
             type="email"
             fullWidth
