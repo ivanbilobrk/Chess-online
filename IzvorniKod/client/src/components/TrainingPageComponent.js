@@ -37,13 +37,13 @@ const loadAllTraining = async () => {
 
 const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
     try {
-        const response = await axios.post('/training/updateTraining', 
+        const response = await axios.post('/training/update', 
             JSON.stringify({ 
                             training:{
                                 trainingDuration: duration,
                                 trainingStart: date,
                                 showing: showing,
-                                trainingId: id,
+                                id: id,
                                 trainerId: tId
                             }
                             }),
@@ -61,7 +61,7 @@ const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
 
 const handleAddTraining = async (tId, start, duration) => {
     try {
-        const response = await axios.post('/news/addTraining', 
+        const response = await axios.post('/training/add', 
             JSON.stringify({ 
                             news:{
                                 trainerId: tId,

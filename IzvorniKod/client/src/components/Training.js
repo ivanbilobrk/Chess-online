@@ -1,5 +1,4 @@
 import * as React from 'react';
-import NewsList from './NewsList';
 import TrainingList from './TrainingList';
 
 const Training = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, user}) => {

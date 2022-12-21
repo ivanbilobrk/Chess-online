@@ -35,7 +35,7 @@ return (
       </AccordionSummary>
       <AccordionDetails>
         <Typography style={{backgroundColor:'#3371FA'}}>
-          ID trenera koji vodi trening: {element.trainer_Id}
+          ID trenera koji vodi trening: {element.trainer_id}
           <br></br>
           Vrijeme trajanja treninga: {element.trainingdurationmin}
         </Typography>
