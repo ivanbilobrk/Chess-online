@@ -28,6 +28,13 @@ module.exports = class User{
         }
         return newUser
     }
+    static async getAllTrainers(){
+        let results = await dbGetAllTrainers();
+
+        if(results.length > 0){
+            return {trainers: results};
+        }
+    }
 
     //dohvat korisnika na osnovu email adrese
     static async fetchByEmail(email) {
@@ -108,6 +115,18 @@ module.exports = class User{
         }
     }
     
+}
+
+dbGetAllTrainers = async () =>{
+    const sql = "select name, surname, id from users where role = '" + "trener" + "' ";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+        throw err
+    }
+
 }
 
 //dohvat korisnika iz baze podataka na osnovu korisničkog imena (stupac user_name)

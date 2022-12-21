@@ -85,7 +85,6 @@ const sql_create_dailyTactics= `CREATE TABLE dailyTactics(
   primary key(id, index)
 )`;
 
-const sql_create_dailyTactics_id_index =`CREATE  UNIQUE INDEX idx_dailyTacticsId ON dailyTactics(id)`;
 
 
 const sql_create_membership =`CREATE TABLE membership(
@@ -97,13 +96,12 @@ const sql_create_membership =`CREATE TABLE membership(
 
 
 const sql_create_reportedMistake =`CREATE TABLE reportedMistake(
-	member_id int REFERENCES users(id),
-	tactic_id int REFERENCES dailyTactics(id),
+    member_id int NOT NULL,
+	tactic_id int NOT NULL,
 	trainer_id int REFERENCES users(id),
-	preposedMove text NOT NULL,
-	moveDescription text NOT NULL,
-	isFixed boolean NOT NULL,
-	PRIMARY KEY(member_id, tactic_id)
+	description text NOT NULL,
+	showing boolean NOT NULL,
+	PRIMARY KEY(tactic_id, member_id)
 
 )`;
 
@@ -173,7 +171,6 @@ let indexes = [
     sql_create_tournament_id_index,
     sql_create_training_id_index,
     sql_create_news_id_index,
-    sql_create_dailyTactics_id_index
 ];
 
 

@@ -1,5 +1,3 @@
-const db = require('../db/index');
-const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel')
 const { StatusCodes } = require('http-status-codes');
 const userInfo = require('../helpFunctions/userInfo');
@@ -23,5 +21,10 @@ const getUserInfoById = async (req, res) =>{
     return res.status(StatusCodes.OK).json(result);
 }
 
+const getAllTrainers = async (req, res) =>{
+    let result = await User.getAllTrainers();
+    return res.status(StatusCodes.OK).json(result);
+}
 
-module.exports = { getUserInfo, getUserInfoById }
+
+module.exports = { getUserInfo, getUserInfoById, getAllTrainers }

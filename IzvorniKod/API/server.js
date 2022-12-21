@@ -41,6 +41,8 @@ app.use('/user', require('./routes/user.routes'));
 app.use('/transactions', require('./routes/transaction.routes'))
 app.use('/tactic/private', require('./routes/tacticPriv.routes'));
 app.use('/score/add', require('./routes/scorePriv.routes'));
+app.use('/mistakes', require('./routes/mistake.routes'));
+
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});

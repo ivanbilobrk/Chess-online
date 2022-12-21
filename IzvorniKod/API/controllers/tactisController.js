@@ -3,6 +3,7 @@ const userInfo = require('../helpFunctions/userInfo');
 const DailyTactics = require('../models/DailyTacticsModel');
 const Score = require('../models/ScoreModel');
 const Users = require('../models/UserModel');
+const Mistake = require('../models/MistakeModel');
 
 const addNewTactic = async (req, res, next)=>{
 
@@ -71,7 +72,6 @@ const editTactic = async (req, res, next)=>{
                     
                     //treba stavit sve koji su isti na showing = 1 a koji nisu na 0
                     if(same == true){
-                        console.log("tu")
                         await Score.showScore(userId, tactic.id);
                     } else {
                         await Score.removeScore(userId, tactic.id)
@@ -79,9 +79,9 @@ const editTactic = async (req, res, next)=>{
 
 
                 })
-                
             }
-            
+
+            await Mistake.removeAllMistakesForTactic(tactic.id);
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
             console.log(err)
