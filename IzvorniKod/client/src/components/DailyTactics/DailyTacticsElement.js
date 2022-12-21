@@ -18,6 +18,8 @@ import '../home.css';
 import UpdateDailyTacticsFormDialog from './UpdateDailyTactics';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CustomizedDialogs from './Dialog';
+import { useFetcher } from 'react-router-dom';
+import { elementTypeAcceptingRef } from '@mui/utils';
 
 
 const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) => {
@@ -30,10 +32,8 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     const [tactic, setTactic] = useState([]);
     const [set, setSet] = useState(false);
 
-    const handleStart = async () => {
-      setSet(true);
-      setTime(Date.now())
-      setMoves([])
+
+    const refereshTactics = async () => {
       try {
         const response = await axios.get('/tactics', 
                             {
@@ -41,22 +41,39 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
                                 
                             });
         
-        setTactic(response.data.tactics);
-    } catch (err) {                                        
-        console.error(err.response);
-        
+        setTactic(response.data.tactics); 
+        console.log(response.data.tactics)
+      } catch (err) {                                        
+          console.error(err.response);
+          
+      }
+      loadAllTactics();
     }
 
+    useEffect( () => {
+      refereshTactics();
+    }, []);
+
+    const handleStart = async () => {
+      setSet(true);
+      setTime(Date.now())
+      setMoves([])
+      refereshTactics(); 
+      console.log('SET - dte: ')
+      console.log(set)
     }
    
     const handleSubmit = async (userId, tacticId, time) => {
-      console.log("moves to submit: "+ moves)
+      setSet(false)
+      console.log("moves to submit: ")
+      console.log(moves)
+      console.log("tactic rjesenje")
       tactic[element.id].moves = tactic[element.id].moves.slice(1)
       for (let j = 0; j < tactic[element.id].moves.length; j++){
-        console.log("tactic.moves:"+ tactic[element.id].moves[j].fen)
+        console.log("tactic:"+ tactic[element.id].moves[j].fen)
       }
       if (moves.length != tactic[element.id].moves.length) {
-         //document.location.reload();   //trenutno ne znam kako bi bolje resetirao plocu nego reload cijele stranice
+        console.log("Krivo rješenje. Pokušajte ponovo!")
          return;
       }
 
@@ -64,17 +81,28 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
         console.log("move : [" + i +"]" +moves[i])
         console.log("tactic: [" + i +"]"+tactic[element.id].moves[i].fen)
         if (moves[i] != tactic[element.id].moves[i].fen){ 
-           console.log('krivo rjesenje')
-           //document.location.reload()
+           console.log("Krivo rješenje. Pokušajte ponovo!")
            return;
 
         }
       }
-
+      console.log("Točno rješenje. Čestitam!")
+      refereshTactics();
       await handleClickAddScore(userId, tacticId, time);
     };
    
     const handleClickEditDailyTactics = async (title, content, showing, moves, id) =>{
+      if (!showing){
+        moves = moves.map((el) => 
+          el.fen
+        )
+        console.log('BRISANJE')
+        console.log(moves)
+      } else {
+        console.log('EDITANJE')
+        console.log(moves)
+      }
+     
       try {
          await axiosPrivate.post('/tactic/private/edit',  /* provjeri path */
               JSON.stringify({ 
@@ -96,7 +124,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
           console.error(err.response);
       
       }
-      loadAllTactics();
+      refereshTactics();
   };
   const handleClickAddScore = async (userId, tacticId, time) =>{
     try {
@@ -118,13 +146,14 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
         console.error(err.response);
     
     }
+    refereshTactics();
 };
 
     if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer_id)){
         deleteButton =  <IconButton 
                             aria-label="remove" 
-                            onClick={()=>handleClickEditDailyTactics(element.title, element.content, 0, element.moves, element.id)}
-                        >
+                            onClick={()=>handleClickEditDailyTactics(element.title, element.content, 0, tactic[element.id].moves, element.id)}
+                        >  
                             <FiX/>
                         </IconButton>;
         editButton =    <IconButton 
@@ -161,6 +190,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
            </Typography>
           <Typography>
             <div style={{display:'flex', justifyContent:'center'}}>
+            
             <WithMoveValidation
               flag = {true}
               set = {set}
@@ -169,6 +199,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
               start = {start}
               setMoves = {setMoves}
             />
+            
             </div>
             <Button onClick={handleStart} >Započni</Button>
             {editButton}

@@ -20,7 +20,7 @@ export default function BasicList({rang}) {
         <p style={{margin:'2rem', fontSize:'18px'}}>Još nitko nije riješio dnevnu taktiku.</p>
       ) : (
         rang.map((element) => (
-            <ListItem disablePadding>
+            <ListItem key= {element.id} disablePadding>
             <ListItemButton style={{width:400}}>
               {element.user} {element.time}
             </ListItemButton>
