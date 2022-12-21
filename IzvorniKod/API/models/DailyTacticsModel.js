@@ -44,7 +44,7 @@ module.exports = class DailyTactics{
 
         let index = 0;
         map1.forEach((value, key)=>{
-            sorted[index++] = {
+            sorted[index] = {
                 title: value.title,
                 id: key,
                 trainer_id: value.trainer,
@@ -52,7 +52,10 @@ module.exports = class DailyTactics{
                 content: value.content,
                 moves: value.moves
             }
+            sorted[index].moves = sorted[index].moves.sort(function(a,b){return a.index - b.index})
+            index++;
         });
+        
         return sorted;
 
     }
