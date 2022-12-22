@@ -1,5 +1,5 @@
 const {Pool} = require('pg');
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env'});
 const env = process.env;
 
 const pool = new Pool({
@@ -9,8 +9,6 @@ const pool = new Pool({
     password: env.DB_PASSWORD,
     port: parseInt(env.DB_PORT),
 });
-
-
 
 
 const sql_create_users = `CREATE TABLE users (
@@ -179,7 +177,7 @@ let indexes = [
 (async () => {
     console.log("Creating and populating tables");
     for (let i = 0; i < tables.length; i++) {
-        
+        console.log(env.DB_PASSWORD)
         console.log("Creating table " + table_names[i] + ".");
         try {
             await pool.query(tables[i], [])

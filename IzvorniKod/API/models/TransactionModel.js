@@ -6,6 +6,7 @@ module.exports = class Membership{
         this.userId = userId;
         this.month = month;
         this.isPaid = isPaid;
+       // this.showing=1;
     }
     
     static getTransactionsForUser = async(id)=>{

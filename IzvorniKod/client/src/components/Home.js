@@ -38,6 +38,8 @@ export default function Home(){
     const [dailyTactics, setDailyTactics] = useState([]);
     const [news, setNews] = useState([]);
     const [content, setContent] = useState("");
+    const [data, setData] = useState([]);
+    const [data2, setData2] = useState([]);
     const [title, setTitle] = useState("");
 
     const logout = useLogout();
@@ -104,7 +106,35 @@ export default function Home(){
             controller.abort();
         }
     },[]);
-    
+
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        const getData2 = async () => {
+            try {
+                const response = await axiosPrivate.get(`/user/u/i/${auth.user}`, {
+                });
+                console.log(response.data.podatcii);
+                isMounted && setData2(response.data.podatcii);
+            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
+
+        getData2();
+        console.log(data2);
+        console.log(data2[5]);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, [])
+
+    if(data2[7]){navigate('/payMembership', { state: { from: location }, replace: true });}
+    if(data2[6]){navigate('/banned', { state: { from: location }, replace: true });}
     return(
         <>
         <div>
