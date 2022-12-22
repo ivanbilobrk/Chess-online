@@ -76,7 +76,10 @@ module.exports = class User{
                 results[0].username, results[0].email, results[0].pwdHash)
             newUser.id = results[0].id
             newUser.role = results[0].role
+            newUser.isBanned=results[0].isbanned
+            newUser.onlyPay=results[0].onlypay
         }
+        console.log(newUser)
         return newUser
     }
     static async addRefreshToken(userName, refreshToken){
@@ -109,8 +112,9 @@ module.exports = class User{
         return newUser
     }
     static async zabraniP(id) {
-
-        let results = await dbZabrani(id)
+console.log(id);
+         await dbZabrani(id)
+        
        
     }
     static async onemoguciP(id) {
@@ -118,6 +122,8 @@ module.exports = class User{
         let results = await dbOnemoguci(id)
        
     }
+
+ 
    
       static  async updateProfile(name, surname, username, email, id){
             let results = await dbEditUser(name, surname, username, email, id);
@@ -195,6 +201,11 @@ dbGetUserByEmail = async (user_email) => {
         throw err
     }
 };
+
+
+
+
+
 dbGetUserByRefreshToken = async (refreshToken) => {
     const sql = `SELECT *
     FROM users WHERE refreshToken = '` + refreshToken + `'`;
@@ -247,6 +258,7 @@ dbZabrani= async (id) => {
     const sql = "UPDATE users SET isBanned = '1' WHERE id = '" + id + "'";
     try {
         const result = await db.query(sql, []);
+        //console.log(id);
         return result.rows; 
     } catch (err){
         console.log(err);

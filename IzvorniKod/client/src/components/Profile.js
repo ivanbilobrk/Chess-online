@@ -36,6 +36,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Profile(){
     const [data, setData] = useState([]);
+    const [data2, setData2] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const logout = useLogout();
@@ -71,26 +72,67 @@ export default function Profile(){
         }
     }, [])
 
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        const getData2 = async () => {
+            try {
+                const response = await axiosPrivate.get(`/user/u/i/${auth.user}`, {
+                });
+                console.log(response.data.podatcii);
+                isMounted && setData2(response.data.podatcii);
+            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
+
+        getData2();
+        console.log(data2);
+        console.log(data2[5]);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, [])
+
+    function fja(){
+        navigate('/members', { state: { from: location }, replace: true });
+
+    }
+    function fja2(){
+        navigate('/edit', { state: { from: location }, replace: true });
+
+    }
+    function fja3(){
+        navigate('/', { state: { from: location }, replace: true });
+
+    }
+    function fja4(){
+        navigate('/PayMembership', { state: { from: location }, replace: true });
+
+    }
+
     const signout = async() =>{
         await logout();
         navigate('/');
     }
-
-    
+   
     const PaymentAdmin = ({uloga}) =>{
         if(uloga == 'admin'){
             return (<><Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
                                     ČLANOVI
-                                </Typography><Typography align='left' color="text.secondary">
-                                        Clan1 <Button size="large" >Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button><br></br>
-                                        Clan2 <Button size="large">Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button><br></br>
-                                        Clan3 <Button size="large">Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button><br></br>
-                                        Clan4 <Button size="large">Pregled transakcija</Button><Button size="large" >Zabrani pristup</Button>
-                                        
-                    <Item><Typography color="text.secondary"> <Link to="/members" style={{ color: '#00F'}}>Pogledaj sve clanove</Link>.</Typography></Item>
-                                    </Typography></>
+                                </Typography><Typography align='center' color="text.secondary">
+                                 <Button onClick ={fja} size="large">Klikni za pregled svih članova</Button>
+                     {/*                   
+                    <Item><Typography color="text.secondary"> <Link to="/members" style={{ color: '#00F'}}>Pogledaj sve clanove</Link>.</Typography></Item> */}
+        </Typography></> 
             );
         }
+        if(data2[7]){navigate('/payMembership', { state: { from: location }, replace: true });}
+        if(data2[6]){navigate('/banned', { state: { from: location }, replace: true });}
+        
             return (<>
                 <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
                    POVIJEST PLAĆANJA
@@ -111,7 +153,7 @@ export default function Profile(){
         if(uloga == 'admin'){
             return null;
         }
-            return <Button size="large">Pregledaj cijelu povijest</Button>;
+            return <Button onClick={fja4} size="large">Plati članarinu</Button>;
         
     }
 
@@ -159,7 +201,8 @@ export default function Profile(){
             <Box sx={{ width: '100%'}}>
             <Stack spacing={0}>
                 <Item><Typography color="text.secondary">Dobrodošli na svoj profil! Ovdje možete pregledati svoje osobne podatke.</Typography></Item>
-                <Item><Typography color="text.secondary">Ukoliko se želite vratiti na home page, kliknite <Link to="/" style={{ color: '#00F'}}>ovdje</Link>.</Typography></Item>
+                <Item><Typography color="text.secondary">Ukoliko se želite vratiti na home page, kliknite  <Button onClick ={fja3} size="small">ovdje</Button>
+                {/*<Link to="/" style={{ color: '#00F'}}>ovdje</Link>*/}</Typography></Item>
             </Stack>
             </Box>
 
@@ -183,7 +226,11 @@ export default function Profile(){
                             ) : <p>No data to display</p>
                         }
                     </Item>
-                    <Item><Typography color="text.secondary"> <Link to="/edit" style={{ color: '#00F'}}>Uredi profil</Link>.</Typography></Item>
+                    <Typography align='center' color="text.secondary">
+                                 <Button onClick ={fja2} size="large">Uredi profil</Button>
+                    
+        </Typography>
+                   {/* <Item><Typography color="text.secondary"> <Link to="/edit" style={{ color: '#00F'}}>Uredi profil</Link>.</Typography></Item> */}
                 </Grid>
 
                 <Grid item xs={6}> {/*POVIJEST PLACANJA*/}

@@ -9,7 +9,7 @@ import { FiEdit3, FiX } from "react-icons/fi";
 import UpdateNews from "./UpdateNews"
 import './home.css';
 import { useNavigate, useLocation } from "react-router-dom";
-
+import Grid from '@mui/material/Grid';
 import { useState, useEffect } from 'react';
 import axios, { axiosPrivate } from "../api/axios";
 import Button from "@mui/material/Button";
@@ -18,14 +18,17 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci}) => {
   const {auth} = useAuth();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const idx=element.id
+  //const idx=element.id
     let deleteButton = <></>;
     let editButton = <></>;
-    
 
-  const handleSubmit = async (id) => {
-    await handleClickZabrani(id);
+
+
+
+  const handleSubmit = async (name, surmame, username, email, id) => {
+    await handleClickZabrani(name, surmame, username, email, id);
     //setOpen(false);
+    handleClickZabrani.disabled(true);
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
 
@@ -41,14 +44,15 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci}) => {
     
     
   return (
-      <Accordion>
+    <p align='center'>
+      <Accordion >
         <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>
-           Ime i prezime : {element.name}  {element.surname}
+          <Typography align='center' color="text.secondary">
+           Ime i prezime : {element.name}  {element.surname} (Id: {element.id})
            
            </Typography>
            
@@ -56,15 +60,15 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci}) => {
       
         <AccordionDetails>
           <Typography>
-          Transakcije:  {data}
+    {/*Transakcije:  {data} */}
             {editButton}
             {/*<Button onClicick="funkcija();" >Zabrani pristup</Button> */}
-            <Button onClick={()=>handleSubmit(element.id)}>Zabrani pristup</Button>
+            <Button onClick={()=>handleSubmit(element.name, element.surname, element.username, element.email,element.id)}>Zabrani pristup</Button>
             <Button onClick={()=>handleSubmit2(element.id)}>Omogući samo plaćanje</Button>
           </Typography>
         </AccordionDetails>
       </Accordion>
-    
+   </p>
   )
 }
 

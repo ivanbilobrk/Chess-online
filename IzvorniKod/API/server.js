@@ -21,7 +21,7 @@ app.use('/login', require('./routes/login.routes'));
 app.use('/logout', require('./routes/logout.routes'));
 app.use('/refresh', require('./routes/refresh.routes'));
 app.use('/news', require('./routes/news.routes'));
-app.use('/members', require('./routes/user.routes'));
+//app.use('/members', require('./routes/user.routes'));
 app.use(verifyJWT);  //every route after this line here will use verifyJWT middleware
 
 //tester - tester route that will demonstrate use of tokens

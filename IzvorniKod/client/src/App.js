@@ -15,6 +15,9 @@ import PersistLogin from "./components/PersistLogin";
 import BlockAuth from './components/BlockAuth';
 import {EditPage} from './pages/EditPage'
 import AllMembers from "./components/AllMembers"
+import Transakcije from "./components/Transakcije"
+import Banned from "./components/Banned"
+import PayMembership from "./components/PayMembership"
 function App() {
   return (
    
@@ -26,6 +29,9 @@ function App() {
 
             <Route path ="edit" element ={<EditPage/>}></Route>
             <Route path ="members" element ={<AllMembers/>}></Route>
+            <Route path ="transactions" element ={<Transakcije/>}></Route>
+            <Route path ="banned" element ={<Banned/>}></Route>
+            <Route path ="payMembership" element ={<PayMembership/>}></Route>
 
           <Route element={<BlockAuth/>}>
             <Route path="register" element = {<RegisterPage/>}></Route>

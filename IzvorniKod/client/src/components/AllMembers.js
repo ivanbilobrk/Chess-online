@@ -11,13 +11,13 @@ import Grid from '@mui/material/Grid';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Admin from './Admin';
-
+import Transakcije from './Transakcije';
 // list imports
 import axios from "../api/axios";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
+import HeaderSigned from "../components/HeaderSigned";
 // card imports
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -47,57 +47,22 @@ export default function AllMembers(){
     //const [userData, setUserData] = useState([]);
 
     let counter = 0;
-    const loadAllTra = async () => {
+   
+    
+    const handleClickZabrani = async (name,surname, username, email, id) =>{
         try {
-            const response = await axios.get('/', 
+            const response =await axiosPrivate.post(`/user/zabrani/u/${auth.user}`, 
+                JSON.stringify({ 
+                                user:{
+                                 name:name,
+                                 surname:surname,
+                                 username:username,
+                                 email:email,
+                                    id: id
+                                }
+                                }),
                                 {
-                                    headers: {'Content-Type':'application/json'},
-                                    withCredentials: true
-                                });
-            setData2(response.data.allMemberships);
-            console.log(response.data.allMemberships);
-        } catch (err) {                                        
-            console.error(err.response);
-            
-        }
-    };
-    
-  
-    useEffect(() =>{
-        let isMounted = true;
-        const controller = new AbortController();
-        /*const getData = async () => {
-            try {
-                const response = await axiosPrivate.get(`/user/${auth.user}`, {
-                });
-                console.log(response.data.podatci)
-                isMounted && setUserData(response.data.podatci);
-            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
-                console.error(err);
-                
-            }
-        }
-        
-        
-        getData();*/
-        
-        loadAllTra();
-        
-        return () => {
-            isMounted = false;
-            controller.abort();
-        }
-    },[]);
-    
-    
-    const handleClickZabrani = async (id) =>{
-        try {
-            const response =await axiosPrivate.post(`/zabrani/${auth.user}`, 
-                JSON.stringify({
-                              user: { id}
-                 } ),
-                                {
-    
+
                                 });
     
         } catch (err) {                                        
@@ -106,9 +71,10 @@ export default function AllMembers(){
         }
       
     };
+  
     const handleClickOnemoguci = async (id) =>{
         try {
-            const response =await axiosPrivate.post(`/user/o/${auth.user}`, 
+            const response =await axiosPrivate.post(`/user/onemoguci/o/u/${auth.user}`, 
                 JSON.stringify({
                               user: { id}
                  } ),
@@ -124,10 +90,9 @@ export default function AllMembers(){
     };
       
   
-    const signout = async() =>{
-        await logout();
-        navigate('/');
-    }
+ 
+    
+      
 
     const loadAllMember = async () => {
         try {
@@ -153,58 +118,43 @@ export default function AllMembers(){
         
         loadAllMember();
         
-        return () => {
-            isMounted = false;
-            controller.abort();
-        }
-    },[]);
-    
-    const loadAllTrans = async () => {
-        try {
-            const response = await axios.get('/', 
-                                {
-                                    headers: {'Content-Type':'application/json'},
-                                    withCredentials: true
-                                });
-            setData2(response.data.allMemberships);
-            console.log(response.allMemberships);
-        } catch (err) {                                        
-            console.error(err.response);
-            
-        }
-    };
-    
-    useEffect(() =>{
-        let isMounted = true;
-        const controller = new AbortController();
-     
-        
-        loadAllTrans();
         
         return () => {
             isMounted = false;
             controller.abort();
         }
     },[]);
+    
+   
+  
+ 
+    
+      
 
    
     
     return(
         <>
-            
-          
-         
-                      <h1>Svi clanovi</h1>
+        <HeaderSigned/>
+        <Typography align='center'>
+        <Grid align='center'>
+                      <h2>Svi članovi</h2>
 
 <Admin
           data={data}
           handleClickZabrani={handleClickZabrani}
           handleClickOnemoguci={handleClickOnemoguci}
          
+         
           />
+</Grid> </Typography>
+<Grid>
 
-
-
+<h2>Sve uplate članarina</h2>
+<Typography align='center'>
+            <Transakcije/>
+            </Typography>
+            </Grid> 
             
         </>
     );

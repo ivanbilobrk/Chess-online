@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel')
 const { StatusCodes } = require('http-status-codes');
 const userInfo = require('../helpFunctions/userInfo');
+const userInfo3 = require('../helpFunctions/userInfo3');
 //const { StatusCodes } = require('http-status-codes');
 //const userInfo = require('../helpFunctions/userInfo');
 const News = require('../models/NewsModel');
@@ -20,6 +21,22 @@ console.log(result);
         return res.status(StatusCodes.OK).json(result);
     }
 }
+
+const getUserInfo3 = async (req, res) => {
+   
+    let result = await userInfo3.getUserInfo3(req, res);
+console.log(result);
+    if(result == 401){
+        return res.sendStatus(401);
+    } else if(result == 403){
+        return res.sendStatus(403);
+    } else {
+        return res.status(StatusCodes.OK).json(result);
+    }
+}
+
+
+
 /*
 const getUserInfo2 = async (req, res) => {
    
@@ -55,19 +72,26 @@ const getAllMembers = async (req, res) => {
     
 }
 
+const zabraniP= async(req, res, next) =>{
+//console.log(req.body.user);
+//console.log(req.body.user.id);
+   
+            
+console.log(req.body.user.id);
+          let snap=  await User.zabraniP( req.body.user.id);
+            //console.log(snap);
+            return res.sendStatus(StatusCodes.OK);
+      
+    } 
 
 
-const zabraniP = async(req, res, next) =>{
-    console.log(req);
-    User.zabraniP(req.body.user.id);
-    return res.sendStatus(StatusCodes.OK);
-}
 
 const onemoguciP = async(req, res, next) =>{
-    console.log(req);
-    User.onemoguciP(req.body.user.id);
+    //console.log(req);
+   await User.onemoguciP(req.body.user.id);
     return res.sendStatus(StatusCodes.OK);
 }
+
    
    
     
@@ -111,4 +135,4 @@ const onemoguciP = async(req, res, next) =>{
     
 
 
-module.exports = { getUserInfo, getAllMembers, updateProfile, zabraniP, onemoguciP};
+module.exports = { getUserInfo,getUserInfo3, getAllMembers, updateProfile, zabraniP, onemoguciP};
