@@ -2,7 +2,7 @@ import React from 'react'
 import NewsElement from './NewsElement'
 import TrainingElement from './TrainingElement'
 
-const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, user}) => {
+const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, handleScheduleTraining, handleCancelTraining, user}) => {
   return (
     <> 
     {!data?.length ? (
@@ -18,6 +18,8 @@ const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate,
                     setDate = {setDate}
                     setDuration = {setDuration}
                     handleUpdateTraining = {handleUpdateTraining}
+                    handleScheduleTraining = {handleScheduleTraining}
+                    handleCancelTraining = {handleCancelTraining}
                     user = {user}
                 />
         )

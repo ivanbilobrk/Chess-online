@@ -51,6 +51,7 @@ export default function Home(){
                                 });
             
             setData(response.data.newsAll);
+            console.log(response.data.newsAll)
         } catch (err) {                                        
             console.error(err.response);
             

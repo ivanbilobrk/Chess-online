@@ -22,17 +22,18 @@ const {auth} = useAuth();
 
 const loadAllTraining = async () => {
     try {
-        const response = await axios.get('/training', 
+        const response = await axios.get('/training/', 
                             {
                                 headers: {'Content-Type':'application/json'},
                                 withCredentials: true
                             });
         setData(response.data.trainingsAll);
-        console.log(response.data.trainingsAll);
+        console.log(response.data.trainingsAll + "Konj");
     } catch (err) {                                        
         console.error(err.response);
         
     }
+    console.log(trainingData);
 };
 
 const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
@@ -63,10 +64,58 @@ const handleAddTraining = async (tId, start, duration) => {
     try {
         const response = await axios.post('/training/add', 
             JSON.stringify({ 
-                            news:{
+                            training:{
                                 trainerId: tId,
                                 trainingStart: start,
-                                trainingDuration: duration
+                                trainingDuration: duration,
+                            }
+                            }),
+                            {
+                                headers: {'Content-Type':'application/json'},
+                                withCredentials: true
+                            });
+    } catch (err) {                                        
+        console.error(err.response);
+    
+    }
+    loadAllTraining();
+};
+
+const handleScheduleTraining = async (tId, start, duration, showing, id) => {
+    try {
+        const response = await axios.post('/training/signup', 
+            JSON.stringify({ 
+                            training:{
+                                trainerId: tId,
+                                trainingStart: start,
+                                trainingDuration: duration,
+                                showing: showing,
+                                id:id
+
+                            }
+                            }),
+                            {
+                                headers: {'Content-Type':'application/json'},
+                                withCredentials: true
+                            });
+    } catch (err) {                                        
+        console.error(err.response);
+    
+    }
+    loadAllTraining();
+};
+
+const handleCancelTraining = async (tId, start, duration, showing, id) => {
+    try {
+        const response = await axios.post('/training/cancel', 
+            JSON.stringify({ 
+                            training:{
+                                trainerId: tId,
+                                trainingStart: start,
+                                trainingDuration: duration,
+                                showing: showing,
+                                id:id
+
                             }
                             }),
                             {
@@ -132,8 +181,9 @@ return(
           setDate = {setDate}
           setDuration = {setDuration}
           handleUpdateTraining = {handleUpdateTraining}
+          handleScheduleTraining = {handleScheduleTraining}
+          handleCancelTraining = {handleCancelTraining}
           user = {userData}/>
-     <AddTraining></AddTraining>
     </>
    
 )

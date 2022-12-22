@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TrainingList from './TrainingList';
 
-const Training = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, user}) => {
+const Training = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, handleScheduleTraining, handleCancelTraining, user}) => {
   return (
     <div style={{width:'550px'}}>
       <TrainingList
@@ -13,6 +13,8 @@ const Training = ({data, trainersId, date, duration, setTrainersId, setDate, set
         setDate = {setDate}
         setDuration = {setDuration}
         handleUpdateTraining = {handleUpdateTraining}
+        handleScheduleTraining = {handleScheduleTraining}
+        handleCancelTraining = {handleCancelTraining}
         user = {user}
       />
     </div>

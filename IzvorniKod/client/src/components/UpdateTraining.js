@@ -6,10 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { FaPlus } from 'react-icons/fa';
+import { FiEdit3 } from 'react-icons/fi';
 import './home.css';
 
-const AddTraining = ({trainersId, date, duration, setTrainersId, setDate, setDuration, handleAddTraining, user}) => {
+const UpdateTraining = ({trainersId, date, duration, showing, id, setTrainersId, setDate, setDuration, handleUpdateTraining, user}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,8 +20,8 @@ const AddTraining = ({trainersId, date, duration, setTrainersId, setDate, setDur
     setOpen(false);
   };
 
-  const handleSubmit = async (trainersId, date, duration) => {
-    await handleAddTraining(trainersId, date, duration);
+  const handleSubmit = async (trainersId, date, duration, showing, id) => {
+    await handleUpdateTraining(duration, date, showing, id, trainersId);
     setOpen(false);
   };
 
@@ -29,14 +29,14 @@ const AddTraining = ({trainersId, date, duration, setTrainersId, setDate, setDur
     <div>
         { user != 'user' ?
       <button className="addButton"  onClick={handleClickOpen}>
-         <FaPlus/> 
+         <FiEdit3> </FiEdit3>
       </button> 
       : null}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add training</DialogTitle>
+        <DialogTitle>Update training</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To add training fill required fields.
+            To edit training fill required fields.
           </DialogContentText>
           <TextField
             autoFocus
@@ -76,4 +76,4 @@ const AddTraining = ({trainersId, date, duration, setTrainersId, setDate, setDur
   );
 }
 
-export default AddTraining;
+export default UpdateTraining;
