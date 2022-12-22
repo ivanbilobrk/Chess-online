@@ -15,7 +15,7 @@ module.exports = class Mistake{
     }
 
     static async removeAllMistakesForTactic(tactic){
-        await dbRemoveAllMistakesForTactic();
+        await dbRemoveAllMistakesForTactic(tactic);
     }
 
     static async getAllMistakesForTrainer(trainer){
@@ -38,7 +38,6 @@ dbRemoveAllMistakesForTactic = async(tactic) => {
 
 dbAddNewMistake = async (values) => {
     const sql = "insert into reportedmistake values ('" + values.user + "', '" + values.tactic + "', '" + values.trainer + "', '" + values.desc + "', '" + values.showing + "') ";
-    console.log(sql)
 
     try {
         await db.query(sql, []);

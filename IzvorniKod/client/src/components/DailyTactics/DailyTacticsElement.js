@@ -20,17 +20,23 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CustomizedDialogs from './Dialog';
 import { useFetcher } from 'react-router-dom';
 import { elementTypeAcceptingRef } from '@mui/utils';
+import DialogSelect from './ReportMistakeDialog';
 
 
 const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) => {
     const axiosPrivate = useAxiosPrivate();
     let deleteButton = <></>;
     let editButton = <></>;
+    let reportMistake = <></>;
     const [moves, setMoves] = useState([]);
     const [start, setStart] = useState(element.moves[0].fen);
     const [time, setTime] = useState();
     const [tactic, setTactic] = useState([]);
+    const [flag, setFlag] = useState(false);
     const [set, setSet] = useState(false);
+    const [trainers, setTrainers] = useState([]);
+    const [mistakes, setMistakes] = useState([]);
+    
 
 
     const refereshTactics = async () => {
@@ -42,7 +48,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
                             });
         
         setTactic(response.data.tactics); 
-        console.log(response.data.tactics)
+       
       } catch (err) {                                        
           console.error(err.response);
           
@@ -52,8 +58,40 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
 
     useEffect( () => {
       refereshTactics();
+      getAllTrainers();
+      getAllMistakesForTrainer();
     }, []);
 
+    const getAllMistakesForTrainer = async () => {
+      try {
+         const response = await axiosPrivate.get('/mistakes/getTrainerMistakes',  
+                              {
+                                  headers: {'Content-Type':'application/json'},
+                                  withCredentials: true
+                              });
+                              
+        
+        setMistakes(response.data.mistakes)
+      } catch (err) {                                        
+        console.error(err.response);
+      
+      }
+    };
+    const getAllTrainers = async () =>{
+      try {
+         const response = await axiosPrivate.get('/user/trainers',  /* provjeri path */
+                              {
+                                  headers: {'Content-Type':'application/json'},
+                                  withCredentials: true
+                              });
+        setTrainers(response.data.trainers)
+        
+      } catch (err) {                                        
+        console.error(err.response);
+      
+      }
+      
+    };
     const handleStart = async () => {
       setSet(true);
       setTime(Date.now())
@@ -62,31 +100,35 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     }
    
     const handleSubmit = async (userId, tacticId, time) => {
+      setFlag(true)
       console.log('tacticid: ' + tacticId + 'element.id: ' + element.id)
       setSet(false)
-      console.log("moves to submit: ")
+      console.log("My moves to submit: ")
       console.log(moves)
-      console.log("tactic rjesenje")
+      console.log("Correct moves from db")
       for (let j = 0; j < tactic[element.id].moves.length; j++){
         console.log("tactic:"+ tactic[element.id].moves[j].fen)
       }
       if (moves.length != tactic[element.id].moves.length) {
-        console.log("Krivo rješenje. Pokušajte ponovo!")
+        alert("Krivo rješenje. Pokušajte ponovo!")
         await handleClickAddScore(userId, tacticId, time, 0, moves);
+        setMoves([])
         return;
       }
 
       for (let i = 0; i < moves.length; i++){
-        console.log("move : [" + i +"]" +moves[i])
-        console.log("tactic: [" + i +"]" + tactic[element.id].title +tactic[element.id].moves[i].fen)
+        console.log("My move : [" + i +"]" +moves[i])
+        console.log("Correct : [" + i +"]" + tactic[element.id].title +tactic[element.id].moves[i].fen)
         if (moves[i] != tactic[element.id].moves[i].fen){ 
-           console.log("Krivo rješenje. Pokušajte ponovo!")
+          alert("Krivo rješenje. Pokušajte ponovo!")
            await handleClickAddScore(userId, tacticId, time, 0, moves);
+           setMoves([])
            return;
 
         }
       }
-      console.log("Točno rješenje. Čestitam!")
+      alert("Točno rješenje. Čestitam!")
+      setMoves([])
       refereshTactics();
       await handleClickAddScore(userId, tacticId, time, 1, moves);
     };
@@ -124,9 +166,8 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
           console.error(err.response);
       
       }
-      console.log('moves->.....')
-      console.log(moves)
       refereshTactics();
+      getAllMistakesForTrainer();
   };
   const handleClickAddScore = async (userId, tacticId, time, showing, moves) =>{
     try {
@@ -152,6 +193,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
     refereshTactics();
 };
 
+
     if (user[5] == 'admin'  || (user[5] == 'trener' && user[0] == element.trainer_id)){ //promjeni uvjet
         deleteButton =  <IconButton 
                             aria-label="remove" 
@@ -159,6 +201,11 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
                         >  
                             <FiX/>
                         </IconButton>;
+
+
+    } 
+    
+    if (mistakes.filter(mistake => mistake.tactic_id == element.id && mistake.showing == 1).length > 0){
         editButton =    <IconButton 
                             aria-label="edit" 
         
@@ -166,14 +213,23 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
                             <UpdateDailyTacticsFormDialog
                                 id = {element.id}
                                 handleClickUpdateDailyTactics={handleClickEditDailyTactics}
+                                
                                 start = {start}
                                 title = {element.title}
                                 content={element.content}
+                                mistake={mistakes.filter(mistake => mistake.tactic_id == element.id && mistake.showing == 1)}
                             />
                             
                         </IconButton>
 
     } 
+
+    if (user[5] == 'user'){
+      reportMistake = <DialogSelect 
+                        trainers = {trainers}
+                        id = {element.id}
+                      />
+    }
 
     //dodaj za reportMistakes
     
@@ -209,6 +265,7 @@ const DailyTacticsElement = ({loadAllTactics, element, title, content, user}) =>
             <Button onClick={handleStart} >Započni</Button>
             {editButton}
           </Typography>
+            {flag && reportMistake}
           <DialogActions>
           <CustomizedDialogs 
             id = {element.id}

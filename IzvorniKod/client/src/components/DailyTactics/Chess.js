@@ -66,8 +66,6 @@ class HumanVsHuman extends Component {
   };
 
   handleClose = () => {
-    console.log('SET: ')
-    console.log(this.props.set)
     this.setState(() => ({
       fen: this.props.start,
     }));

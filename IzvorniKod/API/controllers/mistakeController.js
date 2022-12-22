@@ -12,10 +12,9 @@ const getAllMistakesForTrainer = async (req, res) => {
         return res.sendStatus(403);
     } else if(result.podatci[5] == "trener"){
         let trainerId = result.podatci[0];
-
         try{
             let result = await Mistake.getAllMistakesForTrainer(trainerId);
-            res.status(StatusCodes.OK).json({mistakes: result});
+            res.status(StatusCodes.OK).json({mistakes: result}); 
         } catch(err){
             res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti prijavljene greške za trenera.'});
         }

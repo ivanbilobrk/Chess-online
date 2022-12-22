@@ -11,8 +11,10 @@ import '../home.css';
 import { FiEdit3, FiX } from 'react-icons/fi';
 import WithMoveValidation from './Chess';
 import { useState } from 'react';
+import { Divider } from '@mui/material';
 
-const UpdateDailyTacticsFormDialog = ({id, handleClickUpdateDailyTactics, title, content, start}) => {
+const UpdateDailyTacticsFormDialog = ({id, handleClickUpdateDailyTactics, title, content, start, mistake}) => {
+
   const [moves, setMoves] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [set, setSet] = useState(true);
@@ -28,6 +30,7 @@ const UpdateDailyTacticsFormDialog = ({id, handleClickUpdateDailyTactics, title,
   const handleSubmit = async (title, content, showing, moves, id) => {
     console.log('moves to update: ' + moves)
     await handleClickUpdateDailyTactics(title, content, showing, moves, id);
+    
     setOpen(false);
   };
 
@@ -39,6 +42,10 @@ const UpdateDailyTacticsFormDialog = ({id, handleClickUpdateDailyTactics, title,
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Uređivanje taktike</DialogTitle>
         <DialogContent>
+          <DialogContentText>
+            {mistake[0].description}
+          </DialogContentText>
+          <Divider/>
           <DialogContentText>
             Za uređivanje taktike unesi novo rješenje.
           </DialogContentText>

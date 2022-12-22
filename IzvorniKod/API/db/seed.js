@@ -102,7 +102,7 @@ const sql_create_reportedMistake =`CREATE TABLE reportedMistake(
 	tactic_id int NOT NULL,
 	trainer_id int REFERENCES users(id),
 	description text NOT NULL,
-	showing boolean NOT NULL,
+	showing int NOT NULL,
 	PRIMARY KEY(tactic_id, member_id)
 
 )`;

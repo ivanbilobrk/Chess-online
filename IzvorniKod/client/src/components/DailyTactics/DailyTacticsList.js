@@ -2,6 +2,7 @@ import React from 'react'
 import DailyTacticsElement from './DailyTacticsElement'
 
 const DailyTacticsList = ({loadAllTactics, data, title, content, user}) => {
+
   return (
     <> 
     {!data?.length ? (

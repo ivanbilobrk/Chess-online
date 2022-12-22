@@ -71,8 +71,6 @@ export default function Home(){
                                 });
             
             setDailyTactics(response.data.tactics);
-            console.log("loadAllTactics: ")
-            console.log(response.data.tactics)
         } catch (err) {                                        
             console.error(err.response);
             
@@ -100,7 +98,6 @@ export default function Home(){
         
         loadAllNews();
         loadAllTactics();
-        console.log(dailyTactics)
         
         return () => {
             isMounted = false;
