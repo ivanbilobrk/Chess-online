@@ -88,6 +88,24 @@ export default function AllMembers(){
         }
       
     };
+
+    
+    const handleClickOdobri = async (id) =>{
+        try {
+            const response =await axiosPrivate.post(`/user/onemoguci/o/u/p/${auth.user}`, 
+                JSON.stringify({
+                              user: { id}
+                 } ),
+                                {
+    
+                                });
+    
+        } catch (err) {                                        
+            console.error(err.response);
+        
+        }
+      
+    };
       
   
  
@@ -144,6 +162,7 @@ export default function AllMembers(){
           data={data}
           handleClickZabrani={handleClickZabrani}
           handleClickOnemoguci={handleClickOnemoguci}
+          handleClickOdobri={handleClickOdobri}
          
          
           />

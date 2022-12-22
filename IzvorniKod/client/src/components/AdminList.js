@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminElement from './AdminElement'
 
-const AdminList = ({data, handleClickZabrani, handleClickOnemoguci}) => {
+const AdminList = ({data, handleClickZabrani, handleClickOnemoguci, handleClickOdobri}) => {
   return (
     <> 
     {!data?.length ? (
@@ -12,6 +12,7 @@ const AdminList = ({data, handleClickZabrani, handleClickOnemoguci}) => {
                     element = {element}
                     handleClickZabrani={handleClickZabrani}
                     handleClickOnemoguci={handleClickOnemoguci}
+                    handleClickOdobri={handleClickOdobri}
         
                 />
         )

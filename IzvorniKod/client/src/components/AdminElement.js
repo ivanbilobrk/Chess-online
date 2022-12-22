@@ -14,10 +14,14 @@ import { useState, useEffect } from 'react';
 import axios, { axiosPrivate } from "../api/axios";
 import Button from "@mui/material/Button";
 import useAuth from "../hooks/useAuth";
-const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci}) => {
+const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci, handleClickOdobri}) => {
   const {auth} = useAuth();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [isDisabled, setDisabled] = useState(false);
+  const [isDisabled2, setDisabled2] = useState(true);
+  const [isDisabled3, setDisabled3] = useState(false);
+
   //const idx=element.id
     let deleteButton = <></>;
     let editButton = <></>;
@@ -28,13 +32,24 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci}) => {
   const handleSubmit = async (name, surmame, username, email, id) => {
     await handleClickZabrani(name, surmame, username, email, id);
     //setOpen(false);
-    handleClickZabrani.disabled(true);
+   // handleClickZabrani.disabled(true);
+    setDisabled(true);
+    setDisabled2(false);
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
 
   const handleSubmit2 = async (id) => {
     await handleClickOnemoguci(id);
     //setOpen(false);
+    setDisabled3(true);
+    navigate('/members', { state: { from: '/members'}, replace: true });
+  };
+
+  const handleSubmit3 = async (id) => {
+    await handleClickOdobri(id);
+    //setOpen(false);
+    setDisabled(false);
+    setDisabled2(true);
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
   
@@ -63,8 +78,10 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci}) => {
     {/*Transakcije:  {data} */}
             {editButton}
             {/*<Button onClicick="funkcija();" >Zabrani pristup</Button> */}
-            <Button onClick={()=>handleSubmit(element.name, element.surname, element.username, element.email,element.id)}>Zabrani pristup</Button>
-            <Button onClick={()=>handleSubmit2(element.id)}>Omogući samo plaćanje</Button>
+            <Button disabled={isDisabled} onClick={()=>handleSubmit(element.name, element.surname, element.username, element.email,element.id)}>Zabrani pristup</Button>
+            <Button disabled={isDisabled2} onClick={()=>handleSubmit3(element.id)}>Odobri pristup</Button>
+            <Button disabled={isDisabled3} onClick={()=>handleSubmit2(element.id)}>Omogući samo plaćanje</Button>
+            
           </Typography>
         </AccordionDetails>
       </Accordion>

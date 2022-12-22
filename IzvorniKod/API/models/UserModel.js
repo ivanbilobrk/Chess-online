@@ -122,6 +122,11 @@ console.log(id);
         let results = await dbOnemoguci(id)
        
     }
+    static async odobriP(id) {
+
+        let results = await dbOdobri(id)
+       
+    }
 
  
    
@@ -267,6 +272,16 @@ dbZabrani= async (id) => {
 }
 dbOnemoguci= async (id) => {
     const sql = "UPDATE users SET onlyPay = '1' WHERE id = '" + id + "'";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows; 
+    } catch (err){
+        console.log(err);
+        throw err
+    }
+}
+dbOdobri= async (id) => {
+    const sql = "UPDATE users SET IsBanned = '0' WHERE id = '" + id + "'";
     try {
         const result = await db.query(sql, []);
         return result.rows; 
