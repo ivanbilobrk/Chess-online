@@ -11,7 +11,7 @@ module.exports = class Mistake{
     }
 
     async persist(){
-        await dbAddNewMistake();
+        await dbAddNewMistake(this);
     }
 
     static async removeAllMistakesForTactic(tactic){
@@ -37,11 +37,11 @@ dbRemoveAllMistakesForTactic = async(tactic) => {
 }
 
 dbAddNewMistake = async (values) => {
-    const sql = "insert into reportedmistake values (' + '" + values.member_id + "', '" + values.tactic_id + "', '" + values.trainer_id + "', '" + values.desc + "', '" + values.showing + "') ";
+    const sql = "insert into reportedmistake values ('" + values.user + "', '" + values.tactic + "', '" + values.trainer + "', '" + values.desc + "', '" + values.showing + "') ";
+    console.log(sql)
 
     try {
         await db.query(sql, []);
-        result.rows; 
     } catch (err){
         console.log(err);
         throw err
