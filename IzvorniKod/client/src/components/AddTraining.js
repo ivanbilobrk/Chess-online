@@ -69,7 +69,7 @@ const AddTraining = ({trainersId, date, duration, setTrainersId, setDate, setDur
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={()=> handleSubmit(trainersId, date, duration)}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>
