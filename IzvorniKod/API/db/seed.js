@@ -21,6 +21,8 @@ const sql_create_users = `CREATE TABLE users (
     email text NOT NULL UNIQUE,
     pwdHash text NOT NULL,
     role text NOT NULL,
+    isBanned boolean not null default false,
+    onlyPay boolean not null default false,
     refreshToken text
 )`;
 

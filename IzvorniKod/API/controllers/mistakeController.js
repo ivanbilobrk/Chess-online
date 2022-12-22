@@ -34,7 +34,7 @@ const addMistakeForTactic = async (req, res)=>{
         } else if(result.podatci[5] == "user"){
     
             try{
-                let mistake = new Mistake(result.podatci[0], req.body.mistake.trainer, req.body.mistake.description);
+                let mistake = new Mistake(result.podatci[0], req.body.mistake.trainer, req.body.mistake.tactic, req.body.mistake.description);
                 await mistake.persist();
                 return res.sendStatus(StatusCodes.OK);
             } catch(err){
