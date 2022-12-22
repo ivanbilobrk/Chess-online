@@ -11,6 +11,9 @@ import Grid from '@mui/material/Grid';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { withRouter } from 'react-router-dom';
+import axios from '../../api/axios';
+
+
 
 // list imports
 import List from '@mui/material/List';
@@ -23,6 +26,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import axios from '../api/axios';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -30,7 +34,28 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  }));
+}));
+
+function handleClick(){
+
+    const handleClickTransaction = async (event) => {
+        event.preventDefault();
+
+        await axios.post('/addTransaction', JSON.stringify({
+            Membership: {
+                month: this.state.month,
+                isPaid: true
+            }
+        }), 
+
+        {
+            headers:{'Content-Type':'application/json'}, withCredentials:true
+        });
+
+        this.props.history.goBack();
+    }
+
+}
 
 export default function Payment(){
 
@@ -128,7 +153,7 @@ export default function Payment(){
                             <option value="proinac">Prosinac</option>
                          </select>
                          
-                        <button color="primary" type="submit">Uplata</button>{' '}
+                        <button color="primary" type="submit" onClick={handleClick()}>Uplata</button>{' '}
                         
                     </form>
 
@@ -141,6 +166,7 @@ export default function Payment(){
                 
 
             </Grid>
+
 
         </>
     );
