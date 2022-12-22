@@ -22,7 +22,7 @@ const {auth} = useAuth();
 
 const loadAllTraining = async () => {
     try {
-        const response = await axios.get('/training/', 
+        const response = await axiosPrivate.get('/training', 
                             {
                                 headers: {'Content-Type':'application/json'},
                                 withCredentials: true
@@ -38,7 +38,7 @@ const loadAllTraining = async () => {
 
 const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
     try {
-        const response = await axios.post('/training/update', 
+        const response = await axiosPrivate.post('/training/update', 
             JSON.stringify({ 
                             training:{
                                 trainingDuration: duration,
@@ -62,7 +62,7 @@ const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
 
 const handleAddTraining = async (tId, start, duration) => {
     try {
-        const response = await axios.post('/training/add', 
+        const response = await axiosPrivate.post('/training/add', 
             JSON.stringify({ 
                             training:{
                                 trainerId: tId,
@@ -83,7 +83,7 @@ const handleAddTraining = async (tId, start, duration) => {
 
 const handleScheduleTraining = async (tId, start, duration, showing, id) => {
     try {
-        const response = await axios.post('/training/signup', 
+        const response = await axiosPrivate.post('/training/signup', 
             JSON.stringify({ 
                             training:{
                                 trainerId: tId,
@@ -107,7 +107,7 @@ const handleScheduleTraining = async (tId, start, duration, showing, id) => {
 
 const handleCancelTraining = async (tId, start, duration, showing, id) => {
     try {
-        const response = await axios.post('/training/cancel', 
+        const response = await axiosPrivate.post('/training/cancel', 
             JSON.stringify({ 
                             training:{
                                 trainerId: tId,
@@ -136,8 +136,8 @@ useEffect(() =>{
         try {
             const response = await axiosPrivate.get(`/user/${auth.user}`, {
             });
-            console.log(response.data.podatci)
-            isMounted && setUserData(response.data.podatci);
+            console.log(response.data)
+            isMounted && setUserData(response.data);
         } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
             console.error(err);
             
