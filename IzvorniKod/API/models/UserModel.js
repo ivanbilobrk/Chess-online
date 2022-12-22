@@ -58,6 +58,7 @@ module.exports = class User{
                     results[i].username, results[i].email, results[i].pwdHash)
                 newMember.id = results[i].id
                 newMember.role = results[i].role
+                newMember.isBanned=results[i].isbanned
                 allMembers[i] = newMember;
             }
             //console.log();

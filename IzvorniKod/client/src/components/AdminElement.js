@@ -18,23 +18,31 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci, handle
   const {auth} = useAuth();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [isDisabled, setDisabled] = useState(false);
-  const [isDisabled2, setDisabled2] = useState(true);
+  
+  const [isDisabled, setDisabled] = useState(element.isBanned);
+  const [isDisabled2, setDisabled2] = useState(!element.isBanned);
   const [isDisabled3, setDisabled3] = useState(false);
-
+let count
   //const idx=element.id
     let deleteButton = <></>;
     let editButton = <></>;
+if(element.isBanned){
+ count =1;}
+else { count =0;}
 
 
-
-
-  const handleSubmit = async (name, surmame, username, email, id) => {
+  const handleSubmit = async (name, surmame, username, email, id, isBanned) => {
+    count++;
     await handleClickZabrani(name, surmame, username, email, id);
     //setOpen(false);
    // handleClickZabrani.disabled(true);
-    setDisabled(true);
-    setDisabled2(false);
+   if(count%2==1){
+    setDisabled(!isBanned);
+    setDisabled2(isBanned);}
+    else{setDisabled(isBanned);
+      setDisabled2(!isBanned);}
+
+    //window.location.reload(true);
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
 
@@ -45,11 +53,17 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci, handle
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
 
-  const handleSubmit3 = async (id) => {
+  const handleSubmit3 = async (id, isBanned) => {
+    count++;
     await handleClickOdobri(id);
     //setOpen(false);
-    setDisabled(false);
-    setDisabled2(true);
+    if(count%2==0){
+    setDisabled(!isBanned);
+    setDisabled2(isBanned);}
+    else{setDisabled(isBanned);
+      setDisabled2(!isBanned);}
+   // window.location.reload(true);
+
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
   
@@ -67,7 +81,7 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci, handle
           id="panel1a-header"
         >
           <Typography align='center' color="text.secondary">
-           Ime i prezime : {element.name}  {element.surname} (Id: {element.id})
+           Ime i prezime : {element.name}  {element.surname} (Id: {element.id}) 
            
            </Typography>
            
@@ -78,8 +92,9 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci, handle
     {/*Transakcije:  {data} */}
             {editButton}
             {/*<Button onClicick="funkcija();" >Zabrani pristup</Button> */}
-            <Button disabled={isDisabled} onClick={()=>handleSubmit(element.name, element.surname, element.username, element.email,element.id)}>Zabrani pristup</Button>
-            <Button disabled={isDisabled2} onClick={()=>handleSubmit3(element.id)}>Odobri pristup</Button>
+
+            <Button disabled={isDisabled} onClick={()=>handleSubmit(element.name, element.surname, element.username, element.email,element.id, element.isBanned)}>Zabrani pristup</Button>
+            <Button disabled={isDisabled2} onClick={()=>handleSubmit3(element.id, element.isBanned)}>Odobri pristup</Button>
             <Button disabled={isDisabled3} onClick={()=>handleSubmit2(element.id)}>Omogući samo plaćanje</Button>
             
           </Typography>
