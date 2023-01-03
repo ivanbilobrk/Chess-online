@@ -29,7 +29,7 @@ console.log(result);
         return res.sendStatus(401);
     } else if(result == 403){
         return res.sendStatus(403);
-    } else if(result.podatci[5] == "user"){
+    } else if(result.podatci[5] == "user" || result.podatci[5] == "admin" || result.podatci[5] == "trener"){
 
         try{
             let allUserTrans = await Membership.getTransactionsForUser(result.podatci[0]);

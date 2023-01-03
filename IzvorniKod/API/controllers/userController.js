@@ -92,6 +92,13 @@ const onemoguciP = async(req, res, next) =>{
     return res.sendStatus(StatusCodes.OK);
 }
 
+
+const omoguciP = async(req, res, next) =>{
+    //console.log(req);
+   await User.omoguciP(req.body.user.id);
+    return res.sendStatus(StatusCodes.OK);
+}
+
 const odobriP = async(req, res, next) =>{
     //console.log(req);
    await User.odobriP(req.body.user.id);
@@ -141,4 +148,4 @@ const odobriP = async(req, res, next) =>{
     
 
 
-module.exports = { getUserInfo,getUserInfo3, getAllMembers, updateProfile, zabraniP, onemoguciP, odobriP};
+module.exports = { getUserInfo,getUserInfo3, getAllMembers, updateProfile, zabraniP, onemoguciP, odobriP, omoguciP};

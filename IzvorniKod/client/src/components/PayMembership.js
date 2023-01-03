@@ -11,12 +11,14 @@ import Grid from '@mui/material/Grid';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { withRouter } from 'react-router-dom';
-
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import NativeSelect from "@mui/material/NativeSelect";
 // list imports
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
+import handleClickPay from './Profile'
 // card imports
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -24,6 +26,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from '../api/axios';
+import { MenuItem, TextField } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -39,10 +42,12 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function PayMembership(){
     const axiosPrivate = useAxiosPrivate();
+    const [data3, setData3] = useState([]);
     const [data, setData] = useState([]);
-   
+    const [month, setMonth] = useState('');
     const navigate = useNavigate();
     const logout = useLogout();
+    const paid=1;
     const location = useLocation();
     const {auth} = useAuth();  
     const array = ["username", "email", "name", "surname", "role"];
@@ -60,58 +65,102 @@ export default function PayMembership(){
         navigate('/profile', { state: { from: location }, replace: true });
 
     }
-
-
-
-    const handleClick = async (id, month, ispaid) =>{
-
+    console.log(data[0])
+    const fjaUplati = async (month) => {
+        console.log(month)
+        await handleClickPay(month, paid);
+        console.log(data3.userId)
+        await handleClickOmoguci(data[0]);
+        navigate('/profile', { state: { from: location }, replace: true });
+       
+      };
+      const handleClickPay = async (month, isPaid) =>{
         try {
-            const response =await axiosPrivate.post('/transactions/addTransaction', 
+            const response = await axiosPrivate.post('/transactions/addTransaction', 
                 JSON.stringify({ 
-                                user:{
-                                  
-                                    id: id,
+                                membership:{
                                     month: month,
-                                    ispaid:ispaid
+                                    isPaid: isPaid
+                                    
                                 }
                                 }),
-                                { headers: {'Content-Type':'application/json'},
-                                withCredentials: true
+                               );
+
+                               
     
-    
-                                });
-    
-                                } catch (err) {                                        
+        } catch (err) {                                        
             console.error(err.response);
         
         }
+    };
+    const handleClickOmoguci = async (id) =>{
+        try {
+            const response =await axiosPrivate.post(`/user/omoguci/o/u/o/o/${auth.user}`, 
+                JSON.stringify({
+                              user: { id}
+                 } ),
+                                {
+    
+                                });
+    
+        } catch (err) {                                        
+            console.error(err.response);
         
-        };
+        }
+      
+    };
+
+    
 
         const signout = async() =>{
             await logout();
             navigate('/');
         }
        
-
+        useEffect(() => {
+            let isMounted = true;
+            const controller = new AbortController();
+            const getData = async () => {
+                try {
+                    const response = await axiosPrivate.get(`/user/${auth.user}`, {
+                    });
+                    console.log(response.data.podatci);
+                    isMounted && setData(response.data.podatci);
+                } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+                    console.error(err);
+                    navigate('/login', { state: { from: location }, replace: true });
+                }
+            }
+    
+            getData();
+            console.log(data);
+            console.log(data[5]);
+    
+            return () => {
+                isMounted = false;
+                controller.abort();
+            }
+        }, [])
+  
+    
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
-        const getData = async () => {
+        const getData3 = async () => {
             try {
-                const response = await axiosPrivate.get(`/user/${auth.user}`, {
+                const response = await axiosPrivate.get(`/transactions/userTransactions`, {
                 });
-                console.log(response.data.podatci);
-                isMounted && setData(response.data.podatci);
+                console.log(response.data.allUserMemberships);
+                isMounted && setData3(response.data.allUserMemberships);
             } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
             }
         }
 
-        getData();
-        console.log(data);
-        console.log(data[5]);
+        getData3();
+        console.log(data3);
+        console.log(data3[5]);
 
         return () => {
             isMounted = false;
@@ -137,18 +186,27 @@ export default function PayMembership(){
             <Grid container spacing={2}> {/*OSOBNI PODACI*/}
                 <Grid item xs={6}>
                     <Item>
-                        <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                            OSOBNI PODACI
-                        </Typography>
-
-                        {data?.length
+                    <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+                   POVIJEST PLAĆANJA
+               </Typography>
+               <Typography align='left' color="text.secondary">
+              
+               {data3?.length
                             ? (
-                                <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}
-                                aria-label="contacts">
-                                    {data.slice(1).map((podatak, i) => <ListItem disablePadding sx={{ border: 1 }} key={i}><ListItemText inset primary={podatak} secondary={array[counter++]}></ListItemText></ListItem>)}
-                                </List>
-                            ) : <p>No data to display</p>
-                        }
+
+                                <table align='center' >           
+    {data3.map((eachData) => (
+      <tr> Mjesec: <td>{eachData.month}</td>  
+      <tr> |</tr>         
+       <td>Placeno: {eachData.isPaid ? ("da"): ("ne")}</td>
+       
+       
+      </tr>
+      ))  
+    } </table>
+    ): <p>Nema uplata</p> }
+                  
+               </Typography>
                     </Item>
                 </Grid>
 
@@ -157,28 +215,30 @@ export default function PayMembership(){
                     <CardContent>
                     <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
                     ODABIR MJESECA
-                    </Typography><Typography align='left' color="text.secondary">
-                    <form>
-                        <select style={{width:"35%", marginTop:"3%", marginBottom:"3%", marginRight:"3%", height:"1.5rem"}}>
-                            <option selected value='1'>Siječanj</option>
-                            <option value='2'>Veljača</option>
-                            <option value="ozujak">Ožujak</option>
-                            <option value="travanj">Travanj</option>
-                            <option value="svibanj">Svibanj</option>
-                            <option value="lipanj">Lipanj</option>
-                            <option value="srpanj">Srpanj</option>
-                            <option value="kolovoz">Kolovoz</option>
-                            <option value="rujan">Rujan</option>
-                            <option value="listopad">Listopad</option>
-                            <option value="studeni">Studeni</option>
-                            <option value="proinac">Prosinac</option>
-                         </select>
-                         
-                        <button color="primary" type="submit" onClick={fja5}>Uplata</button>{' '}
-                        
-                    </form>
-
                     </Typography>
+
+<Box>
+                   <TextField label='Odaberi mjesec' select 
+                   value={month} onChange={(e) => setMonth(e.target.value)} fullWidth>
+                    <MenuItem value='1'>Siječanj</MenuItem>
+                    <MenuItem value='2'>Veljača</MenuItem>
+                    <MenuItem value='3'>Ožujak</MenuItem>
+                    <MenuItem value='4'>Travanj</MenuItem>
+                    <MenuItem value='5'>Svibanj</MenuItem>
+                    <MenuItem value='6'>Lipanj</MenuItem>
+                    <MenuItem value='7'>Srpanj</MenuItem>
+                    <MenuItem value='8'>Kolovoz</MenuItem>
+                    <MenuItem value='9'>Rujan</MenuItem>
+                    <MenuItem value='10'>Listopad</MenuItem>
+                    <MenuItem value='11'>Studeni</MenuItem>
+                    <MenuItem value='12'>Prosinac</MenuItem>
+
+
+                   </TextField>
+
+                   < Button  align='left' onClick ={()=>fjaUplati(month)} size="large">Uplati</Button>
+                 {/*  < Button  align='left' onClick ={fjaUplati(month)} size="large">Uplati</Button> */}
+                   </Box>
                     </CardContent>
                 
                     </Card>
