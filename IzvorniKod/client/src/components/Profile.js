@@ -35,13 +35,15 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function Profile(){
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
+    const [data2, setData2] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const logout = useLogout();
     const location = useLocation();
     const {auth} = useAuth();           //primjer kako koristiti auth
     const array = ["username", "email", "name", "surname", "role"];
+    //const [userData, setUserData] = useState([]);
 
     let counter = 0;
 
@@ -50,9 +52,8 @@ export default function Profile(){
         const controller = new AbortController();
         const getData = async () => {
             try {
-                const response = await axiosPrivate.get(`/user/${auth.user}`, {
+                const response = await axiosPrivate.get(`/user`, {
                 });
-                console.log(response.data.podatci);
                 isMounted && setData(response.data.podatci);
             } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);
@@ -61,6 +62,8 @@ export default function Profile(){
         }
 
         getData();
+        console.log(data);
+        console.log(data[5]);
 
         return () => {
             isMounted = false;
@@ -68,19 +71,138 @@ export default function Profile(){
         }
     }, [])
 
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        const getData2 = async () => {
+            try {
+                const response = await axiosPrivate.get(`/user/u/i/${auth.user}`, {
+                });
+                console.log(response.data.podatcii);
+                isMounted && setData2(response.data.podatcii);
+            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
+
+        getData2();
+        console.log(data2);
+        console.log(data2[5]);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, [])
+
+    function fja(){
+        navigate('/members', { state: { from: location }, replace: true });
+
+    }
+    function fja2(){
+        navigate('/edit', { state: { from: location }, replace: true });
+
+    }
+    function fja3(){
+        navigate('/', { state: { from: location }, replace: true });
+
+    }
+    function fja4(){
+        navigate('/PayMembership', { state: { from: location }, replace: true });
+
+    }
+
     const signout = async() =>{
         await logout();
         navigate('/');
     }
+   
+    const PaymentAdmin = ({uloga}) =>{
+        if(uloga == 'admin'){
+            return (<><Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+                                    ČLANOVI
+                                </Typography><Typography align='center' color="text.secondary">
+                                 <Button onClick ={fja} size="large">Klikni za pregled svih članova</Button>
+                     {/*                   
+                    <Item><Typography color="text.secondary"> <Link to="/members" style={{ color: '#00F'}}>Pogledaj sve clanove</Link>.</Typography></Item> */}
+        </Typography></> 
+            );
+        }
+        if(data2[7]){navigate('/payMembership', { state: { from: location }, replace: true });}
+        if(data2[6]){navigate('/banned', { state: { from: location }, replace: true });}
+        
+            return (<>
+                <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+                   POVIJEST PLAĆANJA
+               </Typography>
+               <Typography align='left' color="text.secondary">
+                   Srpanj - plaćen <br/>
+                   Kolovoz - plaćen <br/>
+                   Rujan - plaćen <br/>
+                   Listopad - <Link>plati</Link> <br/>
+                   Studeni - <Link>plati</Link>
+               </Typography>
+           </>);
+        
+        
+    }
+    function ButtonCheck1({uloga}){
+        //console.log(data[5]);
+        if(uloga == 'admin'){
+            return null;
+        }
+            return <Button onClick={fja4} size="large">Plati članarinu</Button>;
+        
+    }
 
+    function TurniriTrening({uloga}){
+        if(uloga == 'admin'){
+            return null;
+        }
+        return (<><Grid item xs={6}>
+            <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+            TRENING
+        </Typography><Typography align='left' color="text.secondary">
+                26. Listopad - trening odrađen <br />
+                2. Studeni - trening odrađen <br />
+                9. Studeni - trening odrađen
+            </Typography>
+                </CardContent>
+                <CardActions>
+                <Button size="large">Uplati trening!</Button>
 
+                </CardActions>
+            </Card>
+        </Grid><Grid item xs={6}> {/*TURNIRI*/}
+                <Card sx={{ minWidth: 275 }}>
+                    <CardContent>
+                    <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+            TURNIRI
+        </Typography><Typography align='left' color="text.secondary">
+                29. Listopad - 3. mjesto <br />
+                5. Studeni - 7. mjesto <br />
+                12. Studeni - 1. mjesto
+            </Typography>
+                    </CardContent>
+                    <CardActions>
+                    <Button size="large">Pregledaj nadolazeće turnire</Button>
+
+                    </CardActions>
+                </Card>
+            </Grid></> );
+    }
+    
     return(
         <>
             <Box sx={{ width: '100%'}}>
-                <Stack spacing={1}>
-                    <Item>Dobrodošli na svoj profil! Ovdje možete pregledati svoje osobne podatke.</Item>
-                    <Item>Ukoliko se želite vratiti na home page, kliknite <Link to="/">ovdje</Link>.</Item>
-                </Stack>
+            <Stack spacing={0}>
+                <Item><Typography color="text.secondary">Dobrodošli na svoj profil! Ovdje možete pregledati svoje osobne podatke.</Typography></Item>
+                <Item><Typography color="text.secondary">Ukoliko se želite vratiti na home page, kliknite  <Button onClick ={fja3} size="small">ovdje</Button>
+                {/*<Link to="/" style={{ color: '#00F'}}>ovdje</Link>*/}</Typography></Item>
+            </Stack>
             </Box>
 
             <h1>Vaš profil</h1>
@@ -103,24 +225,22 @@ export default function Profile(){
                             ) : <p>No data to display</p>
                         }
                     </Item>
+                    <Typography align='center' color="text.secondary">
+                                 <Button onClick ={fja2} size="large">Uredi profil</Button>
+                    
+        </Typography>
+                   {/* <Item><Typography color="text.secondary"> <Link to="/edit" style={{ color: '#00F'}}>Uredi profil</Link>.</Typography></Item> */}
                 </Grid>
 
                 <Grid item xs={6}> {/*POVIJEST PLACANJA*/}
                     <Card sx={{ minWidth: 275 }}>
                         <CardContent>
-                            <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                                POVIJEST PLAĆANJA
-                            </Typography>
-                            <Typography align='left' color="text.secondary">
-                                Srpanj - plaćen <br/>
-                                Kolovoz - plaćen <br/>
-                                Rujan - plaćen <br/>
-                                Listopad - <Link>plati</Link> <br/>
-                                Studeni - <Link>plati</Link>
-                            </Typography>
+                            <PaymentAdmin uloga={data[5]}/>
                         </CardContent>
                         <CardActions>
-                            <Button size="large">Pregledaj cijelu povijest</Button>
+                            <ButtonCheck1 uloga={data[5]}/>
+                            
+                            
                         </CardActions>
                     </Card>
                 </Grid>
@@ -129,42 +249,8 @@ export default function Profile(){
             <hr/>
 
             <Grid container spacing={3}> {/*TRENING*/}
-                <Grid item xs={6}>
-                    <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                                TRENING
-                            </Typography>
-                            <Typography align='left' color="text.secondary">
-                                26. Listopad - trening odrađen <br/>
-                                2. Studeni - trening odrađen <br/>
-                                9. Studeni - trening odrađen
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="large">Uplati trening!</Button>
-                        </CardActions>
-                    </Card>
-                </Grid>
-
-            <Grid item xs={6}> {/*TURNIRI*/}
-                <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
-                            TURNIRI
-                        </Typography>
-                        <Typography align='left' color="text.secondary">
-                            29. Listopad - 3. mjesto <br/>
-                            5. Studeni - 7. mjesto <br/>
-                            12. Studeni - 1. mjesto
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="large">Pregledaj nadolazeće turnire</Button>
-                    </CardActions>
-                </Card>
-            </Grid>                 
-        </Grid>
+                <TurniriTrening uloga={data[5]}/>                
+            </Grid>
             
         <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={signout}>Odjavi se</Button>
         </>

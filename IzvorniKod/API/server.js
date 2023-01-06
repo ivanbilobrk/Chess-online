@@ -20,7 +20,11 @@ app.use('/register', require('./routes/register.routes'));
 app.use('/login', require('./routes/login.routes'));
 app.use('/logout', require('./routes/logout.routes'));
 app.use('/refresh', require('./routes/refresh.routes'));
+app.use('/news', require('./routes/news.routes'));
+app.use('/tactics', require('./routes/tactics.routes'));
+app.use('/scores', require('./routes/score.routes'));
 
+//app.use('/members', require('./routes/user.routes'));
 app.use(verifyJWT);  //every route after this line here will use verifyJWT middleware
 
 //tester - tester route that will demonstrate use of tokens
@@ -35,12 +39,17 @@ app.use(verifyJWT);  //every route after this line here will use verifyJWT middl
 // 8) now if you try to GET /refresh you will get 401 Unauthorized because you aren't logged in anymore
 
 app.use('/user', require('./routes/user.routes'));
+app.use('/transactions', require('./routes/transaction.routes'))
+app.use('/tactic/private', require('./routes/tacticPriv.routes'));
+app.use('/score/add', require('./routes/scorePriv.routes'));
+app.use('/mistakes', require('./routes/mistake.routes'));
+
 
 app.use((req, res)=>{
     res.status(404).json({error: 'Not found'});
 })
 
-app.use((error, req, res, next)=>{
+app.use((error, res, next)=>{
     res.status(error.status).json({
         message: error.message ? error.message : 'Dogodila se greška.',
         stack: error.showStack ? error.showStack : {},

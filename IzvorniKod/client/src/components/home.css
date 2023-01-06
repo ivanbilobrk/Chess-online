@@ -40,14 +40,37 @@
   color: white;
 }
 
-
 .news{
   display: flex;
   justify-content: center;
-  padding:0px;
   margin-top: 20px;
 }
 
+.addButton {
+  height: 38px;
+  min-width: 38px;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: aliceblue;
+  color: #1565c0;
+  cursor: pointer;
+  margin: 7px;
+ 
+}
+
+.addButton:focus, 
+.addButton:hover {
+  color: white;
+  background-color: limegreen;
+  outline: none;
+}
+
+.paragraf-news {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media all and (max-width: 30em) {
   a.registerButton {
@@ -66,7 +89,7 @@
 }
 
 .tekst {
-  height: 1000px;
+  max-height: 2000px;
   background-color:  #2d75c7;
 /* background-color: black; */
   font-size: 36px;
@@ -81,11 +104,18 @@ justify-content: center;
 
 }
 .profil{
-  background-color: black;
+  background-color: #2d75c7;
   display: grid;
   justify-content: center;
   text-decoration: white;
+
 }
+.link {
+  text-decoration: none;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
 
 .calendar-container .kalendar {
   width: 550px;

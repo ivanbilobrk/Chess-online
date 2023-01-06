@@ -1,5 +1,5 @@
 const {Pool} = require('pg');
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env'});
 const env = process.env;
 
 const pool = new Pool({
@@ -16,7 +16,7 @@ module.exports = {
         return pool.query(text, params)
             .then(res => {
                 const duration = Date.now() - start;
-                console.log('executed query', {text, rows: res.rows});
+                //console.log('executed query', {text, rows: res.rows});
                 return res;
             });
     },
