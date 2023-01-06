@@ -10,6 +10,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 
 export default function BasicList({rang}) {
+  console.log(rang)
   return (
     <Box sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}>
       

@@ -10,6 +10,10 @@ module.exports = class Score{
         this.showing = showing
     }
 
+    static async getAllScores(){
+        return await dbGetAllScores();
+    }
+
     static async getAllScoresForTacticWithId(id){
         let results = await dbGetAllScoresForTactic(id);
 
@@ -85,6 +89,18 @@ module.exports = class Score{
         }
     }
 }
+
+dbGetAllScores = async () =>{
+    const sql = "select users.username as user, sum(solvingtime) as time from score join users on score.member_id = users.id where showing = 1 group by member_id, users.username";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows;
+    } catch (err) {
+        console.log(err);
+            throw err;
+    }
+}
+
 dbUpdateShowingToTrue = async (user, tactic) =>{
     const sql = "update score set showing = 1 where member_id = "+user+" and tactic_id = "+tactic;
     try {

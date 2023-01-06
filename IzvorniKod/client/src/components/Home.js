@@ -8,12 +8,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLogout from '../hooks/useLogout';
 import Footer from './Footer';
-
+import RangList from './DailyTactics/RangList'
 import { useEffect } from "react";
 import axios from '../api/axios';
 import News from "./News/News";
 import AddNewsFormDialog from "./News/AddNews";
 import DailyTactics from "./DailyTactics/DailyTactics";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 //novo dodajem
 
 import 'react-calendar/dist/Calendar.css';
@@ -41,6 +46,7 @@ export default function Home(){
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
     const [title, setTitle] = useState("");
+    const [rang, setRang] = useState([]);
 
     const logout = useLogout();
     const location = useLocation();
@@ -63,6 +69,23 @@ export default function Home(){
             
         }
     };
+
+    const loadAllScores = async ()=>{
+        try {
+            console.log("eeee")
+            const response = await axios.get('/scores', 
+                                {
+                                    headers: {'Content-Type':'application/json'},
+                                    withCredentials: true
+                                });
+            console.log(response.data)
+            setRang(response.data.allScores);
+        } catch (err) {                                        
+            console.error(err.response);
+            
+        }
+    }
+
     const loadAllTactics = async () => {
         
         try {
@@ -100,6 +123,7 @@ export default function Home(){
         
         loadAllNews();
         loadAllTactics();
+        loadAllScores();
         
         return () => {
             isMounted = false;
@@ -204,6 +228,25 @@ Također, svi oni natjecateljskog duha mogu sudjelovati u šahovskim turnirima, 
     </div>
     
 <br></br>
+
+<h4 className="paragraf paragraf-news">Rang Lista Svih Taktika
+
+</h4>
+<div className="news">
+<Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+        </AccordionSummary>
+        <AccordionDetails>
+            <RangList rang={rang}/>
+        </AccordionDetails>
+</Accordion>
+</div>
+
+
 
 <h4 className="paragraf">Kalendar</h4>
                 <div className="app">

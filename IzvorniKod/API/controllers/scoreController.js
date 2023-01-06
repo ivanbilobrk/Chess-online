@@ -2,12 +2,22 @@ const { StatusCodes } = require('http-status-codes');
 const userInfo = require('../helpFunctions/userInfo');
 const Score = require('../models/ScoreModel');
 
+const getAllScores = async (req, res, next) =>{
+    try{
+        let result = await Score.getAllScores();
+        return res.status(StatusCodes.OK).json({allScores:result});
+    } catch(err){
+        console.log(err)
+        return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti sve scorove.'});
+    }
+}
+
 const getAllScoresForTactic = async (req, res, next)=>{
     try{
         let result1 = await Score.getAllScoresForTacticWithId(req.body.tactic.id);
         return res.status(StatusCodes.OK).json({scores: result1});
     } catch(err){
-        return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti sve scorove.'});
+        return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dohvatiti sve scorove za ovu taktiku.'});
     }
 }
 
@@ -57,4 +67,4 @@ const addNewNewScore = async (req, res, next)=>{
     }
 }
 
-module.exports = {getAllScoresForTactic, addNewNewScore};
+module.exports = {getAllScoresForTactic, addNewNewScore, getAllScores};

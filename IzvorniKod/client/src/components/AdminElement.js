@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import { FiEdit3, FiX } from "react-icons/fi";
-import UpdateNews from "./UpdateNews"
 import './home.css';
 import { useNavigate, useLocation } from "react-router-dom";
 import Grid from '@mui/material/Grid';
