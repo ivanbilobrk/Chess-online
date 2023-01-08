@@ -33,7 +33,9 @@ module.exports = class Training {
         let result = [];
         if(trainings?.length != 0){
             for(let i = 0; i < trainings.length; i++){
-                let newTraining = new Training(trainings[i].id, trainings[i].trainer_id, trainings[i].trainingStartTimeDate, trainings[i].trainingDurationMin);
+                let newTraining = new Training(trainings[i].trainer_id, trainings[i].trainingStartTimeDate, trainings[i].trainingDurationMin);
+                newTraining.id = trainings[i].id;
+                newTraining.showing = trainings[i].showing;
                 result[i] = newTraining;
             }
             console.log(result);
@@ -42,8 +44,8 @@ module.exports = class Training {
         return undefined;
     }
 
-    static async getTrainingById(newsId) {
-        let results = await dbGetTrainingById(newsId);
+    static async getTrainingById(trainingId) {
+        let results = await dbGetTrainingById(trainingId);
 
         if(results?.length == 1){
             let training = new Training(results[0].trainer_id, results[0].trainingstarttimedate, results[0].trainingdurationmin);
