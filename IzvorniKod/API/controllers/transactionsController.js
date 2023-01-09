@@ -29,7 +29,7 @@ console.log(result);
         return res.sendStatus(401);
     } else if(result == 403){
         return res.sendStatus(403);
-    } else if(result.podatci[5] == "user"){
+    } else if(result.podatci[5] == "user" || result.podatci[5] == "admin" || result.podatci[5] == "trener"){
 
         try{
             let allUserTrans = await Membership.getTransactionsForUser(result.podatci[0]);
@@ -53,6 +53,7 @@ const addNewTransaction = async (req, res)=>{
         try{
             let membership = new Membership(result.podatci[0], req.body.membership.month, req.body.membership.isPaid);
             await membership.persist();
+            //console.log(membership)
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dodati transakcije.'});

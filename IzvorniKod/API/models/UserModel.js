@@ -66,6 +66,7 @@ module.exports = class User{
                 newMember.id = results[i].id
                 newMember.role = results[i].role
                 newMember.isBanned=results[i].isbanned
+                newMember.onlyPay=results[i].onlypay
                 allMembers[i] = newMember;
             }
             //console.log();
@@ -133,6 +134,11 @@ console.log(id);
     static async odobriP(id) {
 
         let results = await dbOdobri(id)
+       
+    }
+    static async omoguciP(id) {
+
+        let results = await dbOmoguci(id)
        
     }
 
@@ -292,6 +298,17 @@ dbZabrani= async (id) => {
 }
 dbOnemoguci= async (id) => {
     const sql = "UPDATE users SET onlyPay = '1' WHERE id = '" + id + "'";
+    try {
+        const result = await db.query(sql, []);
+        return result.rows; 
+    } catch (err){
+        console.log(err);
+        throw err
+    }
+}
+
+dbOmoguci= async (id) => {
+    const sql = "UPDATE users SET onlyPay = '0' WHERE id = '" + id + "'";
     try {
         const result = await db.query(sql, []);
         return result.rows; 

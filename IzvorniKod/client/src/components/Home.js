@@ -143,7 +143,7 @@ export default function Home(){
                 isMounted && setData2(response.data.podatcii);
             } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
                 console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
+               // navigate('/login', { state: { from: location }, replace: true });
             }
         }
 
