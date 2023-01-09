@@ -65,13 +65,15 @@ export default function PayMembership(){
         navigate('/profile', { state: { from: location }, replace: true });
 
     }
+    
     console.log(data[0])
     const fjaUplati = async (month) => {
         console.log(month)
-        await handleClickPay(month, paid);
-        console.log(data3.userId)
-        await handleClickOmoguci(data[0]);
         navigate('/profile', { state: { from: location }, replace: true });
+        await handleClickPay(month, paid);
+        
+        await handleClickOmoguci(data[0]);
+       // navigate('/profile', { state: { from: location }, replace: true });
        
       };
       const handleClickPay = async (month, isPaid) =>{

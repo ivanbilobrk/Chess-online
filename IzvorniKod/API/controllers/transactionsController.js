@@ -53,6 +53,7 @@ const addNewTransaction = async (req, res)=>{
         try{
             let membership = new Membership(result.podatci[0], req.body.membership.month, req.body.membership.isPaid);
             await membership.persist();
+            //console.log(membership)
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu dodati novost.'});
