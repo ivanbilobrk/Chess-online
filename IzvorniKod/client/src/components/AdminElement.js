@@ -20,7 +20,7 @@ const AdminElement = ({element, handleClickZabrani, handleClickOnemoguci, handle
   
   const [isDisabled, setDisabled] = useState(element.isBanned);
   const [isDisabled2, setDisabled2] = useState(!element.isBanned);
-  const [isDisabled3, setDisabled3] = useState(false);
+  const [isDisabled3, setDisabled3] = useState(element.onlyPay);
 let count
   //const idx=element.id
     let deleteButton = <></>;
@@ -45,10 +45,10 @@ else { count =0;}
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
 
-  const handleSubmit2 = async (id) => {
+  const handleSubmit2 = async (id, onlyPay) => {
     await handleClickOnemoguci(id);
     //setOpen(false);
-    setDisabled3(true);
+    setDisabled3(!onlyPay);
     navigate('/members', { state: { from: '/members'}, replace: true });
   };
 
@@ -94,7 +94,7 @@ else { count =0;}
 
             <Button disabled={isDisabled} onClick={()=>handleSubmit(element.name, element.surname, element.username, element.email,element.id, element.isBanned)}>Zabrani pristup</Button>
             <Button disabled={isDisabled2} onClick={()=>handleSubmit3(element.id, element.isBanned)}>Odobri pristup</Button>
-            <Button disabled={isDisabled3} onClick={()=>handleSubmit2(element.id)}>Omogući samo plaćanje</Button>
+            <Button disabled={isDisabled3} onClick={()=>handleSubmit2(element.id, element.onlyPay)}>Omogući samo plaćanje</Button>
             
           </Typography>
         </AccordionDetails>

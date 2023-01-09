@@ -92,7 +92,7 @@ export default function AllMembers(){
     
     const handleClickOdobri = async (id) =>{
         try {
-            const response =await axiosPrivate.post(`/user/onemoguci/o/u/p/${auth.user}`, 
+            const response =await axiosPrivate.post(`/user/odobri/o/u/p/${auth.user}`, 
                 JSON.stringify({
                               user: { id}
                  } ),

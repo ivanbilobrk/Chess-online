@@ -37,16 +37,36 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Profile(){
     const [data, setData] = useState([]);
     const [data2, setData2] = useState([]);
+    const [data3, setData3] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const logout = useLogout();
     const location = useLocation();
+    const isPaid='1';
     const {auth} = useAuth();           //primjer kako koristiti auth
     const array = ["username", "email", "name", "surname", "role"];
     //const [userData, setUserData] = useState([]);
 
     let counter = 0;
+   /*const handleClickPay = async (month, isPaid) =>{
+        try {
+            const response = await axiosPrivate.post('/transactions/addTransaction', 
+                JSON.stringify({ 
+                                membership:{
+                                    month: month,
+                                    isPaid: isPaid
+                                    
+                                }
+                                }),
+                               );
 
+                               
+    
+        } catch (err) {                                        
+            console.error(err.response);
+        
+        }
+    };*/
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
@@ -96,6 +116,40 @@ export default function Profile(){
         }
     }, [])
 
+   
+    useEffect(() => {
+      // if( data[5]==="admin" || data[5]==="user" || data[5]==="trainer"){
+        let isMounted = true;
+        const controller = new AbortController();
+        
+        const getData3 = async () => {
+            console.log(data[5])
+           // if( data[5]=="user"){
+            try {
+                const response = await axiosPrivate.get(`/transactions/userTransactions`, {
+                });
+                console.log(response.data.allUserMemberships);
+                isMounted && setData3(response.data.allUserMemberships);
+            } catch (err) {                                         //na ovaj način ukoliko istekne refresh token cemo vratiti korisnika na login i postaviti u history trenutnu lokaciju kako bi se mogli vratiti nazad na ovo mjesto
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
+
+        getData3();
+        console.log(data3);
+        console.log(data3[5]);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }//}
+   // else return null;
+   // }
+   , [])
+
+
     function fja(){
         navigate('/members', { state: { from: location }, replace: true });
 
@@ -137,11 +191,23 @@ export default function Profile(){
                    POVIJEST PLAĆANJA
                </Typography>
                <Typography align='left' color="text.secondary">
-                   Srpanj - plaćen <br/>
-                   Kolovoz - plaćen <br/>
-                   Rujan - plaćen <br/>
-                   Listopad - <Link>plati</Link> <br/>
-                   Studeni - <Link>plati</Link>
+              
+               {data3?.length
+                            ? (
+
+                                <table align='center' >           
+    {data3.map((eachData) => (
+      <tr> Mjesec: <td>{eachData.month}</td>  
+      <tr> |</tr>         
+       <td>Placeno: {eachData.isPaid ? ("da"): ("ne")}</td>
+       
+       
+      </tr>
+      ))  
+    } </table>
+    ): <p>Nema uplata</p> }
+     
+                  
                </Typography>
            </>);
         
@@ -188,7 +254,7 @@ export default function Profile(){
             </Typography>
                     </CardContent>
                     <CardActions>
-                    <Button size="large">Pregledaj nadolazeće turnire</Button>
+                    <Button  size="large">Pregledaj nadolazeće turnire</Button>
 
                     </CardActions>
                 </Card>
@@ -224,11 +290,12 @@ export default function Profile(){
                                 </List>
                             ) : <p>No data to display</p>
                         }
+                         <CardActions>
+                       < Button  align='center' onClick ={fja2} size="large">Uredi profil</Button>
+                       </CardActions>
                     </Item>
-                    <Typography align='center' color="text.secondary">
-                                 <Button onClick ={fja2} size="large">Uredi profil</Button>
                     
-        </Typography>
+                   
                    {/* <Item><Typography color="text.secondary"> <Link to="/edit" style={{ color: '#00F'}}>Uredi profil</Link>.</Typography></Item> */}
                 </Grid>
 
