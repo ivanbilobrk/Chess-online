@@ -69,12 +69,16 @@ module.exports = class Tournament {
     }
 
     async signupForTournament(userId) {
+        console.log(this.participantsNo);
         this.participantsNo++;
+        console.log(this.participantsNo);
+        await dbUpdateParticipantsNo(this);
         await dbSignupForTournament(this, userId);
     }
 
     async cancelTournament() {
         this.participantsNo--;
+        await dbUpdateParticipantsNo(this);
         await dbCancelTournament(this);
     }
 
@@ -130,8 +134,8 @@ const dbGetTournamentById = async(id) =>{
 
 
 const dbAddNewTournament = async (tournament) => {
-    const sql = "insert into tournament (trainer_id, tournamentstarttimedate, tournamentdurationmin, showing) values('"+tournament.trainerId+
-                    "', '"+tournament.tournamentStart+"', '"+tournament.tournamentDuration+"', '"+tournament.showing+"') returning id";
+    const sql = "insert into tournament (trainer_id, tournamentstarttimedate, tournamentdurationmin, participantsno, showing) values('"+tournament.trainerId+
+                    "', '"+tournament.tournamentStart+"', '"+tournament.tournamentDuration+"', '"+0+"', '"+tournament.showing+"') returning id";
 
     try {
         await db.query(sql, []);
@@ -170,6 +174,18 @@ const dbDeleteTournament = async (tournament) => {
 
 const dbSignupForTournament = async (tournament, userId) => {
     const sql = "insert into scheduledtournament values ('"+userId+"', '"+tournament.id+"') ";
+
+    try {
+        await db.query(sql, []);
+    } catch (err) {
+        console.log(err);
+        throw err
+    }
+}
+
+
+const dbUpdateParticipantsNo = async (tournament) => {
+    const sql = "update tournament set participantsno = '" + parseInt(tournament.participantsNo) + "' where id = '" + tournament.id + "'";
 
     try {
         await db.query(sql, []);

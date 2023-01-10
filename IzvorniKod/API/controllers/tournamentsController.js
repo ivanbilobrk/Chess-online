@@ -142,13 +142,14 @@ const signupForTournament = async(req, res) => {
             tournament.showing = req.body.tournament.showing;
             tournament.participantsNo = req.body.tournament.participantsNo;
             tournament.id = req.body.tournament.id;
+            console.log(tournament);
             await tournament.signupForTournament(result.podatci[0]);
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
-            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se prijaviti na trening.'});
+            return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se prijaviti na turnir.'});
         }
     } else {
-        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za prijaviti se na trening.'});
+        return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za prijaviti se na turnir.'});
     }
 }
 
