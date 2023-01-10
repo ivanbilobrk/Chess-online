@@ -155,4 +155,4 @@ const odobriP = async(req, res, next) =>{
     
 
 
-module.exports = { getUserInfo,getUserInfo3, getAllMembers, updateProfile, zabraniP, onemoguciP, odobriP, getUserInfoById, getAllTrainers};
+module.exports = { getUserInfo,getUserInfo3, getAllMembers, updateProfile, zabraniP, onemoguciP, odobriP, getUserInfoById, getAllTrainers, omoguciP};
