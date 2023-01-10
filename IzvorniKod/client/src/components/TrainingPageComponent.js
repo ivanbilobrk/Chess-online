@@ -28,7 +28,7 @@ const loadAllTraining = async () => {
                                 withCredentials: true
                             });
         setData(response.data.trainingsAll);
-        console.log(response.data.trainingsAll + "Konj");
+        console.log(response.data.trainingsAll);
     } catch (err) {                                        
         console.error(err.response);
         

@@ -3,6 +3,7 @@ import NewsElement from './NewsElement'
 import TrainingElement from './TrainingElement'
 
 const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, handleScheduleTraining, handleCancelTraining, user}) => {
+  console.log(data)
   return (
     <> 
     {!data?.length ? (

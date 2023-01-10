@@ -2,10 +2,11 @@ import * as React from 'react';
 import TrainingList from './TrainingList';
 
 const Training = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, handleScheduleTraining, handleCancelTraining, user}) => {
+  console.log(data)
   return (
     <div style={{width:'550px'}}>
       <TrainingList
-        data={!data ? null : data.filter(item => item.showing === 1)}
+        data={data}
         trainersId = {trainersId}
         date = {date}
         duration = {duration}
