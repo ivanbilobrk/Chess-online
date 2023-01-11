@@ -39,7 +39,10 @@ export default function HeaderSigned() {
                       <Button color="inherit" sx={{ mr:1 }}>Osobni podatci <BiUser style={{margin: 4, marginBottom:5, fontSize:18}}/>
                       </Button>
                   </Link>
-                  
+                  <Link to="/training" style={{textDecoration: 'none', color: 'white', float: 'right'}}> 
+                      <Button color="inherit" sx={{ mr:1 }}>Treninzi
+                      </Button>
+                  </Link>
               </ToolbarGroup>
           </Toolbar>
         </AppBar>

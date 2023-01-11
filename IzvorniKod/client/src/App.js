@@ -18,6 +18,7 @@ import AllMembers from "./components/AllMembers"
 import Transakcije from "./components/Transakcije"
 import Banned from "./components/Banned"
 import PayMembership from "./components/PayMembership"
+import TrainingPage from "./pages/TrainingPage";
 function App() {
   return (
    
@@ -44,6 +45,7 @@ function App() {
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={["user", "admin", "trener"]}/>}>
               <Route path ="profile" element ={<ProfilePage/>}></Route>
+              <Route path="training" element ={<TrainingPage/>}></Route>
             </Route>
           </Route>
 

@@ -1,0 +1,93 @@
+import React, { useEffect } from 'react'
+
+import { useState } from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IconButton } from '@mui/material';
+import { FiX } from 'react-icons/fi';
+import { Checkbox } from "@mui/material";
+import UpdateTraining from './UpdateTraining';
+
+const TrainingElement = ({element, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, 
+  handleScheduleTraining, handleCancelTraining, scheduledData, user}) => {
+    useEffect(()=>{
+        console.log(scheduledData)
+    },[])
+  let checkboxx = <></>;
+  let editButton = <></>;
+  let signedUp = <p>Prijavljeni ste na ovaj trening</p>;
+
+  const [checked, setChecked] = useState(false);
+  const checkboxHandle = () => {
+    if(!checked){
+      setChecked(true);
+      handleScheduleTraining(trainersId, date, duration, 1, element.id);
+    }
+    else{
+      setChecked(false);
+      handleCancelTraining(trainersId, date, duration, 1, element.id);
+    }
+  }
+
+  if (user[5] == 'admin' || (user[5] == 'trener' && trainersId == user[0])){
+    editButton = <IconButton aria-label='edit'>
+        <UpdateTraining
+        trainersId = {trainersId}
+        date = {date}
+        duration = {duration}
+        showing = {1}
+        id = {element.id}
+        setTrainersId = {setTrainersId}
+        setDate = {setDate}
+        setDuration = {setDuration}
+        handleUpdateTraining = {handleUpdateTraining}
+        user = {user}>
+        </UpdateTraining>
+    </IconButton>
+} 
+    if(user[5]=='user'){
+        checkboxx = <Checkbox onChange={checkboxHandle}></Checkbox>
+    }
+return (
+        <Accordion style={{width:'100%'}}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography>
+        <pre style={{fontFamily:'inherit'}}>
+        Trening datuma {element.trainingStart.slice(0,10)}     {checked==true ? <span style={{color:'green', float:'right'}}>Prijavljeni ste na ovaj trening </span> : null}
+        </pre>
+          
+         </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Typography style={{backgroundColor:'rgba(214, 196, 205, 0.41)', borderRadius:'3px'}}>
+            Početak treninga: {element.trainingStart.slice(11,16)}<br></br>
+          ID trenera koji vodi trening: {element.trainerId}
+          <br></br>
+          Vrijeme trajanja treninga: {element.trainingDuration}
+          <br></br>
+          {checkboxx}
+          { user[0]==element.trainerId || user[5]=='admin' ?
+            <IconButton 
+            aria-label="remove" 
+        >
+            <FiX 
+                onClick={()=>handleUpdateTraining(duration, date, 0, element.id, trainersId)}
+            />
+        </IconButton>
+            : null }
+        </Typography>
+      </AccordionDetails>
+    </Accordion>
+    
+)
+
+}
+
+export default TrainingElement;
