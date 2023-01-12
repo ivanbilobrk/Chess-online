@@ -43,6 +43,10 @@ export default function HeaderSigned() {
                       <Button color="inherit" sx={{ mr:1 }}>Treninzi
                       </Button>
                   </Link>
+                  <Link to="/tournaments" style={{textDecoration: 'none', color: 'white', float: 'right'}}> 
+                      <Button color="inherit" sx={{ mr:1 }}>Turniri
+                      </Button>
+                  </Link>
               </ToolbarGroup>
           </Toolbar>
         </AppBar>

@@ -49,7 +49,7 @@ const TrainingElement = ({element, trainersId, date, duration, setTrainersId, se
     </IconButton>
 } 
     if(user[5]=='user'){
-        checkboxx = <Checkbox onChange={checkboxHandle}></Checkbox>
+        checkboxx = <>Prijavi me na trening! <Checkbox onChange={checkboxHandle}></Checkbox></>
     }
 return (
         <Accordion style={{width:'100%'}}>

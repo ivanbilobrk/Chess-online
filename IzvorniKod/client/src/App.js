@@ -19,6 +19,7 @@ import Transakcije from "./components/Transakcije"
 import Banned from "./components/Banned"
 import PayMembership from "./components/PayMembership"
 import TrainingPage from "./pages/TrainingPage";
+import TournamentsPage from "./pages/TournamentsPage";
 function App() {
   return (
    
@@ -46,6 +47,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={["user", "admin", "trener"]}/>}>
               <Route path ="profile" element ={<ProfilePage/>}></Route>
               <Route path="training" element ={<TrainingPage/>}></Route>
+              <Route path="tournaments" element ={<TournamentsPage/>}></Route>
             </Route>
           </Route>
 
