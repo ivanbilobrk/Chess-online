@@ -16,7 +16,7 @@ const Training = ({data, trainersId, date, duration, setTrainersId, setDate, set
         handleUpdateTraining = {handleUpdateTraining}
         handleScheduleTraining = {handleScheduleTraining}
         handleCancelTraining = {handleCancelTraining}
-        shceduledData = {scheduledData}
+        scheduledData = {scheduledData}
         user = {user}
       />
     </div>

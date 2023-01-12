@@ -29,14 +29,11 @@ module.exports = class Training {
 
     static getAllScheduledTrainings = async(id) => {
         let trainings = await dbGetAllScheduledTrainings(id);
-        console.log(trainings);
+        console.log(trainings + 'idemo');
         let result = [];
         if(trainings?.length != 0){
             for(let i = 0; i < trainings.length; i++){
-                let newTraining = new Training(trainings[i].trainer_id, trainings[i].trainingStartTimeDate, trainings[i].trainingDurationMin);
-                newTraining.id = trainings[i].id;
-                newTraining.showing = trainings[i].showing;
-                result[i] = newTraining;
+               result[i] = trainings[i];
             }
             console.log(result);
             return result;
@@ -98,10 +95,12 @@ const dbGetAllTrainings = async() => {
 
 
 const dbGetAllScheduledTrainings = async (id)=>{
-    const sql = "select * from scheduledTraining join users on member_id = id where member_id =" + id;
+    const sql = "select * from scheduledTraining where member_id = '" + id +"'";
 
     try {
         const result = await db.query(sql, []);
+        console.log(result);
+        console.log(result.rows);
         return result.rows;
     } catch (err) {
         console.log(err);

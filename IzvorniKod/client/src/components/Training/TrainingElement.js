@@ -8,48 +8,51 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton } from '@mui/material';
 import { FiX } from 'react-icons/fi';
+import { FiEdit3 } from 'react-icons/fi';
 import { Checkbox } from "@mui/material";
 import UpdateTraining from './UpdateTraining';
 
 const TrainingElement = ({element, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, 
   handleScheduleTraining, handleCancelTraining, scheduledData, user}) => {
-    useEffect(()=>{
-        console.log(scheduledData)
-    },[])
+  
+  let scTraining = [];
+  if(scheduledData!=undefined){
+    scTraining = scheduledData.filter(item => item.training_id==element.id);
+  }
+  console.log(scTraining.length);
+  
   let checkboxx = <></>;
   let editButton = <></>;
-  let signedUp = <p>Prijavljeni ste na ovaj trening</p>;
-
-  const [checked, setChecked] = useState(false);
+  let checked = scTraining.length==1;
+  let initState = scTraining.length==1;
   const checkboxHandle = () => {
     if(!checked){
-      setChecked(true);
+      checked = true;
       handleScheduleTraining(trainersId, date, duration, 1, element.id);
     }
     else{
-      setChecked(false);
+      checked = false;
       handleCancelTraining(trainersId, date, duration, 1, element.id);
     }
   }
 
-  if (user[5] == 'admin' || (user[5] == 'trener' && trainersId == user[0])){
-    editButton = <IconButton aria-label='edit'>
+  if (user[5] == 'admin' || ( user[0]==element.trainerId && user[5]=='trener')){
+        editButton = <>
         <UpdateTraining
-        trainersId = {trainersId}
+        trainersId = {element.trainerId}
         date = {date}
         duration = {duration}
-        showing = {1}
+        showing = {element.showing}
         id = {element.id}
         setTrainersId = {setTrainersId}
         setDate = {setDate}
         setDuration = {setDuration}
         handleUpdateTraining = {handleUpdateTraining}
         user = {user}>
-        </UpdateTraining>
-    </IconButton>
+        </UpdateTraining></>
 } 
     if(user[5]=='user'){
-        checkboxx = <>Prijavi me na trening! <Checkbox onChange={checkboxHandle}></Checkbox></>
+        checkboxx = <>Prijavi me na trening! <Checkbox onChange={checkboxHandle} defaultChecked={initState}></Checkbox></>
     }
 return (
         <Accordion style={{width:'100%'}}>
@@ -70,10 +73,10 @@ return (
             Početak treninga: {element.trainingStart.slice(11,16)}<br></br>
           ID trenera koji vodi trening: {element.trainerId}
           <br></br>
-          Vrijeme trajanja treninga: {element.trainingDuration}
+          Vrijeme trajanja treninga u minutama: {element.trainingDuration}
           <br></br>
           {checkboxx}
-          { user[0]==element.trainerId || user[5]=='admin' ?
+          { user[0]==element.trainerId && user[5]=='trener' || user[5]=='admin' ?
             <IconButton 
             aria-label="remove" 
         >
@@ -82,6 +85,8 @@ return (
             />
         </IconButton>
             : null }
+          <br></br>
+          {editButton}
         </Typography>
       </AccordionDetails>
     </Accordion>

@@ -55,7 +55,7 @@ const loadAllScheduledTraining = async () => {
 
 const handleUpdateTraining = async (duration, date, showing, id, tId) =>{
     try {
-        const response = await axiosPrivate.post('/training/delete', 
+        const response = await axiosPrivate.post('/training/update', 
             JSON.stringify({ 
                             training:{
                                 trainingDuration: duration,
@@ -210,7 +210,7 @@ return(
           handleUpdateTraining = {handleUpdateTraining}
           handleScheduleTraining = {handleScheduleTraining}
           handleCancelTraining = {handleCancelTraining}
-          shceduledData = {scheduledData}
+          scheduledData = {scheduledData}
           user = {userData}/>
     </div>
     

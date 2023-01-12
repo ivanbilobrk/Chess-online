@@ -27,27 +27,16 @@ const UpdateTraining = ({trainersId, date, duration, showing, id, setTrainersId,
 
   return (
     <div>
-        { user != 'user' ?
+      Uredi trening
       <button className="addButton"  onClick={handleClickOpen}>
          <FiEdit3> </FiEdit3>
       </button> 
-      : null}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update training</DialogTitle>
         <DialogContent>
           <DialogContentText>
             To edit training fill required fields.
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="TrainerId"
-            type="title"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setTrainersId(e.target.value)}
-          />
           <TextField
             margin="dense"
             id="name"
@@ -69,7 +58,7 @@ const UpdateTraining = ({trainersId, date, duration, showing, id, setTrainersId,
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={()=>handleSubmit(trainersId, date, duration, 1, id)}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

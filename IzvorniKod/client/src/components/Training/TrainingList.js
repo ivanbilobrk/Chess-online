@@ -3,6 +3,7 @@ import TrainingElement from './TrainingElement'
 
 const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTraining, handleScheduleTraining, handleCancelTraining, scheduledData, user}) => {
   console.log(data)
+  console.log(scheduledData)
   return (
     <> 
     {!data?.length ? (
@@ -20,7 +21,7 @@ const TrainingList = ({data, trainersId, date, duration, setTrainersId, setDate,
                     handleUpdateTraining = {handleUpdateTraining}
                     handleScheduleTraining = {handleScheduleTraining}
                     handleCancelTraining = {handleCancelTraining}
-                    shceduledData = {scheduledData}
+                    scheduledData = {scheduledData}
                     user = {user}
                 />
         )
