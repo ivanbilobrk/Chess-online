@@ -2,12 +2,12 @@ import * as React from 'react';
 import TournamentsList from './TournamentsList';
 
 
-const Tournaments = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTournaments, handleScheduleTournaments,scheduledData, user}) => {
+const Tournaments = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTournaments, handleDeleteTournaments, handleScheduleTournaments, handleCancelTournaments, scheduledData, user}) => {
   console.log(data)
   return (
     <div style={{}}>
       <TournamentsList
-        data={data}
+        data={!data ? null : data.filter(item => item.showing == 1)}
         trainersId = {trainersId}
         date = {date}
         duration = {duration}
@@ -15,7 +15,9 @@ const Tournaments = ({data, trainersId, date, duration, setTrainersId, setDate, 
         setDate = {setDate}
         setDuration = {setDuration}
         handleUpdateTournaments = {handleUpdateTournaments}
-        handleScheduleTraining = {handleScheduleTournaments}
+        handleDeleteTournaments = {handleDeleteTournaments}
+        handleScheduleTournaments = {handleScheduleTournaments}
+        handleCancelTournaments = {handleCancelTournaments}
         scheduledData = {scheduledData}
         user = {user}
       />

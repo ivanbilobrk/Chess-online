@@ -79,7 +79,7 @@ const updateExistingTournament = async(req, res) => {
             if(currentTrainerId != result.podatci[0] && result.podatci[5] != "admin"){
                 return res.status(StatusCodes.UNAUTHORIZED).json({'error':'Nemate ovlasti za mijenjati turnir.'})
             }
-
+            console.log(req.body.tournament.showing + " jaaaaa")
             let tournament = new Tournament(currentTrainerId, req.body.tournament.tournamentStart, req.body.tournament.tournamentDuration);
             tournament.showing = req.body.tournament.showing;
             tournament.participantsNo = req.body.tournament.participantsNo;
@@ -170,7 +170,7 @@ const cancelTournamentSubscription = async(req, res) => {
             tournament.showing = req.body.tournament.showing;
             tournament.participantsNo = req.body.tournament.participantsNo;
             tournament.id = req.body.tournament.id;
-            await tournament.cancelTournament();
+            await tournament.cancelTournament(result.podatci[0]);
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se odjaviti s turnira.'});

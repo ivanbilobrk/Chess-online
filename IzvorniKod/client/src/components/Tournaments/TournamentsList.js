@@ -1,7 +1,7 @@
 import React from 'react'
 import TournamentsElement from './TournamentsElement'
 
-const TournamentsList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTournaments, handleScheduleTournaments,scheduledData, user}) => {
+const TournamentsList = ({data, trainersId, date, duration, setTrainersId, setDate, setDuration, handleUpdateTournaments, handleDeleteTournaments, handleScheduleTournaments, handleCancelTournaments, scheduledData, user}) => {
   console.log(data)
   return (
     <> 
@@ -18,7 +18,9 @@ const TournamentsList = ({data, trainersId, date, duration, setTrainersId, setDa
                     setDate = {setDate}
                     setDuration = {setDuration}
                     handleUpdateTournaments = {handleUpdateTournaments}
+                    handleDeleteTournaments = {handleDeleteTournaments}
                     handleScheduleTournaments = {handleScheduleTournaments}
+                    handleCancelTournaments = {handleCancelTournaments}
                     scheduledData = {scheduledData}
                     user = {user}
                 />

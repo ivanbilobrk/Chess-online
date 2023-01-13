@@ -23,16 +23,19 @@ const TrainingElement = ({element, trainersId, date, duration, setTrainersId, se
   
   let checkboxx = <></>;
   let editButton = <></>;
-  let checked = scTraining.length==1;
+  const[checked, setChecked] = useState(false)
   let initState = scTraining.length==1;
+  let unchecked = false
+  console.log(initState+ ' ' + unchecked)
   const checkboxHandle = () => {
     if(!checked){
-      checked = true;
+      setChecked(true);
       handleScheduleTraining(trainersId, date, duration, 1, element.id);
     }
     else{
-      checked = false;
+      setChecked(false);
       handleCancelTraining(trainersId, date, duration, 1, element.id);
+      unchecked = true;
     }
   }
 
@@ -52,7 +55,7 @@ const TrainingElement = ({element, trainersId, date, duration, setTrainersId, se
         </UpdateTraining></>
 } 
     if(user[5]=='user'){
-        checkboxx = <>Prijavi me na trening! <Checkbox onChange={checkboxHandle} defaultChecked={initState}></Checkbox></>
+        checkboxx = <>Prijavi me na trening! <Checkbox onChange={checkboxHandle} ></Checkbox></>
     }
 return (
         <Accordion style={{width:'100%'}}>
@@ -63,7 +66,7 @@ return (
       >
         <Typography>
         <pre style={{fontFamily:'inherit'}}>
-        Trening datuma {element.trainingStart.slice(0,10)}     {checked==true ? <span style={{color:'green', float:'right'}}>Prijavljeni ste na ovaj trening </span> : null}
+        Trening datuma {element.trainingStart.slice(0,10)}     {initState==true&&unchecked==false || checked==true ? <span style={{color:'green', float:'right'}}>Prijavljeni ste na ovaj trening </span> : null}
         </pre>
           
          </Typography>

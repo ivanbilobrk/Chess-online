@@ -166,7 +166,7 @@ const cancelTrainingSubscription = async(req, res) => {
             let training = new Training(currentTrainerId, req.body.training.trainingStart, req.body.training.trainingDuration);
             training.showing = req.body.training.showing;
             training.id = req.body.training.id;
-            await training.cancelTraining();
+            await training.cancelTraining(result.podatci[0]);
             return res.sendStatus(StatusCodes.OK);
         } catch(err){
             return res.status(StatusCodes.BAD_REQUEST).json({'error':'Ne mogu se odjaviti s treninga.'});

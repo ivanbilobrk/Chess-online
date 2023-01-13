@@ -65,8 +65,8 @@ module.exports = class Training {
         await dbSignupForTraining(this, userId);
     }
 
-    async cancelTraining() {
-        await dbCancelTraining(this);
+    async cancelTraining(userId) {
+        await dbCancelTraining(this, userId);
     }
 
     async persist() {
@@ -173,8 +173,8 @@ const dbSignupForTraining = async (training, userId) => {
 }
 
 
-const dbCancelTraining = async (training) => {
-    const sql = "delete from scheduledtraining where training_id = '" + training.id + "'";
+const dbCancelTraining = async (training, userId) => {
+    const sql = "delete from scheduledtraining where training_id = '" + training.id + "' AND member_id = '" + userId + "'";
 
     try {
         await db.query(sql, []);
