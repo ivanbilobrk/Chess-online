@@ -1074,7 +1074,7 @@
 	\subsection{Dijagram stanja}
 	Dijagram stanja prikazuje stanja objekta te prijelaze iz jednog stanja u drugo temeljene na događajima. \\
 	Na slici 4.5 prikazan je dijagram stanja za registriranog korisnika. \\
-	\includegraphics[width=\columnwidth]{dijagramStanja}
+	\includegraphics[width=\columnwidth]{stanja}
 	\begin{center}
 		\textit{Slika 4.5: Dijagram stanja}
 	\end{center}
@@ -1088,7 +1088,7 @@
 	Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja.\\ 
 	U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu aktivnosti sa slike 4.6 prikazan je proces uređivanja profila.\\
 	\\
-	\includegraphics[width=\columnwidth]{dijagramAktivnosti}
+	\includegraphics[width=\columnwidth]{aktivnost}
 	\begin{center}
 		\textit{Slika 4.6: Dijagram aktivnosti}
 	\end{center}
@@ -1099,7 +1099,7 @@
 	Dijagram komponenti
 	Slika 4.7 prikazuje dijagram komponenti kojim je vizualizirana organizacija te međuovisnost između implementacijskih komponenata te odnos programske potpore prema okolini.\\
 	\\
-	\includegraphics[width=\columnwidth]{component_diagram}
+	\includegraphics[width=\columnwidth]{komponente}
 	\begin{center}
 		\textit{Slika 4.7: Dijagram komponenti}
 	\end{center}
@@ -1115,16 +1115,343 @@
 	Baza podataka izrađena je pomoću PostgreSQL\footnote{\url{https://www.postgresql.org/}} sustava za upravljanja bazom podataka, a za lakšu vizualizaciju podatka korišten je i pgAdmin\footnote{\url{https://www.pgadmin.org/}}.  
 	\eject
 	\subsection{Ispitivanje programskog rješenja}
-	Bla bla
+	\subsubsection{Ispitivanje komponenti}
+	Test 1: Ispitivanje registracije\\
+	Provedeno je ispitivanje uspješnosti registracije stvaranjem novog korisnika sa podatcima koji ne postoje u bazi podataka.  Provodi se test koji nakon klika gumba za registraciju provjera pokazuje li se obavijest “Uspješna registracija“. Ukoliko se korisniku prikazuje obavijest, registracija je uspješno izvršena.\\
+	Prikaz koda ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{registration}
+	\begin{center}
+		\textit{Slika 5.1}
+	\end{center}
+	Prikaz rezultata ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{registration-true}
+	\begin{center}
+		\textit{Slika 5.2}
+	\end{center}
 	\eject
+	Test 2: Ispitivanje prijave
+	Provedeno je ispitivanje uspješnosti prijave u sustav upisivanjem podataka korisnika koji već postoje u sustavu. Provodi se test koji nakon klika gumba za prijavu provjerava trenutni URL. Ako se korisniku prikazuje profil, prijava je uspješno izvršena.
+	
+	Prikaz koda ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{login_}
+	\begin{center}
+		\textit{Slika 5.3}
+	\end{center}
+	Prikaz rezultata ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{login-true}
+	\begin{center}
+		\textit{Slika 5.4}
+	\end{center}
+	\eject
+	Test 3: Ispitivanje pogreške prilikom prijave\\
+	Ispituje se hoće li se prikazati obavijest o pogrešnom unosu prilikom unosa nepostojećih podataka. Nakon pogrešnog unosa provjerava se prikazuje li se obavijest sa tekstom “Pogreška User ne postoji“. Ukoliko je obavijest pronađena, test je ispravan.\\
+	
+	Prikaz koda ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{wrongLogin}
+	\begin{center}
+		\textit{Slika 5.5}
+	\end{center}
+	Prikaz rezultata ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{wrongLogin-true}
+	\begin{center}
+		\textit{Slika 5.6}
+	\end{center}
+	\eject
+	Test 4: Ispitivanje dohvata točnih podataka o korisniku\\
+	Ispituje se prikaz podataka korisniku nakon prijave, ako svi pročitani podatci odgovaraju očekivanim vrijednostima, test je ispravan.\\
+	
+	Prikaz koda ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{userData}
+	\begin{center}
+		\textit{Slika 5.7}
+	\end{center}
+	Prikaz rezultata ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{userData-true}
+	\begin{center}
+		\textit{Slika 5.8}
+	\end{center}
+	\eject
+	Test 5: Ispitivanje dohvata točnih podataka o plaćanju\\
+	Ispituje se prikaz podataka o plaćanju korisnika, nakon prijave prelazimo na stranicu za plaćanje i provjeravamo ima li upisanih transakcija. S obzirom da testiramo novog korisnika, očekivani rezultat je “Nema uplata“. Ukoliko pročitano odgovara očekivanom rezultatatu, test je ispravan.\\
+	
+	Prikaz koda ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{paymentData}
+	\begin{center}
+		\textit{Slika 5.9}
+	\end{center}
+	Prikaz rezultata ispitivanja:\\
+	
+	\includegraphics[width=\columnwidth]{paymentData-true}
+	\begin{center}
+		\textit{Slika 5.10}
+	\end{center}
+	\eject
+	Test 6: Ispitivanje pogreške prikikom rješavanja dnevne taktike\\
+	Ispituje se hoće li se prikazati obavijes o pogrešnom rješenju dnevne taktike. Očekivani rezultat je “ Krivo rješenje. Pokušajte ponovo!“. Ukoliko izlaz odgovara oekivanom rješenju, test je ispravan.\\
+	
+		Prikaz koda ispitivanja:\\
+	\includegraphics[width=\columnwidth]{dnevnaTaktika_}
+	\begin{center}
+		\textit{Slika 5.11}
+	\end{center}
+	Prikaz rezultata ispitivanja:\\
+	\includegraphics[width=\columnwidth]{dnevnaTaktika-true}
+	\begin{center}
+		\textit{Slika 5.12}
+	\end{center}
+	\eject
+	\subsubsection{Ispitivanje sustava}
+	Test 1: ispitivanje registracije\\
+	Preduvjeti: User name i email ne postoje u bazi\\
+	Podatci: \\
+		1.	Name: Prvi \\
+		2.	Surname: Test\\
+		3.	Username: PrviiTest\\
+		4.	Email Adress: prviitest@gmail.com\\
+		5.	Password:****\\
+		6.	Confirm Password: ****\\
+	Koraci:\\
+		1. Kliknuti na link za registraciju\\
+		2. Unijeti točne podatke u predviđena polja\\
+		3. Kliknuti na gumb “Registriraj se!“\\
+		4. Kliknuti na link za prijavu\\
+	
+	Očekivani rezultat: Registracija je uspješna, nakon unosa podataka korisnik se može prijaviti na svoj račun \\
+	Stvarni izlaz: Jednak očekivanom rezultatu\\
+	
+	Prikaz rezultata za registraciju u Selenium IDE-u\\
+	
+	\includegraphics[width=\columnwidth]{registracija}
+	\begin{center}
+		\textit{Slika 5.13}
+	\end{center}
+	\eject
+	Prikaz stranice prije i nakon registracije:\\
+	
+	\includegraphics[width=\columnwidth]{registracija-prije}
+	\begin{center}
+		\textit{Slika 5.14}
+	\end{center}
+	\includegraphics[width=\columnwidth]{registracija-nakon}
+	\begin{center}
+		\textit{Slika 5.15}
+	\end{center}
+	\eject
+	Test 2: Ispitivanje prijave\\
+	Preduvjeti: Korisnik je registriran i zapisan u bazi podataka\\
+	Podatci: \\
+	1.Username: PrviiTest\\
+	2.Password: ****\\
+	Koraci:\\
+	1. Kliknuti na link za prijavu\\
+	2. Unijeti točne podatke u predviđena polja\\
+	3. Kliknuti na gumb “Prijavi se!“\\
+	
+	Očekivani rezultat: Prijava je uspješna, nakon unosa podataka korisnik može vidjeti svoje podatke\\
+	Stvarni izlaz: Jednak očekivanom rezultatu\\
+	Prikaz rezultata za registraciju u Selenium IDE-u:\\
+	
+	\includegraphics[width=\columnwidth]{login}
+	\begin{center}
+		\textit{Slika 5.16}
+	\end{center}
+	\eject
+	Prikaz stranice prije i nakon prijave:\\
+	
+	\includegraphics[width=\columnwidth]{prijava-prije}
+	\begin{center}
+		\textit{Slika 5.17}
+	\end{center}
+	\includegraphics[width=\columnwidth]{prijava-nakon}
+	\begin{center}
+		\textit{Slika 5.18}
+	\end{center}
+	\eject
+	
+	Test 3: ispitivanje registracije s pogrešnim unosom\\
+	Preduvjeti: User name ili email već postoje u bazi\\
+	Podatci: \\
+	7.	Name: Prvi \\
+	8.	Surname: Test\\
+	9.	Username: PrviiTest\\
+	10.	Email Adress: prviitest@gmail.com\\
+	11.	Password:****\\
+	12.	Confirm Password: ****\\
+	Koraci:\\
+	1. Kliknuti na link za registraciju\\
+	2. Unijeti točne podatke u predviđena polja\\
+	3. Kliknuti na gumb “Registriraj se!“\\
+	4. Izmjeniti već postojeće podatke\\
+	
+	Očekivani rezultat: Registracija nije uspješna, nakon unosa podataka javlja se greška “User name je već iskorišten!“ \\
+	Stvarni izlaz: Jednak očekivanom rezultatu
+	Prikaz rezultata za registraciju u Selenium IDE-u\\
+	
+	\includegraphics[width=\columnwidth]{registracija-greska}
+	\begin{center}
+		\textit{Slika 5.19}
+	\end{center}
+	\eject
+	Prikaz stranice:\\
+	
+	\includegraphics[width=\columnwidth]{reg-greska}
+	\begin{center}
+		\textit{Slika 5.20}
+	\end{center}
+	\eject
+	
+	Test 4: ispitivanje stvaranja nove novosti\\
+	Preduvjeti: Korisnik je admin ili trener\\
+	Koraci:\\
+	1. Kliknuti na ikonu za dodavanje novosti\\
+	2. Unijeti točne podatke u predviđena polja\\
+	3. Kliknuti na gumb “Spremi“\\
+	
+	Očekivani rezultat: Nova novost je unešena u bazu podataka\\  
+	Stvarni izlaz: Jednak očekivanom rezultatu\\
+	Prikaz rezultata za registraciju u Selenium IDE-u:\\
+	
+		\includegraphics[width=\columnwidth]{nova-novost}
+	\begin{center}
+		\textit{Slika 5.21}
+	\end{center}
+	\eject
+	Prikaz stranice:\\
+	
+	\includegraphics[width=\columnwidth]{novost}
+	\begin{center}
+		\textit{Slika 5.22}
+	\end{center}
+	\eject
+	
+	Test 5: ispitivanje funkcionalnosti dnevnih taktika\\
+	Preduvjeti: Nema\\
+	Koraci:\\
+	1. Kliknuti na gumb za početak dnevne taktike\\
+	2. Pomaknuti figurice po želji\\
+	3. Kliknuti na gumb za završetak\\
+	
+	Očekivani rezultat: Ako je kosrisnik prijavljen te je točno riješio taktiku, bit će stavljen na rang listu \\
+	Stvarni izlaz: Taktika je pogrešno riješena\\
+	
+	Prikaz rezultata za registraciju u Selenium IDE-u:\\
+	
+	\includegraphics[width=\columnwidth]{dnevnaTaktika}
+	\begin{center}
+		\textit{Slika 5.23}
+	\end{center}
+	\eject
+	Prikaz stranice:\\
+	
+	\includegraphics[width=\columnwidth]{taktika}
+	\begin{center}
+		\textit{Slika 5.24}
+	\end{center}
+	\eject
+	
+	
+	
 	\subsection{Dijagram razmještaja}
 	Na slici 5.? prikazan je dijagram razmještaja koji opisuje topologiju sustava. Sustav se sastoji od poslužiteljskog računala na kojem se nalaze web poslužitelj te poslužitelj baze podataka. Na dijagramu je prikazano i klijentsko računalo, a klijent pristupa aplikaciji preko web preglednika. Komunikacija klijent – poslužitelj odvija se preko HTTP protokola.\\
 	\\
-	\includegraphics[width=\columnwidth]{deployment_diagram}
+	\includegraphics[width=\columnwidth]{razmjestaj}
 	\begin{center}
-		\textit{Slika 5.?: Dijagram razmještaja}
+		\textit{Slika 5.25: Dijagram razmještaja}
 	\end{center}
 	\eject
+	\subsection{Upute za puštanje u pogon}
+	Web aplikaciju koju smo razvili u okviru ovog projekta pustili smo u pogon koristeći Render\footnote{\url{https://render.com/}} web stranicu koja nudi besplatne usluge dovoljne za funkcionalnost cijele naše aplikacije. \\
+	Na Render-u smo postavili PostgreSQL bazu podataka, Node poslužitelj koji odgovara na upite korisnika te statičku stranicu koja služi za prikaz React web aplikacije. \\
+	\\
+	\includegraphics[width=\columnwidth]{1}
+	\begin{center}
+		\textit{Slika 5.26}
+	\end{center}
+	\textbf{Postavljanje baze podataka}\\
+	Postavljanje baze podataka kroz Render web sučelje je jednostavno. Render nam nudi biranje određenih parametara baze poput imena, korisnika baze, lozinke te vrata baze putem kojih se Node poslužitelj spaja na bazu. Nakon što smo napravili bazu podataka ona je prazna te u nju moramo dodati tablice prilagođene našoj web aplikaciji. Render nam za to daje PSQL naredbu putem koje se možemo izvana spojiti na bazu podataka te ju onda napuniti podatcima. 
+	\includegraphics[width=\columnwidth]{2}
+	\begin{center}
+		\textit{Slika 5.27}
+	\end{center}
+	
+	Iduća slika prikazuje naredbeni redak putem kojeg punimo bazu željenim tablicama.\\
+	\includegraphics[width=\columnwidth]{10}
+	\begin{center}
+		\textit{Slika 5.28}
+	\end{center}
+
+	
+	Podatci o svim tablicama baze podataka nalaze se u datoteci seed.js. Ta datoteka sadrži SQL naredbe putem kojih direktno inicijaliziramo bazu. Pomoću PSQL naredbe se iz naredbenog retka izvana spajamo na bazu te kopiramo sve naredbe iz seed.js. Nakon ovog koraka u bazi se nalaze sve tablice potrebne za rad web aplikacije. \\
+	
+	\textbf{Postavljanje Node poslužitelja}\\
+	Kroz Render web sučelje stvaramo poslužitelj koji će odgovarati na upite korisnika iz React web aplikacije te koji komunicira sa bazom podataka. Renderova usluga Web service je pravi izbor za ovo. Render nam nudi odabir GitLab grane koja će služiti za deploy poslužitelja te konfiguriranje putanje u kojoj se nalaze datoteke poslužitelja. Odabrali smo main granu našeg projekta te sada svaki puta kada se dogodi neki push na tu granu Node poslužitelj na Renderu će se automatski ažurirati. \\
+	
+	\includegraphics[width=\columnwidth]{4}
+	\begin{center}
+		\textit{Slika 5.29}
+	\end{center}
+
+	
+	Također, moramo postaviti i naredbu putem koje će Render pokretati poslužitelj. Kako je riječ o Node poslužitelju to radimo sa naredbom: node server.js. \\
+	
+	\includegraphics[width=\columnwidth]{5}
+	\begin{center}
+		\textit{Slika 5.30}
+	\end{center}
+
+	Kako bi sve radilo moramo konfigurirati i varijable okoline koje se ne objavljuju na GitLab već je svaki član tima imao vlastitu .env datoteku koju je konfigurirao prema vlastitim potrebama. U .env datoteci sada se moraju nalaziti parametri koji će omogućiti Node poslužitelju spajanje na prethodno stvorenu bazu i stvaranje Json web tokena.\\
+	
+	 \includegraphics[width=\columnwidth]{3}
+	 \begin{center}
+	 	\textit{Slika 5.31}
+	 \end{center}
+ 
+ 	\textbf{Postavljanje React web aplikacije}\\
+ 	Stvaranje React web aplikacije kroz Render je jednostavno. React web aplikaciju kroz Render postavljamo tako da koristimo static site uslugu. Kao i kod kofiguriranja Node poslužitelja biramo GitLab granu te putanju do datoteka potrebnih za React web aplikaciju.
+ 	
+ 	\includegraphics[width=\columnwidth]{6}
+ 	\begin{center}
+ 		\textit{Slika 5.32}
+ 	\end{center}
+ 	
+ 	Kako bi Render znao stvoriti build verziju React web aplikacije moramo napisati ispravnu naredbu. \\
+ 	
+ 	 	\includegraphics[width=\columnwidth]{7}
+ 	\begin{center}
+ 		\textit{Slika 5.33}
+ 	\end{center}
+ 	
+ 	
+	Ovom naredbom React stvara optimalnu verziju web aplikacije koju će Render na kraju i prikazivati u pregledniku. Optimalnu verziju čini jedan html dokument te nekoliko Javascript datoteka potrebnih za rad aplikacije. Datoteke optimalne verzije tj. builda nalaze se u direktoriju build. \\
+	
+		\includegraphics[width=\columnwidth]{8}
+	\begin{center}
+		\textit{Slika 5.34}
+	\end{center}
+	
+	
+	Ostalo je još konfigurirati varijable okoline. Sada imamo jednu naredbu koja predstavlja URL kojim React web aplikacija pristupa Node poslužitelju. \\
+	
+	\includegraphics[width=\columnwidth]{9}
+	\begin{center}
+		\textit{Slika 5.35}
+	\end{center}
+
+	
+	Nakon svih ovih koraka aplikaciji pristupamo putem URL-a koji nam je dao Render za static site uslugu. Ovim URL-om pristupamo React web aplikaciji koja šalje upite na Node poslužitelj koji dalje može komunicirati sa bazom. 
+	\eject
+	
+	
+	
 	\section{Zaključak i budući rad}
 	Nakon 17 tjedana postignut je konačni cilj ovog projekta a to je izrada funkcionalne web aplikacije šahovskog kluba. U ostvarenoj aplikaciji omogućeno je registriranje i prijava korisnika, rješavanje dnevnih taktika, pregled rang listi, prijavljivanje pogrešaka u dnevnoj taktici te revizija istih, plaćanje članarine šahovskog kluba, prijavljivanje na treninge i turnire postavljenih na aplikaciju od strane ovlaštenih osoba te pregled osobnih podataka.\\
 	Sama izrada aplikacije tekla je u dvije faze koje su se otprilike podudarale s ciklusima akademskog semestra.\\
@@ -1134,6 +1461,14 @@
 	Ovaj projekt te naš rad i sudjelovanje vrijedno je iskustvo za sve članove tima. Nije bilo lako prilagoditi se na ovakav način rada te obujam posla, no to je ono što nas sve čeka u budućnosti. Timski rad, podrška drugima, organiziranje vremena, samoedukacija i korištenje do sada nepoznatih tehnologija; sve su to vrline koje smo trebali usvojiti kako bi odradili ovaj projekt. Uzimajući u obzir sve navedeno, ali i ostale obveze koje individualno imamo na nekim drugim područjima, možemo biti zadovoljni s obavljenim poslom na ovom projektu.\eject
 	\eject
 	
+	\section{Popis literature}
+	\begin{enumerate}
+		\item Programsko inženjerstvo, FER ZEMRIS, \url{http://www.fer.hr/predmet/proinz}
+		\item The Unified Modelling Language, \url{https://www.uml-diagrams.org/}
+		\item Astah Community, \url{http://astah.net/editions/uml-new}
+		\item React MUI, \url{https://mui.com/}
+	\end{enumerate}
+	\eject
 	\section{Dodatak: Prikaz aktivnosti grupe}
 	\subsection{Dnevnik sastajanja}
 	\begin{packed_enum}
@@ -1249,42 +1584,42 @@
 	\subsection{Tablica aktivnosti}
 	U nastavku je prikazana tablica aktivnosti na projektu. Sve vrijednosti tablice predstavljaju sate rada člana tima na pojedinoj aktivnosti.
 	\\
-%	\begin{longtblr}[
-%		label=none,
-%		]{
-%			vlines,hlines,
-%			width = \textwidth,
-%			colspec={X[7, l]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]}, 
-%			vline{1} = {1}{text=\clap{}},
-%			hline{1} = {1}{text=\clap{}},
-%			rowhead = 1,
-%		} 
-%		\multicolumn{1}{c|}{} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ivan Bilobrk}}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Altea Božić }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Tina Jureško }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Lara Mahalec }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Mijo Rajič }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ilan Vezmarović }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Anteo Vukasović }}} \\  
-%		Upravljanje projektom 		& 5 &  &  &  &  &  & \\ 
-%		Opis projektnog zadatka 	&  &  &  &  &  &  & 1\\ 
-%		
-%		Funkcionalni zahtjevi       & 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
-%		Opis pojedinih obrazaca 	& 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
-%		Dijagram obrazaca 			& 1 & 1 & 1 & 1 & 3 & 1 & 1 \\ 
-%		Sekvencijski dijagrami 		&  & 3 & 3 & 2 &  &  &  \\ 
-%		Opis ostalih zahtjeva 		&  &  &  &  &  &  & 1 \\ 
-%		
-%		Arhitektura i dizajn sustava	 & 1 & 1 & 1 & 1 & 1 & 1 & 2 \\ 
-%		Baza podataka				& 1 & 1 & 1 & 10 & 1 & 1 &   \\ 
-%		Dijagram razreda 			&  & 3 & 2 &  & 3 &  & 1  \\ 
-%		Dijagram stanja				&  &  &  &  &  &  &  \\ 
-%		Dijagram aktivnosti 		&  &  &  &  &  &  &  \\ 
-%		Dijagram komponenti			&  &  &  &  &  &  &  \\ 
-%		Korištene tehnologije i alati 		&  &  &  &  &  &  &  \\ 
-%		Ispitivanje programskog rješenja 	&  &  &  &  &  &  &  \\ 
-%		Dijagram razmještaja			&  &  &  &  &  &  &  \\ 
-%		Upute za puštanje u pogon 		&  &  &  &  &  &  &  \\   
-%		Zaključak i budući rad 		&  &  &  &  &  &  &  \\  
-%		Popis literature 			&  &  &  &  &  &  &  \\  
-%		Front-end  			& 2 & 10 & 10 & 1 & 8 &  & 7 \\  
-%		Back-end 			& 18 &  &  &  &  & 15 &  \\   
-%		Deployment 			& 3 &  &  &  &  &  &  \\
-%	\end{longtblr}
+	\begin{longtblr}[
+		label=none,
+		]{
+			vlines,hlines,
+			width = \textwidth,
+			colspec={X[7, l]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]}, 
+			vline{1} = {1}{text=\clap{}},
+			hline{1} = {1}{text=\clap{}},
+			rowhead = 1,
+		} 
+		\multicolumn{1}{c|}{} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ivan Bilobrk}}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Altea Božić }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Tina Jureško }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Lara Mahalec }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Mijo Rajič }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ilan Vezmarović }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Anteo Vukasović }}} \\  
+		Upravljanje projektom 		& 8 &  &  &  &  &  & \\ 
+		Opis projektnog zadatka 	&  &  &  &  &  &  & 1\\ 
+		
+		Funkcionalni zahtjevi       & 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
+		Opis pojedinih obrazaca 	& 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
+		Dijagram obrazaca 			& 1 & 1 & 1 & 1 & 3 & 1 & 1 \\ 
+		Sekvencijski dijagrami 		&  & 3 & 3 & 2 &  &  &  \\ 
+		Opis ostalih zahtjeva 		&  &  &  &  &  &  & 1 \\ 
+		
+		Arhitektura i dizajn sustava	 & 1 & 1 & 1 & 1 & 1 & 1 & 2 \\ 
+		Baza podataka				& 1 & 1 & 1 & 10 & 1 & 1 &   \\ 
+		Dijagram razreda 			&  & 3 & 2 &  & 3 &  & 1  \\ 
+		Dijagram stanja				&  & 4 &  &  &  &  &  \\ 
+		Dijagram aktivnosti 		&  &  & 4 &  &  &  &  \\ 
+		Dijagram komponenti			&  & 4 &  &  &  &  &  \\ 
+		Korištene tehnologije i alati 		&  &  &  &  &  &  & 1 \\ 
+		Ispitivanje programskog rješenja 	&  &  &  & 8 &  &  &  \\ 
+		Dijagram razmještaja			&  &  & 4 &  &  &  &  \\ 
+		Upute za puštanje u pogon 		& 1 &  &  &  &  &  &  \\   
+		Zaključak i budući rad 		&  &  &  &  &  &  & 1 \\  
+		Popis literature 			&  &  &  &  &  &  &  \\  
+		Front-end  			& 14 & 10 & 10 & 10 & 9 & 14 & 16 \\  
+		Back-end 			& 24 &  &  & 16 & 12 & 18 & 2 \\   
+		Deployment 			& 4 &  &  &  &  &  &  \\
+	\end{longtblr}
 		
 	
 \end{document}
