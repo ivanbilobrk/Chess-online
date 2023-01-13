@@ -32,7 +32,8 @@ const sql_create_training = `CREATE TABLE training (
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
   trainer_id int REFERENCES users(id),
   trainingStartTimeDate timestamp NOT NULL,
-  trainingDurationMin int NOT NULL
+  trainingDurationMin int NOT NULL,
+  showing int
 )`;
 
 const sql_create_training_id_index =`CREATE  UNIQUE INDEX idx_trainingId ON training(id)`;
