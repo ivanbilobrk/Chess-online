@@ -43,6 +43,8 @@ app.use('/transactions', require('./routes/transaction.routes'))
 app.use('/tactic/private', require('./routes/tacticPriv.routes'));
 app.use('/score/add', require('./routes/scorePriv.routes'));
 app.use('/mistakes', require('./routes/mistake.routes'));
+app.use('/training', require('./routes/training.routes'));
+app.use('/tournaments', require('./routes/tournament.routes'));
 
 
 app.use((req, res)=>{
