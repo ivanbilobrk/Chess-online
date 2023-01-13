@@ -75,7 +75,7 @@
 			\vspace*{\stretch{3.0}}
 			
 			\huge Šahisti\\
-			\Large Dokumentacija, Rev. \textit{1}\\
+			\Large Dokumentacija, Rev. \textit{2}\\
 			
 			\vspace*{\stretch{12.0}}
 			\normalsize
@@ -84,7 +84,7 @@
 			
 			
 			\vspace*{\stretch{1.0}}
-			Datum predaje: \textit{18. 11. 2022.}\\
+			Datum predaje: \textit{13. 1. 2023.}\\
 			
 			\vspace*{\stretch{4.0}}
 			
@@ -119,13 +119,23 @@
 		0.9 & Napisani i dodani dijagrami razreda te odgovarajući opisi. & Altea Božić, Tina Jureško i Mijo Rajić & 18.11.2022. \\[3pt] \hline
 		0.10 & Dodan popis sastanaka sa glavnim temama te ažurirana tablica aktivnosti prvog ciklusa & Anteo \newline Vukasović & 18.11.2022. \\[3pt] \hline  
 		0.11 & Kompletirana tablica promjena dokumentacije za prvi ciklus. & Anteo \newline Vukasović & 18.11.2022. \\[3pt] \hline  
-		\textbf{1.0} & Verzija samo s bitnim dijelovima za 1. ciklus & \textit{verificirao \newline cijeli tim} & 18.11.2022. \\[3pt] \hline 
+		\textbf{1.0} & \textbf{Verzija samo s bitnim dijelovima za 1. ciklus} & \textit{verificirao \newline cijeli tim} & 18.11.2022. \\[3pt] \hline
+		1.1 & Dijagram stanja & Tina Jureško & 11.1.2023. \\[3pt] \hline 
+		1.2 & Dijagram aktivnosti & Tina Jureško & 11.1.2023. \\[3pt] \hline
+		1.3 & Dijagram komponenti & Altea Božić & 12.1.2023. \\[3pt] \hline
+		1.4 & Dijagram razmještaja & Altea Božić & 12.1.2023. \\[3pt] \hline
+		1.5 & Korištene tehnologije i alati & Anteo \newline Vukasović & 13.1.2023. \\[3pt] \hline 
+		1.6 & Ispitivanje programskog rješenja & Lara \newline Mahalec & 13.1.2023. \\[3pt] \hline
+		1.7 & Upute za puštanje u pogon & Ivan Bilobrk & 13.1.2023. \\[3pt] \hline
+		1.8 & Zaključak i daljnji rad & Anteo \newline Vukasović & 13.1.2023. \\[3pt] \hline
+		1.9 & Literatura i ažuriranje poglavlja aktivnosti grupe & Anteo \newline Vukasović & 13.1.2023. \\[3pt] \hline
+		\textbf{2.0} & \textbf{Konačna verzija} & \textit{verificirao \newline cijeli tim} & 13.1.2023. \\[3pt] \hline
 	\end{longtblr}
 
 	\eject
 	
 	\section{Opis projektnog zadatka}
-		Cilj ovog projektnog zadatka je izrada funkcionalne web aplikacije koju će koristiti članovi šahovskog kluba. Ova web aplikacija olakšala bi trenerima u šahovskom klubu organizaciju i vodenje treninga i natjecanja svojih učenika, a učenicima bi pružila platformu na kojoj bi mogli okušati svoja znanja i vještine putem dnevnih taktika. Na taj način svi korisnici mogu doraditi i unaprijediti svoja znanja i vještine u divnoj šahovskoj igri. \\ 
+		Cilj ovog projektnog zadatka je izrada funkcionalne web aplikacije koju će koristiti članovi šahovskog kluba. Ova web aplikacija olakšala bi trenerima u šahovskom klubu organizaciju i vođenje treninga i natjecanja svojih učenika, a učenicima bi pružila platformu na kojoj bi mogli okušati svoja znanja i vještine putem dnevnih taktika. Na taj način svi korisnici mogu doraditi i unaprijediti svoja znanja i vještine u divnoj šahovskoj igri. \\ 
 		Aplikacija je dizajnirana primarno za članove šahovskog kluba te će samo oni imati pristup punoj funkcionalnosti aplikacije. No to ne sprječava sve one zainteresirane da dobiju uvid u svijet šaha putem ove aplikacije. \\
 		Prilikom pokretanja same aplikacije, korisnika se vodi na stranicu s 3 opcije:
 		\begin{itemize}
@@ -1061,6 +1071,69 @@
 	DTO služi za razmjenu raznih zahtjeva i podataka između različitih dijelova sustava.
 	
 	\eject
+	\subsection{Dijagram stanja}
+	Dijagram stanja prikazuje stanja objekta te prijelaze iz jednog stanja u drugo temeljene na događajima. \\
+	Na slici 4.5 prikazan je dijagram stanja za registriranog korisnika. \\
+	\includegraphics[width=\columnwidth]{dijagramStanja}
+	\begin{center}
+		\textit{Slika 4.5: Dijagram stanja}
+	\end{center}
+	Nakon prijave, klijentu se prikazuje početna stranica na kojoj može pregledati novosti, rang listu te odigrati dnevnu taktiku.\\
+	Klikom na "Osobni podatci" prikazuju mu se njegovi podatci koje može uređivati po želji.\\
+	Registrirani korisnik ima i opcije prijave na treninge klikom na "Uplati\\ trening",kao i prijavu na turnir klikom na "Pregledaj nadolazeće turnire".
+	Korisnik uplatu izvršava klikom na "Plati članarinu". \\
+	U slučaju da je registrirani korisnik administrator, ima opciju pregleda svih članova kluba uz pomoć gumba "Klikni za pregled svih članova".
+	\eject
+	\subsection{Dijagram aktivnosti}
+	Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. Ne upotrebljava se za modeliranje događajima poticanog ponašanja.\\ 
+	U modeliranju toka upravljanja svaki novi korak poduzima se nakon završenog prethodnog, a naglasak je na jednostavnosti. Na dijagramu aktivnosti sa slike 4.6 prikazan je proces uređivanja profila.\\
+	\\
+	\includegraphics[width=\columnwidth]{dijagramAktivnosti}
+	\begin{center}
+		\textit{Slika 4.6: Dijagram aktivnosti}
+	\end{center}
+	Korisnik nakon uspješne prijave u sustav sa svojim korisničkim podatcima klikom na gumb "Uredi profil" započinje uređivanje nakon čega se pojavljuje prozorčić za upis novih podataka te klikom na "Submit" web-aplikacija šalje upit za spremanjem podataka bazi.\\
+	Ako je uređivanje uspješno izvršeno, korisniku se prikazuju njegovi novi osobni podatci.
+	\eject
+	\subsection{Dijagram komponenti}
+	Dijagram komponenti
+	Slika 4.7 prikazuje dijagram komponenti kojim je vizualizirana organizacija te međuovisnost između implementacijskih komponenata te odnos programske potpore prema okolini.\\
+	\\
+	\includegraphics[width=\columnwidth]{component_diagram}
+	\begin{center}
+		\textit{Slika 4.7: Dijagram komponenti}
+	\end{center}
+	Postoje dva različita sučelja. Sučelje za dohvat HTML, CSS te Javascript datoteka služi za posluživanje datoteka s frontend dijela aplikacije, a koje su prikazane kao komponente koje su potrebne komponenti Router za njezino djelovanje (ovisnost). Router je komponenta koja određuje koja će datoteka biti poslužena na sučelju. Sučelje za JSON podatke omogućuje pristup REST API-u koji je zadužen za backend podatke aplikacije. React-view komponenta preko sučelja komunicira s web aplikacijom Šahisti te djeluje ovisno o korisnikovim akcijama.
+	\eject
+	
+	\section{Implementacija i korisničko sučelje}
+	\subsection{Korištene tehnologije i alati}
+	U radu na našem projektu za međusobnu komunikaciju korištene su 3 aplikacije; Discord\footnote{\url{https://discord.com/}}, MS Teams\footnote{\url{https://www.microsoft.com/en-us/microsoft-teams/group-chat-software}} i WhatsApp\footnote{\url{https://www.whatsapp.com/}}.\\
+	Upravljanje izvornim kodom ostvareno je sustavom Git\footnote{\url{https://git-scm.com/}}, a udaljeni repozitorij našeg projekta dostupan nam je bio na web platformi GitLab\footnote{\url{https://gitlab.com/}}.\\
+	Kao razvojno okruženje korišten je Visual Studio Code\footnote{\url{https://code.visualstudio.com/}}, uređivač izvornog koda razvijen od strane Microsofta s Frameworkom, dostupan za Windowse, Linux te macOS. Visual Studio Code podržava rad u brojnim jezicima te nudi mogućnost preuzimanja mnoštva ekstenzija za omogućavanje i olakšavanje rada programerima stoga je nama pružio dobru platformu za rad.\\
+	Backend dio stranice napisan je u jeziku JavaScript\footnote{\url{https://www.javascript.com/}}, a frontend dio stranice napisan je u Reactu\footnote{\url{https://reactjs.org/}}, biblioteci u JavaScriptu koja se koristi za izradu korisničkih sučelja.\\
+	Baza podataka izrađena je pomoću PostgreSQL\footnote{\url{https://www.postgresql.org/}} sustava za upravljanja bazom podataka, a za lakšu vizualizaciju podatka korišten je i pgAdmin\footnote{\url{https://www.pgadmin.org/}}.  
+	\eject
+	\subsection{Ispitivanje programskog rješenja}
+	Bla bla
+	\eject
+	\subsection{Dijagram razmještaja}
+	Na slici 5.? prikazan je dijagram razmještaja koji opisuje topologiju sustava. Sustav se sastoji od poslužiteljskog računala na kojem se nalaze web poslužitelj te poslužitelj baze podataka. Na dijagramu je prikazano i klijentsko računalo, a klijent pristupa aplikaciji preko web preglednika. Komunikacija klijent – poslužitelj odvija se preko HTTP protokola.\\
+	\\
+	\includegraphics[width=\columnwidth]{deployment_diagram}
+	\begin{center}
+		\textit{Slika 5.?: Dijagram razmještaja}
+	\end{center}
+	\eject
+	\section{Zaključak i budući rad}
+	Nakon 17 tjedana postignut je konačni cilj ovog projekta a to je izrada funkcionalne web aplikacije šahovskog kluba. U ostvarenoj aplikaciji omogućeno je registriranje i prijava korisnika, rješavanje dnevnih taktika, pregled rang listi, prijavljivanje pogrešaka u dnevnoj taktici te revizija istih, plaćanje članarine šahovskog kluba, prijavljivanje na treninge i turnire postavljenih na aplikaciju od strane ovlaštenih osoba te pregled osobnih podataka.\\
+	Sama izrada aplikacije tekla je u dvije faze koje su se otprilike podudarale s ciklusima akademskog semestra.\\
+	Prva faza bila je slabijeg intenziteta od druge no nije bila bez svojih izazova. U prvoj fazi bilo je ključno definirati potrebne stvari za izradu aplikaciju te konceptualno izgraditi "kostur" prema kojem će se graditi aplikacija. U tu svrhu trebalo je dobro razumjeti i dokumentirati sve zahtjeve naše aplikacije, izraditi use case-ove te njihove dijagrame, izraditi dijagrame razreda te osmisliti bazu podataka. Sve je to bilo potrebno lijepo dokumentirati u jedan čitki i smisleni dokument čije poglavlje upravo čitate. Osim dokumentacije, potrebno je bilo implementirati generičke funkcionalnosti stranicu kao što su registracija, prijava i slično. A uz sve to, svi smo se morali prilagoditi radu u grupi sa osobama koje smo uglavnom netom upoznali. \\
+	Nakon uspješno i kvalitetno odrađene prve faze, uslijedila je druga, užurbanija i zahtjevnija faza. U ovoj fazi glavni fokus bio je na izradi implementacijskih rješenja. Na trenutke je ovo iziskivalo mnoštvo napora s obzirom da je većini članova ovo prvi susret s radom na projektu ovakvog obujma. No ipak sve je uglavnom uspješno savladano te smo na kraju dobili aplikaciju koja je spremna za korištenje, sve što joj je potrebno je stvarni šahovski klub. Osim same implementacije, bilo je i posla oko ispitivanje programskog rješenja te puštanja aplikacije u pogon(deployment). Također, na dokumentaciji je preostalo posla, kao što je izrada dijagrama aktivnosti, stanja, komponenti, razmještaja i slično.\\
+	Iako je aplikacija izrađena i puštena u pogon prostora za daljnji rad ima. Sitne greške se mogu pronaći te bi ih se moglo još dodatno "ispeglati". Na dizajnu stranice bi se također dalo poraditi, no i ovakvim minimalističkim stilom i dalje izgleda pristojno. Jedan od mogućih daljnjih razvoja je i omogućavanje igranja partija tzv. dopisnog šaha u kojem članovi međusobno naizmjence šalju poteze jedan drugome unutar nekog definiranog vremenskog okvira te na taj način simuliraju "over the board" partiju šaha. Također bi se moglo poraditi i na dodavanju video sadržaja od strane trener, na primjer lekcije o otvaranjima, analize legendarnih partija i slično.\\
+	Ovaj projekt te naš rad i sudjelovanje vrijedno je iskustvo za sve članove tima. Nije bilo lako prilagoditi se na ovakav način rada te obujam posla, no to je ono što nas sve čeka u budućnosti. Timski rad, podrška drugima, organiziranje vremena, samoedukacija i korištenje do sada nepoznatih tehnologija; sve su to vrline koje smo trebali usvojiti kako bi odradili ovaj projekt. Uzimajući u obzir sve navedeno, ali i ostale obveze koje individualno imamo na nekim drugim područjima, možemo biti zadovoljni s obavljenim poslom na ovom projektu.\eject
+	\eject
+	
 	\section{Dodatak: Prikaz aktivnosti grupe}
 	\subsection{Dnevnik sastajanja}
 	\begin{packed_enum}
@@ -1078,7 +1151,7 @@
 		
 		\item sastanak
 		\item[] \begin{packed_item}
-			\item Datum: 24. listopada 2022. \today
+			\item Datum: 24. listopada 2022. 
 			\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič, Ilan Vezmarović i Anteo Vukasović
 			\item Teme sastanka:
 			\begin{packed_item}
@@ -1089,7 +1162,7 @@
 	
 		\item sastanak
 		\item[] \begin{packed_item}
-		\item Datum: 4. studenog 2022. \today
+		\item Datum: 4. studenog 2022. 
 		\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec i Mijo Rajič
 		\item Teme sastanka:
 		\begin{packed_item}
@@ -1101,7 +1174,7 @@
 
 		\item sastanak
 		\item[] \begin{packed_item}
-			\item Datum: 9. studenog 2022. \today
+			\item Datum: 9. studenog 2022. 
 			\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič i Anteo Vukasović
 			\item Teme sastanka:
 			\begin{packed_item}
@@ -1113,11 +1186,62 @@
 	
 	\item sastanak
 	\item[] \begin{packed_item}
-		\item Datum: 18. studenog 2022. \today
+		\item Datum: 18. studenog 2022. 
 		\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič, Ilan Vezmarović i Anteo Vukasović
 		\item Teme sastanka:
 		\begin{packed_item}
 			\item  Provjera i potvrđivanje napisane dokumentacije za prvi ciklus
+		\end{packed_item}
+		\end{packed_item}
+	 	\item sastanak
+		\item[] \begin{packed_item}
+			\item Datum: 9. prosinca 2022. 
+			\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič, Ilan Vezmarović i Anteo Vukasović
+			\item Teme sastanka:
+			\begin{packed_item}
+				\item  Podjela poslova implementacije među članovima tima
+			\end{packed_item}
+		\end{packed_item}
+		\item sastanak
+		\item[] \begin{packed_item}
+			\item Datum: 14. prosinca 2022. 
+			\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič, Ilan Vezmarović i Anteo Vukasović
+			\item Teme sastanka:
+			\begin{packed_item}
+				\item  Konzultacije s asistentom
+			\end{packed_item}
+		\end{packed_item}
+		\item sastanak
+	\item[] \begin{packed_item}
+		\item Datum: 22. prosinca 2022. 
+		\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič, Ilan Vezmarović i Anteo Vukasović
+		\item Teme sastanka:
+		\begin{packed_item}
+			\item  Prikaz i testiranje implementiranog sadržaja
+			\item Podjela daljnjih poslova među članovima tima 
+		\end{packed_item}
+	\end{packed_item}
+		\item sastanak
+	\item[] \begin{packed_item}
+		\item Datum: 4. siječnja 2023. 
+		\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič i Anteo Vukasović
+		\item Teme sastanka:
+		\begin{packed_item}
+			\item  Prikaz i testiranje do sada obavljenog posla
+			\item  Planiranje rada završne faze implementacija
+			\item  Podjela daljnjeg rada u dokumentaciji
+			\item  Podjela posla za ispitivanje programskog rješenja
+		\end{packed_item}
+	\end{packed_item}
+	\eject
+		\item sastanak
+	\item[] \begin{packed_item}
+		\item Datum: 13. siječnja 2022. 
+		\item Prisustvovali:  Ivan Bilobrk, Altea Božić, Tina Jureško, Lara Mahalec, Mijo Rajič, Ilan Vezmarović i Anteo Vukasović
+		\item Teme sastanka:
+		\begin{packed_item}
+			\item  Konačna verifikacija dokumentacije i programskog rješenja
+			\item  Podjela posla oko prezentacije projekta
 		\end{packed_item}
 	\end{packed_item}
 	\end{packed_enum}
@@ -1125,42 +1249,42 @@
 	\subsection{Tablica aktivnosti}
 	U nastavku je prikazana tablica aktivnosti na projektu. Sve vrijednosti tablice predstavljaju sate rada člana tima na pojedinoj aktivnosti.
 	\\
-	\begin{longtblr}[
-		label=none,
-		]{
-			vlines,hlines,
-			width = \textwidth,
-			colspec={X[7, l]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]}, 
-			vline{1} = {1}{text=\clap{}},
-			hline{1} = {1}{text=\clap{}},
-			rowhead = 1,
-		} 
-		\multicolumn{1}{c|}{} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ivan Bilobrk}}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Altea Božić }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Tina Jureško }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Lara Mahalec }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Mijo Rajič }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ilan Vezmarović }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Anteo Vukasović }}} \\  
-		Upravljanje projektom 		& 5 &  &  &  &  &  & \\ 
-		Opis projektnog zadatka 	&  &  &  &  &  &  & 1\\ 
+%	\begin{longtblr}[
+%		label=none,
+%		]{
+%			vlines,hlines,
+%			width = \textwidth,
+%			colspec={X[7, l]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]X[1, c]}, 
+%			vline{1} = {1}{text=\clap{}},
+%			hline{1} = {1}{text=\clap{}},
+%			rowhead = 1,
+%		} 
+%		\multicolumn{1}{c|}{} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ivan Bilobrk}}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Altea Božić }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Tina Jureško }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Lara Mahalec }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Mijo Rajič }}} & \multicolumn{1}{c|}{\rotatebox{90}{\textbf{Ilan Vezmarović }}} &	\multicolumn{1}{c|}{\rotatebox{90}{\textbf{Anteo Vukasović }}} \\  
+%		Upravljanje projektom 		& 5 &  &  &  &  &  & \\ 
+%		Opis projektnog zadatka 	&  &  &  &  &  &  & 1\\ 
+%		
+%		Funkcionalni zahtjevi       & 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
+%		Opis pojedinih obrazaca 	& 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
+%		Dijagram obrazaca 			& 1 & 1 & 1 & 1 & 3 & 1 & 1 \\ 
+%		Sekvencijski dijagrami 		&  & 3 & 3 & 2 &  &  &  \\ 
+%		Opis ostalih zahtjeva 		&  &  &  &  &  &  & 1 \\ 
+%		
+%		Arhitektura i dizajn sustava	 & 1 & 1 & 1 & 1 & 1 & 1 & 2 \\ 
+%		Baza podataka				& 1 & 1 & 1 & 10 & 1 & 1 &   \\ 
+%		Dijagram razreda 			&  & 3 & 2 &  & 3 &  & 1  \\ 
+%		Dijagram stanja				&  &  &  &  &  &  &  \\ 
+%		Dijagram aktivnosti 		&  &  &  &  &  &  &  \\ 
+%		Dijagram komponenti			&  &  &  &  &  &  &  \\ 
+%		Korištene tehnologije i alati 		&  &  &  &  &  &  &  \\ 
+%		Ispitivanje programskog rješenja 	&  &  &  &  &  &  &  \\ 
+%		Dijagram razmještaja			&  &  &  &  &  &  &  \\ 
+%		Upute za puštanje u pogon 		&  &  &  &  &  &  &  \\   
+%		Zaključak i budući rad 		&  &  &  &  &  &  &  \\  
+%		Popis literature 			&  &  &  &  &  &  &  \\  
+%		Front-end  			& 2 & 10 & 10 & 1 & 8 &  & 7 \\  
+%		Back-end 			& 18 &  &  &  &  & 15 &  \\   
+%		Deployment 			& 3 &  &  &  &  &  &  \\
+%	\end{longtblr}
 		
-		Funkcionalni zahtjevi       & 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
-		Opis pojedinih obrazaca 	& 1 & 1 & 1 & 1 & 1 & 1 & 3 \\ 
-		Dijagram obrazaca 			& 1 & 1 & 1 & 1 & 3 & 1 & 1 \\ 
-		Sekvencijski dijagrami 		&  & 3 & 3 & 2 &  &  &  \\ 
-		Opis ostalih zahtjeva 		&  &  &  &  &  &  & 1 \\ 
-		
-		Arhitektura i dizajn sustava	 & 1 & 1 & 1 & 1 & 1 & 1 & 2 \\ 
-		Baza podataka				& 1 & 1 & 1 & 10 & 1 & 1 &   \\ 
-		Dijagram razreda 			&  & 3 & 2 &  & 3 &  & 1  \\ 
-		Dijagram stanja				&  &  &  &  &  &  &  \\ 
-		Dijagram aktivnosti 		&  &  &  &  &  &  &  \\ 
-		Dijagram komponenti			&  &  &  &  &  &  &  \\ 
-		Korištene tehnologije i alati 		&  &  &  &  &  &  &  \\ 
-		Ispitivanje programskog rješenja 	&  &  &  &  &  &  &  \\ 
-		Dijagram razmještaja			&  &  &  &  &  &  &  \\ 
-		Upute za puštanje u pogon 		&  &  &  &  &  &  &  \\   
-		Zaključak i budući rad 		&  &  &  &  &  &  &  \\  
-		Popis literature 			&  &  &  &  &  &  &  \\  
-		Front-end  			& 2 & 10 & 10 & 1 & 8 &  & 7 \\  
-		Back-end 			& 18 &  &  &  &  & 15 &  \\   
-		Deployment 			& 3 &  &  &  &  &  &  \\
-		
-	\end{longtblr}
 	
 \end{document}
