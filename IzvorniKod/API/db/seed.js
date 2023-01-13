@@ -42,7 +42,8 @@ const sql_create_tournament =`CREATE TABLE tournament(
   trainer_id int REFERENCES users(id),
   tournamentStartTimeDate timestamp NOT NULL,
   tournamentDurationMin int NOT NULL,
-  participantsNo int 
+  participantsNo int,
+  showing int 
 )`;
 
 const sql_create_tournament_id_index =`CREATE  UNIQUE INDEX idx_tournamentId ON tournament(id)`;
